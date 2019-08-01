@@ -20,3 +20,4 @@ public class StationSchedule {
     private String arrivalTime;
 
 }
+

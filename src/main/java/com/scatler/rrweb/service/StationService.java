@@ -2,19 +2,27 @@ package com.scatler.rrweb.service;
 
 import com.scatler.rrweb.dao.StationDAO;
 import com.scatler.rrweb.entity.StationSchedule;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by alexkpc on 01.08.2019.
  */
+
+@Service
 public class StationService {
 
+    @Autowired
     private StationDAO stationDAO;
 
-    public StationSchedule getStationSchedule (String day) {
 
+    @Transactional
+    public List<StationSchedule> getStationSchedule(int id, Date day) {
 
-        return stationDAO.getStationSchedule(day);
+        return stationDAO.getStationSchedule(id,day);
     }
-
-
 }
