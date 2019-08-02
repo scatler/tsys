@@ -25,7 +25,7 @@ public class StationDAO {
 
         Session session = sessionFactory.getCurrentSession();
 
-        List stations =  session.createQuery("from Trains inner join TrainsConfig").list();
+        List stations =  session.createQuery("select t from Trains t inner join t.trainsConfigs").list();
 
         System.out.println(stations);
         System.out.println("done");
