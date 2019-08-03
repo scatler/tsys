@@ -6,17 +6,8 @@
 package com.scatler.rrweb.entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 /**
@@ -38,9 +29,19 @@ public class Stations implements Serializable {
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+
+
+    public Routes getRoute() {
+        return route;
+    }
+
+    public void setRoute(Routes route) {
+        this.route = route;
+    }
+
     @JoinColumn(name = "station_id", referencedColumnName = "station_id")
-    @OneToOne(optional = false)
-    private Routes stationId;
+    @ManyToOne
+    private Routes route;
 
     public Stations() {
     }
@@ -65,13 +66,7 @@ public class Stations implements Serializable {
         this.name = name;
     }
 
-    public Routes getStationId() {
-        return stationId;
-    }
 
-    public void setStationId(Routes stationId) {
-        this.stationId = stationId;
-    }
 
     @Override
     public int hashCode() {

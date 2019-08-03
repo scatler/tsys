@@ -1,6 +1,8 @@
 package com.scatler.rrweb.controller;
 
+import com.scatler.rrweb.entity.Stations;
 import com.scatler.rrweb.entity.User;
+import com.scatler.rrweb.entity.objects.StationTimeTable;
 import com.scatler.rrweb.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by alexkpc on 01.08.2019.
@@ -34,8 +37,10 @@ public class StationController {
     @GetMapping("/timeTableTest")
     public String getTimeTableTest (Model model ) {
 
-        stationService.getStationSchedule(1,new Date(2019,8,1));
-
+        List<StationTimeTable> tt = stationService.getStationSchedule(1,new Date(2019,8,1));
+        List<Stations> stationsList = stationService.getAllStations();
+        model.addAttribute("timetable", tt);
+        model.addAttribute("stations",stationsList);
         return "station-timetable";
     }
 

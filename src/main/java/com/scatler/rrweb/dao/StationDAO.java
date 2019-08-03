@@ -30,8 +30,16 @@ public class StationDAO {
         //TODO how to replace full name of class
         List<StationTimeTable> stt = session.createQuery("select new com.scatler.rrweb.entity.objects.StationTimeTable(t.id,rl.arrivalTime) from Trains t inner join t.trainsConfigList tcfg inner join tcfg.trainsDaysConfigList trdays inner join tcfg.routesConfigList rcfg inner join rcfg.routesList rl inner join rl.stations").getResultList();
 
-        System.out.println(stt);
+        System.out.println(stt.size());
         System.out.println("done");
         return stt;
+    }
+
+    public List<Stations> getAllStations() {
+        Session session = sessionFactory.getCurrentSession();
+        List <Stations> stationsList = session.createQuery("select s from Stations s").getResultList();
+        System.out.println("Selecting stations");
+        System.out.println(stationsList.size());
+        return stationsList;
     }
 }

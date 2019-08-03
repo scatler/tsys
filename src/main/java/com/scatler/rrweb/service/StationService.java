@@ -2,6 +2,7 @@ package com.scatler.rrweb.service;
 
 import com.scatler.rrweb.dao.StationDAO;
 
+import com.scatler.rrweb.entity.Stations;
 import com.scatler.rrweb.entity.Stationschedule;
 import com.scatler.rrweb.entity.objects.StationTimeTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,10 @@ public class StationService {
     public List<StationTimeTable> getStationSchedule(int id, Date day) {
 
         return stationDAO.getStationSchedule(id,day);
+    }
+
+    @Transactional
+    public List<Stations> getAllStations() {
+        return stationDAO.getAllStations();
     }
 }
