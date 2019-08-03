@@ -1,29 +1,72 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.scatler.rrweb.entity;
 
-import javax.persistence.*;
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
- * Created by alexkpc on 01.08.2019.
+ *
+ * @author alexkpc
  */
 @Entity
-@Table(name = "trains_days_config", schema = "mydatabase", catalog = "")
-public class TrainsDaysConfig {
-    private int id;
-    private Date day;
+@Table(name = "trains_days_config")
+@NamedQueries({
+    @NamedQuery(name = "TrainsDaysConfig.findAll", query = "SELECT t FROM TrainsDaysConfig t")})
+public class TrainsDaysConfig implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "day")
+    @Temporal(TemporalType.DATE)
+    private Date day;
+    @JoinColumn(name = "tr_cfg_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private TrainsConfig trCfgId;
+
+    public TrainsDaysConfig() {
     }
 
-    public void setId(int id) {
+    public TrainsDaysConfig(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "day", nullable = true)
+    public TrainsDaysConfig(Integer id, Date day) {
+        this.id = id;
+        this.day = day;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Date getDay() {
         return day;
     }
@@ -32,23 +75,37 @@ public class TrainsDaysConfig {
         this.day = day;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public TrainsConfig getTrCfgId() {
+        return trCfgId;
+    }
 
-        TrainsDaysConfig that = (TrainsDaysConfig) o;
-
-        if (id != that.id) return false;
-        if (day != null ? !day.equals(that.day) : that.day != null) return false;
-
-        return true;
+    public void setTrCfgId(TrainsConfig trCfgId) {
+        this.trCfgId = trCfgId;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (day != null ? day.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof TrainsDaysConfig)) {
+            return false;
+        }
+        TrainsDaysConfig other = (TrainsDaysConfig) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.scatler.rrweb.TrainsDaysConfig[ id=" + id + " ]";
+    }
+    
 }

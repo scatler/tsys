@@ -30,7 +30,7 @@ public class StationController {
     }
 
 
-//TODO delete
+    //TODO delete (it is just a testing)
     @GetMapping("/timeTableTest")
     public String getTimeTableTest (Model model ) {
 

@@ -1,33 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.scatler.rrweb.entity;
 
-import javax.persistence.*;
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
- * Created by alexkpc on 01.08.2019.
+ *
+ * @author alexkpc
  */
 @Entity
-public class Tickets {
-    private int id;
-    private Date day;
-    private Integer tickentsAmount;
-    private Trains trainsByTrainId;
-    private Routes routesByRouteId;
-    private Stations stationsByStationidStart;
-    private Stations stationsByStationidEnd;
+@Table(name = "tickets")
+@NamedQueries({
+    @NamedQuery(name = "Tickets.findAll", query = "SELECT t FROM Tickets t")})
+public class Tickets implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "train_id")
+    private Integer trainId;
+    @Column(name = "route_id")
+    private Integer routeId;
+    @Column(name = "day")
+    @Temporal(TemporalType.DATE)
+    private Date day;
+    @Column(name = "tickents_amount")
+    private Integer tickentsAmount;
+    @Column(name = "stationid_start")
+    private Integer stationidStart;
+    @Column(name = "stationid_end")
+    private Integer stationidEnd;
+
+    public Tickets() {
     }
 
-    public void setId(int id) {
+    public Tickets(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "day", nullable = true)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getTrainId() {
+        return trainId;
+    }
+
+    public void setTrainId(Integer trainId) {
+        this.trainId = trainId;
+    }
+
+    public Integer getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(Integer routeId) {
+        this.routeId = routeId;
+    }
+
     public Date getDay() {
         return day;
     }
@@ -36,8 +87,6 @@ public class Tickets {
         this.day = day;
     }
 
-    @Basic
-    @Column(name = "tickents_amount", nullable = true)
     public Integer getTickentsAmount() {
         return tickentsAmount;
     }
@@ -46,66 +95,45 @@ public class Tickets {
         this.tickentsAmount = tickentsAmount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Integer getStationidStart() {
+        return stationidStart;
+    }
 
-        Tickets tickets = (Tickets) o;
+    public void setStationidStart(Integer stationidStart) {
+        this.stationidStart = stationidStart;
+    }
 
-        if (id != tickets.id) return false;
-        if (day != null ? !day.equals(tickets.day) : tickets.day != null) return false;
-        if (tickentsAmount != null ? !tickentsAmount.equals(tickets.tickentsAmount) : tickets.tickentsAmount != null)
-            return false;
+    public Integer getStationidEnd() {
+        return stationidEnd;
+    }
 
-        return true;
+    public void setStationidEnd(Integer stationidEnd) {
+        this.stationidEnd = stationidEnd;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (day != null ? day.hashCode() : 0);
-        result = 31 * result + (tickentsAmount != null ? tickentsAmount.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "train_id", referencedColumnName = "id")
-    public Trains getTrainsByTrainId() {
-        return trainsByTrainId;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Tickets)) {
+            return false;
+        }
+        Tickets other = (Tickets) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setTrainsByTrainId(Trains trainsByTrainId) {
-        this.trainsByTrainId = trainsByTrainId;
+    @Override
+    public String toString() {
+        return "com.scatler.rrweb.Tickets[ id=" + id + " ]";
     }
-
-    @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "id")
-    public Routes getRoutesByRouteId() {
-        return routesByRouteId;
-    }
-
-    public void setRoutesByRouteId(Routes routesByRouteId) {
-        this.routesByRouteId = routesByRouteId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "stationid_start", referencedColumnName = "id")
-    public Stations getStationsByStationidStart() {
-        return stationsByStationidStart;
-    }
-
-    public void setStationsByStationidStart(Stations stationsByStationidStart) {
-        this.stationsByStationidStart = stationsByStationidStart;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "stationid_end", referencedColumnName = "id")
-    public Stations getStationsByStationidEnd() {
-        return stationsByStationidEnd;
-    }
-
-    public void setStationsByStationidEnd(Stations stationsByStationidEnd) {
-        this.stationsByStationidEnd = stationsByStationidEnd;
-    }
+    
 }

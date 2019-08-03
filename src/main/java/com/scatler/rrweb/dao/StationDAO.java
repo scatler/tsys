@@ -1,7 +1,9 @@
 package com.scatler.rrweb.dao;
 
-import com.scatler.rrweb.entity.StationSchedule;
+
 import com.scatler.rrweb.entity.Stations;
+import com.scatler.rrweb.entity.Stationschedule;
+import com.scatler.rrweb.entity.objects.StationTimeTable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,15 @@ public class StationDAO {
     private SessionFactory sessionFactory;
 
 
-    public List<StationSchedule> getStationSchedule(int id, Date day) {
+    public List<StationTimeTable> getStationSchedule(int id, Date day) {
 
         Session session = sessionFactory.getCurrentSession();
 
-        List stations =  session.createQuery("select t from Trains t inner join t.trainsConfigs").list();
+        //TODO how to replace full name of class
+        List<StationTimeTable> stt = session.createQuery("select new com.scatler.rrweb.entity.objects.StationTimeTable(t.id,rl.arrivalTime) from Trains t inner join t.trainsConfigList tcfg inner join tcfg.trainsDaysConfigList trdays inner join tcfg.routesConfigList rcfg inner join rcfg.routesList rl inner join rl.stations").getResultList();
 
-        System.out.println(stations);
+        System.out.println(stt);
         System.out.println("done");
-        return null;
+        return stt;
     }
 }

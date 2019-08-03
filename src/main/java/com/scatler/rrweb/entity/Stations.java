@@ -1,31 +1,62 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.scatler.rrweb.entity;
 
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
- * Created by alexkpc on 01.08.2019.
+ *
+ * @author alexkpc
  */
 @Entity
-public class Stations {
-    private int id;
-    private String name;
-    private Integer stationId;
+@Table(name = "stations")
+@NamedQueries({
+    @NamedQuery(name = "Stations.findAll", query = "SELECT s FROM Stations s")})
+public class Stations implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 45)
+    @Column(name = "name")
+    private String name;
+    @JoinColumn(name = "station_id", referencedColumnName = "station_id")
+    @OneToOne(optional = false)
+    private Routes stationId;
+
+    public Stations() {
     }
 
-    public void setId(int id) {
+    public Stations(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 45)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -34,38 +65,37 @@ public class Stations {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "station_id", nullable = true)
-    public Integer getStationId() {
+    public Routes getStationId() {
         return stationId;
     }
 
-    public void setStationId(Integer stationId) {
+    public void setStationId(Routes stationId) {
         this.stationId = stationId;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
 
-        Stations stations = (Stations) o;
-
-        if (id != stations.id) return false;
-        if (name != null ? !name.equals(stations.name) : stations.name != null) return false;
-        if (stationId != null ? !stationId.equals(stations.stationId) : stations.stationId != null) return false;
-
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Stations)) {
+            return false;
+        }
+        Stations other = (Stations) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (stationId != null ? stationId.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "com.scatler.rrweb.Stations[ id=" + id + " ]";
     }
-
-
-
+    
 }

@@ -1,42 +1,64 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.scatler.rrweb.entity;
 
-import javax.persistence.*;
-
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
-
-import static javax.persistence.CascadeType.ALL;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
- * Created by alexkpc on 01.08.2019.
+ * @author alexkpc
  */
 @Entity
-public class Trains {
-    private int id;
-    private Integer locoId;
-    private String name;
-    private Integer seats;
-    private Integer trainId;
+@Table(name = "trains")
 
-    public void setTrainsConfigs(List<TrainsConfig> trainsConfigs) {
-        this.trainsConfigs = trainsConfigs;
-    }
+public class Trains implements Serializable {
 
-    List<TrainsConfig> trainsConfigs = new ArrayList<>();
-
-
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "loco_id")
+    private Integer locoId;
+    @Size(max = 45)
+    @Column(name = "name")
+    private String name;
+    @Column(name = "seats")
+    private Integer seats;
+    @Column(name = "train_id")
+    private Integer trainId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainId")
+    private List<TrainsConfig> trainsConfigList;
+
+    public Trains() {
     }
 
-    public void setId(int id) {
+    public Trains(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "loco_id", nullable = true)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getLocoId() {
         return locoId;
     }
@@ -45,8 +67,6 @@ public class Trains {
         this.locoId = locoId;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 45)
     public String getName() {
         return name;
     }
@@ -55,8 +75,6 @@ public class Trains {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "seats", nullable = true)
     public Integer getSeats() {
         return seats;
     }
@@ -65,7 +83,6 @@ public class Trains {
         this.seats = seats;
     }
 
-    @Column(name = "train_id", nullable = false)
     public Integer getTrainId() {
         return trainId;
     }
@@ -74,10 +91,37 @@ public class Trains {
         this.trainId = trainId;
     }
 
-    //-----------------------------------------
-
-    @OneToMany(mappedBy="train",cascade=CascadeType.ALL)
-    public List<TrainsConfig> getTrainsConfigs () {
-            return trainsConfigs;
+    public List<TrainsConfig> getTrainsConfigList() {
+        return trainsConfigList;
     }
+
+    public void setTrainsConfigList(List<TrainsConfig> trainsConfigList) {
+        this.trainsConfigList = trainsConfigList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Trains)) {
+            return false;
+        }
+        Trains other = (Trains) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.scatler.rrweb.Trains[ id=" + id + " ]";
+    }
+
 }
