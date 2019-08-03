@@ -31,14 +31,22 @@ public class Stations implements Serializable {
     @Column(name = "name")
     private String name;
 
-    //**
-    @JoinColumn(name = "station_id", referencedColumnName = "station_id")
-    @ManyToOne
-    private Routes route;
+    public List<Routes> getRoutes() {
+        return routes;
+    }
 
-    //inverse
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "station")
-    private List<Routes> routesList;
+    public void setRoutes(List<Routes> routes) {
+        this.routes = routes;
+    }
+
+    //**
+    @JoinTable(name = "stations_routes",
+            joinColumns = @JoinColumn(name = "route_id"),
+            inverseJoinColumns = @JoinColumn(name = "station_id")
+    )
+    @ManyToMany
+    private List<Routes> routes;
+
 
 
     public Stations() {
@@ -48,21 +56,8 @@ public class Stations implements Serializable {
         this.id = id;
     }
 
-        public Routes getRoute () {
-        return route;
-    }
 
-        public void setRoute (Routes route){
-        this.route = route;
-    }
 
-        public List<Routes> getRoutesList () {
-        return routesList;
-    }
-
-        public void setRoutesList (List < Routes > routesList) {
-        this.routesList = routesList;
-    }
 
         public Integer getId () {
         return id;

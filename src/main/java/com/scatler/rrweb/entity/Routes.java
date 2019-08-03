@@ -46,14 +46,19 @@ public class Routes implements Serializable {
     @ManyToOne(optional = false)
     private RoutesConfig routeId;
 
+    public List<Stations> getStations() {
+        return stations;
+    }
+
+    public void setStations(List<Stations> stations) {
+        this.stations = stations;
+    }
+
     //**
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "route")
+    @ManyToMany(mappedBy = "routes")
     private List<Stations> stations;
 
-    //inverse
-    @JoinColumn(name = "station_id", referencedColumnName = "station_id")
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Stations station;
+
 
     public Routes() {
     }
