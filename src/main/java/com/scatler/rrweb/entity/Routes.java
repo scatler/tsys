@@ -38,6 +38,7 @@ public class Routes implements Serializable {
     private Integer stopMin;
     @Basic(optional = false)
     @NotNull
+
     @Column(name = "station_id")
     private int stationId;
 
@@ -45,8 +46,14 @@ public class Routes implements Serializable {
     @ManyToOne(optional = false)
     private RoutesConfig routeId;
 
+    //**
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "route")
     private List<Stations> stations;
+
+    //inverse
+    @JoinColumn(name = "station_id", referencedColumnName = "station_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Stations station;
 
     public Routes() {
     }

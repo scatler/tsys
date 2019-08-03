@@ -6,6 +6,7 @@
 package com.scatler.rrweb.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -30,18 +31,15 @@ public class Stations implements Serializable {
     @Column(name = "name")
     private String name;
 
-
-    public Routes getRoute() {
-        return route;
-    }
-
-    public void setRoute(Routes route) {
-        this.route = route;
-    }
-
+    //**
     @JoinColumn(name = "station_id", referencedColumnName = "station_id")
     @ManyToOne
     private Routes route;
+
+    //inverse
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "station")
+    private List<Routes> routesList;
+
 
     public Stations() {
     }
@@ -50,33 +48,48 @@ public class Stations implements Serializable {
         this.id = id;
     }
 
-    public Integer getId() {
+        public Routes getRoute () {
+        return route;
+    }
+
+        public void setRoute (Routes route){
+        this.route = route;
+    }
+
+        public List<Routes> getRoutesList () {
+        return routesList;
+    }
+
+        public void setRoutesList (List < Routes > routesList) {
+        this.routesList = routesList;
+    }
+
+        public Integer getId () {
         return id;
     }
 
-    public void setId(Integer id) {
+        public void setId (Integer id){
         this.id = id;
     }
 
-    public String getName() {
+        public String getName () {
         return name;
     }
 
-    public void setName(String name) {
+        public void setName (String name){
         this.name = name;
     }
 
 
-
-    @Override
-    public int hashCode() {
+        @Override
+        public int hashCode () {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
+        @Override
+        public boolean equals (Object object){
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Stations)) {
             return false;
@@ -88,9 +101,11 @@ public class Stations implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
+        @Override
+        public String toString () {
         return "com.scatler.rrweb.Stations[ id=" + id + " ]";
     }
+
+    }
     
-}
+

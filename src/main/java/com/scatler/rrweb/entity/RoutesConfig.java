@@ -38,9 +38,12 @@ public class RoutesConfig implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "route_id")
+
     private int routeId;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
     private List<Routes> routesList;
+
     @JoinColumn(name = "r_cgf_type", referencedColumnName = "r_cfg_type")
     @ManyToOne(optional = false)
     private TrainsConfig rCgfType;
