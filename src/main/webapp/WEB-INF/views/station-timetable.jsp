@@ -6,24 +6,15 @@
     <jsp:attribute name="header">
       <h1>Welcome</h1>
     </jsp:attribute>
+    <jsp:attribute name="inner_title">
+      <h1>Station TimeTable</h1>
+    </jsp:attribute>
     <jsp:attribute name="footer">
-      <p id="copyright">Copyright 1927, Future Bits When There Be Bits Inc.</p>
+      <p id="copyright">Contacts</p>
     </jsp:attribute>
     <jsp:body>
-        <t:dropdown listCategory="${stations}">
-            Menu
-        </t:dropdown>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>Train#</th>
-                <th>Time</th>
-             </tr>
-            <c:forEach var="tt" items="${timetable}">
-                  <tr>
-                    <td>${tt.trainId}</td>
-                    <td>${tt.arrivalTime}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </jsp:body>
+        <t:dropdown listCategory="${stations}"/>
+        <t:datepicker/>
+        <t:traintable timetable="${timetable}"/>
+       </jsp:body>
 </t:genericpage>

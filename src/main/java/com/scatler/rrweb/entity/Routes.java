@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 public class Routes implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -36,29 +37,14 @@ public class Routes implements Serializable {
 
     @Column(name = "stop_min")
     private Integer stopMin;
-    @Basic(optional = false)
-    @NotNull
-
-    @Column(name = "station_id")
-    private int stationId;
 
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     @ManyToOne(optional = false)
     private RoutesConfig routeId;
 
-    public List<Stations> getStations() {
-        return stations;
-    }
-
-    public void setStations(List<Stations> stations) {
-        this.stations = stations;
-    }
-
     //**
     @ManyToMany(mappedBy = "routes")
     private List<Stations> stations;
-
-
 
     public Routes() {
     }
@@ -67,9 +53,19 @@ public class Routes implements Serializable {
         this.id = id;
     }
 
+
+
     public Routes(Integer id, int stationId) {
         this.id = id;
-        this.stationId = stationId;
+
+    }
+
+    public List<Stations> getStations() {
+        return stations;
+    }
+
+    public void setStations(List<Stations> stations) {
+        this.stations = stations;
     }
 
     public Integer getId() {
@@ -96,13 +92,15 @@ public class Routes implements Serializable {
         this.stopMin = stopMin;
     }
 
-    public int getStationId() {
+/*    public int getStationId() {
         return stationId;
-    }
+    }*/
 
+/*
     public void setStationId(int stationId) {
         this.stationId = stationId;
     }
+*/
 
     public RoutesConfig getRouteId() {
         return routeId;

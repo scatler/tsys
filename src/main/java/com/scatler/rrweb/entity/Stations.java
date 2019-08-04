@@ -22,14 +22,31 @@ import javax.validation.constraints.Size;
 public class Stations implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+    //**
+    @JoinTable(name = "routes",
+            joinColumns = @JoinColumn(name = "station_id"),
+            inverseJoinColumns = @JoinColumn(name = "route_id")
+    )
+    @ManyToMany
+    private List<Routes> routes;
+
+    public Stations() {
+    }
+
+
+    public Stations(Integer id) {
+        this.id = id;
+    }
 
     public List<Routes> getRoutes() {
         return routes;
@@ -38,26 +55,6 @@ public class Stations implements Serializable {
     public void setRoutes(List<Routes> routes) {
         this.routes = routes;
     }
-
-    //**
-    @JoinTable(name = "stations_routes",
-            joinColumns = @JoinColumn(name = "route_id"),
-            inverseJoinColumns = @JoinColumn(name = "station_id")
-    )
-    @ManyToMany
-    private List<Routes> routes;
-
-
-
-    public Stations() {
-    }
-
-    public Stations(Integer id) {
-        this.id = id;
-    }
-
-
-
 
         public Integer getId () {
         return id;
