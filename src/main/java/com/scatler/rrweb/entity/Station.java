@@ -31,10 +31,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Station.findAll", query = "SELECT s FROM Station s")})
 public class Station implements Serializable {
 
-    @JoinColumn(name = "line_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Line lineId;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -44,8 +40,13 @@ public class Station implements Serializable {
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+    @Column(name = "timezone")
+    private Integer timezone;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stationId")
     private List<RouteStation> routeStationList;
+    @JoinColumn(name = "line_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Line lineId;
 
     public Station() {
     }
@@ -70,12 +71,28 @@ public class Station implements Serializable {
         this.name = name;
     }
 
+    public Integer getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(Integer timezone) {
+        this.timezone = timezone;
+    }
+
     public List<RouteStation> getRouteStationList() {
         return routeStationList;
     }
 
     public void setRouteStationList(List<RouteStation> routeStationList) {
         this.routeStationList = routeStationList;
+    }
+
+    public Line getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(Line lineId) {
+        this.lineId = lineId;
     }
 
     @Override
@@ -101,14 +118,6 @@ public class Station implements Serializable {
     @Override
     public String toString() {
         return "com.scatler.rrweb.entity.Station[ id=" + id + " ]";
-    }
-
-    public Line getLineId() {
-        return lineId;
-    }
-
-    public void setLineId(Line lineId) {
-        this.lineId = lineId;
     }
     
 }

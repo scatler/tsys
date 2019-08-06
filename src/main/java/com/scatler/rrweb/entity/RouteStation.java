@@ -7,9 +7,7 @@ package com.scatler.rrweb.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,12 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -38,38 +34,35 @@ public class RouteStation implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Column(name = "arrival_time")
     @Temporal(TemporalType.TIME)
     private Date arrivalTime;
     @Column(name = "stop_min")
     @Temporal(TemporalType.TIME)
     private Date stopMin;
+    @Column(name = "day")
+    private Integer day;
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Route routeId;
     @JoinColumn(name = "station_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Station stationId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeStationId")
-    private List<TrainRouteStation> trainRouteStationList;
-    @Column(name = "day")
-    private Integer day;
 
     public RouteStation() {
     }
 
-    public RouteStation(String id) {
+    public RouteStation(Integer id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -89,6 +82,14 @@ public class RouteStation implements Serializable {
         this.stopMin = stopMin;
     }
 
+    public Integer getDay() {
+        return day;
+    }
+
+    public void setDay(Integer day) {
+        this.day = day;
+    }
+
     public Route getRouteId() {
         return routeId;
     }
@@ -103,14 +104,6 @@ public class RouteStation implements Serializable {
 
     public void setStationId(Station stationId) {
         this.stationId = stationId;
-    }
-
-    public List<TrainRouteStation> getTrainRouteStationList() {
-        return trainRouteStationList;
-    }
-
-    public void setTrainRouteStationList(List<TrainRouteStation> trainRouteStationList) {
-        this.trainRouteStationList = trainRouteStationList;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class StationDAO {
         Session session = sessionFactory.getCurrentSession();
 
         //TODO how to replace full name of class
-        String hql = "select new com.scatler.rrweb.entity.objects.searchresult.StationTimeTable(t.id,rs.arrivalTime) from Train t inner join t.trainRouteStationList trs inner join trs.routeStationId rs inner join rs.stationId sid inner join rs.routeId where sid = ?";
+        String hql = "select new com.scatler.rrweb.entity.objects.searchresult.StationTimeTable(t.id,rs.arrivalTime) from Train t inner join t.trainRouteidDayList trs inner join trs.routeId rs inner join rs.stationId sid inner join rs.routeId where sid = ?";
         List<StationTimeTable> stations = session.createQuery(hql).setString(0,String.valueOf(station_id)).getResultList();
         return stations;
     }

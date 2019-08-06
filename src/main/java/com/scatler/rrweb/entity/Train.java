@@ -41,7 +41,7 @@ public class Train implements Serializable {
     @Column(name = "seats")
     private Integer seats;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainId")
-    private List<TrainRouteStation> trainRouteStationList;
+    private List<TrainRouteidDay> trainRouteidDayList;
 
     public Train() {
     }
@@ -74,12 +74,12 @@ public class Train implements Serializable {
         this.seats = seats;
     }
 
-    public List<TrainRouteStation> getTrainRouteStationList() {
-        return trainRouteStationList;
+    public List<TrainRouteidDay> getTrainRouteidDayList() {
+        return trainRouteidDayList;
     }
 
-    public void setTrainRouteStationList(List<TrainRouteStation> trainRouteStationList) {
-        this.trainRouteStationList = trainRouteStationList;
+    public void setTrainRouteidDayList(List<TrainRouteidDay> trainRouteidDayList) {
+        this.trainRouteidDayList = trainRouteidDayList;
     }
 
     @Override

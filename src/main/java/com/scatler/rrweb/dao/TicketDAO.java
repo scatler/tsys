@@ -1,5 +1,6 @@
 package com.scatler.rrweb.dao;
 
+import com.scatler.rrweb.entity.Train;
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
 import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
 import org.hibernate.Session;
@@ -16,20 +17,21 @@ public class TicketDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public List<AvailableTrain> getAvailableTrains(int station_id1, int station_id2, Date day) {
+    public List<Train> getAvailableTrains(int station_id1, int station_id2, Date day) {
 
         Session session = sessionFactory.getCurrentSession();
 
 
-       String hql = "select t from Train t " +
-                "inner join t.trainRouteStationList trs " +
-                "inner join trs.routeStationId rs " +
-                "inner join rs.stationId sid " +
-                "inner join rs.routeId r where sid.id = 1001 and trs.id in (select trs2.id from TrainRouteStation trs2 inner join trs2.routeStationId rs2 inner join rs2.stationId st2 where st2.id = 1013 and rs.id > rs2.id)";
+        String hql = "select t from Train t " +
+                "inner join t.trainRouteidDayList trd " +
+                "inner join trd.routeId rs1 " +
+                "inner join rs1.stationId sid " +
+                "inner join rs1.routeId rid where rs1.stationId = '1001' and rs1.routeId in " +
+                "(select rs2.routeId from RouteStation rs2 where rs2.stationId = '1001') and rs1.id < " +
+                "(select rs3.id from RouteStation rs3 where rs3.stationId = '1013' and rs3.routeId = rs1.routeId)" +
+                " and date(trd.dayDept + rs1.day) = '2019-08-05'";
 
-/*        String hql = "select trs2.id from TrainRouteStation trs2 inner join trs2.routeStationId rsid2 inner join rsid2.stationId st2 where st2.id = 1013";*/
-        List<AvailableTrain> availableTrains = session.createQuery(hql).getResultList();
-        System.out.println(availableTrains);
-        return null;
+
+        return session.createQuery(hql).getResultList();
     }
 }

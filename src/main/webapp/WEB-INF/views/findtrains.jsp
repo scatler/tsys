@@ -10,14 +10,14 @@
     <jsp:attribute name="footer"/>
 
     <jsp:body>
-        <t:ajax/>
+    <t:ajax/>
         <form  class="form-inline" name="getTimeTableForm" action="<c:url value="/station/getTimeTable"/>" method="post">
             <div class="form-group"><t:dropdown listCategory="${stations}" title="From"/></div>
             <div class="form-group"><t:dropdown listCategory="${stations}" title="To"/></div>
             <div class="form-group"><t:datepicker/></div>
             <div class="form-group"><t:btnsubmit/></div>
         </form>
-        <t:ajaxresp/>
+    <t:ajaxresp/>
 
     </jsp:body>
 </t:genericpage>
