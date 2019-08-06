@@ -6,7 +6,12 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40155188-230c-4578-94ba-444e3c6f5fa3" name="Default" comment="Station timetable ready. Continue work on findtrains" />
+    <list default="true" id="40155188-230c-4578-94ba-444e3c6f5fa3" name="Default" comment="Station timetable ready. Continue work on findtrains">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_8_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_8_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,8 +61,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/controller/StationController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="37" column="30" selection-start-line="28" selection-start-column="2" selection-end-line="29" selection-end-column="42" />
+                <state>
+                  <caret column="37" lean-forward="true" selection-start-column="37" selection-end-column="37" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -68,7 +73,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/service/StationService.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
+                <state relative-caret-position="289">
                   <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="8" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -101,13 +106,22 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/dao/TicketDAO.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="251">
-                  <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+                <state relative-caret-position="713">
+                  <caret line="34" column="1" lean-forward="true" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#0#312#1" expanded="true" />
                     <element signature="e#0#332#1" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/pom.xml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="499">
+                  <caret line="83" column="36" lean-forward="true" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
                 </state>
               </provider>
             </entry>
@@ -227,7 +241,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/scatler/rrweb/entity/Train.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/scatler/rrweb/service/StationService.java" />
         <option value="$PROJECT_DIR$/src/main/resources/database.properties" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/scatler/rrweb/entity/objects/TestAjaxObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/scatler/rrweb/entity/objects/TimeTableSelector.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/gettimetable.jsp" />
@@ -249,6 +262,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/scatler/rrweb/controller/TicketController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/scatler/rrweb/service/TicketService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/scatler/rrweb/dao/TicketDAO.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -310,149 +324,6 @@
               <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
               <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
               <item name="HibernateRRD" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="objects" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="objects" type="462c0819:PsiDirectoryNode" />
-              <item name="searchresult" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="objects" type="462c0819:PsiDirectoryNode" />
-              <item name="selectors" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rrweb" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="tags" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
-              <item name="031_RRweb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RRD" type="b2602c69:ProjectViewProjectNode" />
@@ -735,7 +606,7 @@
       <workItem from="1564850351056" duration="47212000" />
       <workItem from="1564945060198" duration="5008000" />
       <workItem from="1564982237998" duration="35832000" />
-      <workItem from="1565068660002" duration="3174000" />
+      <workItem from="1565068660002" duration="4196000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1564383296558</created>
@@ -821,11 +692,18 @@
       <option name="project" value="LOCAL" />
       <updated>1565078535530</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="remove jackson">
+      <created>1565080636834</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1565080636834</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197213000" />
+    <option name="totallyTimeSpent" value="198235000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1456" extended-state="0" />
@@ -836,7 +714,7 @@
       <window_info id="Structure" order="2" sideWeight="0.22998872" side_tool="true" weight="0.1546105" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.6048309" visible="true" weight="0.17170112" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.6048309" visible="true" weight="0.17170112" />
       <window_info id="Web" order="6" sideWeight="0.22998872" side_tool="true" weight="0.1546105" />
       <window_info id="Favorites" order="7" sideWeight="0.22978081" side_tool="true" weight="0.1546105" />
       <window_info id="Capture Tool" order="8" />
@@ -846,7 +724,7 @@
       <window_info anchor="bottom" id="Database Changes" order="2" />
       <window_info anchor="bottom" id="Messages" order="3" sideWeight="0.49682036" weight="0.32879817" />
       <window_info anchor="bottom" id="Find" order="4" weight="0.32955405" />
-      <window_info active="true" anchor="bottom" id="Debug" order="5" visible="true" weight="0.30839002" />
+      <window_info anchor="bottom" id="Debug" order="5" visible="true" weight="0.30839002" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Java Enterprise" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32969603" />
@@ -883,7 +761,8 @@
     <MESSAGE value="inverse try" />
     <MESSAGE value="working many2many, but need to enter data for 3rd table" />
     <MESSAGE value="Station timetable ready. Continue work on findtrains" />
-    <option name="LAST_COMMIT_MESSAGE" value="Station timetable ready. Continue work on findtrains" />
+    <MESSAGE value="remove jackson" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove jackson" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1030,13 +909,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RRD.iml">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="67" column="54" lean-forward="true" selection-start-line="67" selection-start-column="54" selection-end-line="67" selection-end-column="54" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/stations.jsp">
       <provider selected="true" editor-type-id="text-editor">
@@ -1274,47 +1146,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/service/StationService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/controller/StationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="37" column="30" selection-start-line="28" selection-start-column="2" selection-end-line="29" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.1.0.RELEASE/spring-web-5.1.0.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3179">
           <caret line="221" column="13" selection-start-line="221" selection-start-column="13" selection-end-line="221" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/service/TicketService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" column="54" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/station-timetable.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -1328,10 +1163,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="499">
+          <caret line="83" column="36" lean-forward="true" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/station-timetable.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/service/TicketService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="54" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/service/StationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/controller/StationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="37" lean-forward="true" selection-start-column="37" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/scatler/rrweb/dao/TicketDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+        <state relative-caret-position="713">
+          <caret line="34" column="1" lean-forward="true" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#0#312#1" expanded="true" />
