@@ -1,20 +1,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="menu.jsp" flush="true"/>
 <t:genericpage>
-    <jsp:attribute name="header">
-      <h1>Welcome</h1>
-    </jsp:attribute>
+    <jsp:attribute name="header"/>
+
     <jsp:attribute name="inner_title">
       <h1>Station TimeTable</h1>
     </jsp:attribute>
-    <jsp:attribute name="footer">
-      <p id="copyright">Contacts</p>
-    </jsp:attribute>
+    <jsp:attribute name="footer"/>
+
     <jsp:body>
-        <t:dropdown listCategory="${stations}"/>
-        <t:datepicker/>
-        <t:traintable timetable="${timetable}"/>
-       </jsp:body>
+        <t:ajax/>
+        <form  class="form-inline" name="getTimeTableForm" action="<c:url value="/station/getTimeTable"/>" method="post">
+            <div class="form-group"><t:dropdown listCategory="${stations}" title="Select station:"/></div>
+            <div class="form-group"><t:datepicker/></div>
+            <div class="form-group"><t:btnsubmit/></div>
+        </form>
+        <t:ajaxresp/>
+
+    </jsp:body>
 </t:genericpage>

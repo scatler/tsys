@@ -1,15 +1,14 @@
 package com.scatler.rrweb.dao;
 
 
-import com.scatler.rrweb.entity.Stations;
-import com.scatler.rrweb.entity.Stationschedule;
-import com.scatler.rrweb.entity.objects.StationTimeTable;
+import com.scatler.rrweb.entity.Station;
+
+import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.List;
 
@@ -23,23 +22,19 @@ public class StationDAO {
     private SessionFactory sessionFactory;
 
 
-    public List<StationTimeTable> getStationSchedule(int id, Date day) {
+    public List<StationTimeTable> getStationSchedule(int station_id, Date day) {
 
         Session session = sessionFactory.getCurrentSession();
 
         //TODO how to replace full name of class
-        String hql = "select new com.scatler.rrweb.entity.objects.StationTimeTable(t.id,rl.arrivalTime) from Trains t inner join t.trainsConfigList tcfg inner join tcfg.trainsDaysConfigList trdays inner join tcfg.routesConfigList rcfg inner join rcfg.routesList rl inner join rl.stations stns";
-        List<StationTimeTable> stt = session.createQuery(hql).getResultList();
-        System.out.println(stt.size());
-        System.out.println("done");
-        return stt;
+        String hql = "select new com.scatler.rrweb.entity.objects.searchresult.StationTimeTable(t.id,rs.arrivalTime) from Train t inner join t.trainRouteStationList trs inner join trs.routeStationId rs inner join rs.stationId sid inner join rs.routeId where sid = ?";
+        List<StationTimeTable> stations = session.createQuery(hql).setString(0,String.valueOf(station_id)).getResultList();
+        return stations;
     }
 
-    public List<Stations> getAllStations() {
+    public List<Station> getAllStations() {
         Session session = sessionFactory.getCurrentSession();
-        List <Stations> stationsList = session.createQuery("select s from Stations s").getResultList();
-        System.out.println("Selecting stations");
-        System.out.println(stationsList.size());
+        List <Station> stationsList = session.createQuery("select s from Station s").getResultList();
         return stationsList;
     }
 }
