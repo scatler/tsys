@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +31,11 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Station.findAll", query = "SELECT s FROM Station s")})
 public class Station implements Serializable {
+
+    @OneToMany(mappedBy = "station1Id")
+    private List<Ticket> ticketList;
+    @OneToMany(mappedBy = "station2Id")
+    private List<Ticket> ticketList1;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -118,6 +124,24 @@ public class Station implements Serializable {
     @Override
     public String toString() {
         return "com.scatler.rrweb.entity.Station[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
+    }
+
+    @XmlTransient
+    public List<Ticket> getTicketList1() {
+        return ticketList1;
+    }
+
+    public void setTicketList1(List<Ticket> ticketList1) {
+        this.ticketList1 = ticketList1;
     }
     
 }

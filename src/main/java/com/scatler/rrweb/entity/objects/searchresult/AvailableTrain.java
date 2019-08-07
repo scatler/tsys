@@ -10,6 +10,7 @@ public class AvailableTrain {
 
     private RouteStation rs;
     private Train t;
+    private int free_tickets;
 
 
 }
