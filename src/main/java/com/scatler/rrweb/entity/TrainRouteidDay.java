@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -31,25 +31,26 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "train_routeid_day")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TrainRouteidDay.findAll", query = "SELECT t FROM TrainRouteidDay t")})
+    @NamedQuery(name = "TrainRouteidDay.findAll", query = "SELECT t FROM TrainRouteidDay t"),
+    @NamedQuery(name = "TrainRouteidDay.findById", query = "SELECT t FROM TrainRouteidDay t WHERE t.id = :id"),
+    @NamedQuery(name = "TrainRouteidDay.findByDayDept", query = "SELECT t FROM TrainRouteidDay t WHERE t.dayDept = :dayDept")})
 public class TrainRouteidDay implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trd")
-    private List<Ticket> ticketList;
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "day_dept")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dayDept;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trd")
+    private List<Ticket> ticketList;
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     @ManyToOne(optional = false)
     private RouteStation routeId;
@@ -60,20 +61,20 @@ public class TrainRouteidDay implements Serializable {
     public TrainRouteidDay() {
     }
 
-    public TrainRouteidDay(String id) {
+    public TrainRouteidDay(Integer id) {
         this.id = id;
     }
 
-    public TrainRouteidDay(String id, Date dayDept) {
+    public TrainRouteidDay(Integer id, Date dayDept) {
         this.id = id;
         this.dayDept = dayDept;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -83,6 +84,15 @@ public class TrainRouteidDay implements Serializable {
 
     public void setDayDept(Date dayDept) {
         this.dayDept = dayDept;
+    }
+
+    @XmlTransient
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 
     public RouteStation getRouteId() {
@@ -124,15 +134,6 @@ public class TrainRouteidDay implements Serializable {
     @Override
     public String toString() {
         return "com.scatler.rrweb.entity.TrainRouteidDay[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<Ticket> getTicketList() {
-        return ticketList;
-    }
-
-    public void setTicketList(List<Ticket> ticketList) {
-        this.ticketList = ticketList;
     }
     
 }

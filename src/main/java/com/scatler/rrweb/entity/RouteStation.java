@@ -7,7 +7,9 @@ package com.scatler.rrweb.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,10 +17,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,8 +31,13 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "route_station")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "RouteStation.findAll", query = "SELECT r FROM RouteStation r")})
+    @NamedQuery(name = "RouteStation.findAll", query = "SELECT r FROM RouteStation r"),
+    @NamedQuery(name = "RouteStation.findById", query = "SELECT r FROM RouteStation r WHERE r.id = :id"),
+    @NamedQuery(name = "RouteStation.findByArrivalTime", query = "SELECT r FROM RouteStation r WHERE r.arrivalTime = :arrivalTime"),
+    @NamedQuery(name = "RouteStation.findByStopMin", query = "SELECT r FROM RouteStation r WHERE r.stopMin = :stopMin"),
+    @NamedQuery(name = "RouteStation.findByDay", query = "SELECT r FROM RouteStation r WHERE r.day = :day")})
 public class RouteStation implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,6 +60,8 @@ public class RouteStation implements Serializable {
     @JoinColumn(name = "station_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Station stationId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
+    private List<TrainRouteidDay> trainRouteidDayList;
 
     public RouteStation() {
     }
@@ -104,6 +116,15 @@ public class RouteStation implements Serializable {
 
     public void setStationId(Station stationId) {
         this.stationId = stationId;
+    }
+
+    @XmlTransient
+    public List<TrainRouteidDay> getTrainRouteidDayList() {
+        return trainRouteidDayList;
+    }
+
+    public void setTrainRouteidDayList(List<TrainRouteidDay> trainRouteidDayList) {
+        this.trainRouteidDayList = trainRouteidDayList;
     }
 
     @Override

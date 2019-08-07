@@ -37,13 +37,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ticket.findByBirthday", query = "SELECT t FROM Ticket t WHERE t.birthday = :birthday")})
 public class Ticket implements Serializable {
 
-    @JoinColumn(name = "station1_id", referencedColumnName = "id")
-    @ManyToOne
-    private Station station1Id;
-    @JoinColumn(name = "station2_id", referencedColumnName = "id")
-    @ManyToOne
-    private Station station2Id;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -59,6 +52,12 @@ public class Ticket implements Serializable {
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
     private Date birthday;
+    @JoinColumn(name = "station1_id", referencedColumnName = "id")
+    @ManyToOne
+    private Station station1Id;
+    @JoinColumn(name = "station2_id", referencedColumnName = "id")
+    @ManyToOne
+    private Station station2Id;
     @JoinColumn(name = "trd", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TrainRouteidDay trd;
@@ -102,6 +101,22 @@ public class Ticket implements Serializable {
         this.birthday = birthday;
     }
 
+    public Station getStation1Id() {
+        return station1Id;
+    }
+
+    public void setStation1Id(Station station1Id) {
+        this.station1Id = station1Id;
+    }
+
+    public Station getStation2Id() {
+        return station2Id;
+    }
+
+    public void setStation2Id(Station station2Id) {
+        this.station2Id = station2Id;
+    }
+
     public TrainRouteidDay getTrd() {
         return trd;
     }
@@ -133,22 +148,6 @@ public class Ticket implements Serializable {
     @Override
     public String toString() {
         return "com.scatler.rrweb.entity.Ticket[ id=" + id + " ]";
-    }
-
-    public Station getStation1Id() {
-        return station1Id;
-    }
-
-    public void setStation1Id(Station station1Id) {
-        this.station1Id = station1Id;
-    }
-
-    public Station getStation2Id() {
-        return station2Id;
-    }
-
-    public void setStation2Id(Station station2Id) {
-        this.station2Id = station2Id;
     }
     
 }

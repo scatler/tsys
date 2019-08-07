@@ -70,6 +70,15 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- Lombok Dependency -->
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.8</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<!-- JSP Dependency -->
 		<dependency>

@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,8 +27,11 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "route")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Route.findAll", query = "SELECT r FROM Route r")})
+    @NamedQuery(name = "Route.findAll", query = "SELECT r FROM Route r"),
+    @NamedQuery(name = "Route.findById", query = "SELECT r FROM Route r WHERE r.id = :id"),
+    @NamedQuery(name = "Route.findByName", query = "SELECT r FROM Route r WHERE r.name = :name")})
 public class Route implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,6 +69,7 @@ public class Route implements Serializable {
         this.name = name;
     }
 
+    @XmlTransient
     public List<RouteStation> getRouteStationList() {
         return routeStationList;
     }
