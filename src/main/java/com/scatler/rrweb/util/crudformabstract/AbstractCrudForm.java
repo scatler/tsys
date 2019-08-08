@@ -10,7 +10,7 @@ import java.util.List;
  */
 public abstract class AbstractCrudForm<T extends Serializable> {
 
-    private List<T> data;
+    protected List<T> data;
 
     public AbstractCrudForm(List<T> data) {
         this.data = data;

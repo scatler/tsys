@@ -1,6 +1,7 @@
 package com.scatler.rrweb.dao;
 
 import com.scatler.rrweb.entity.Station;
+import com.scatler.rrweb.entity.TrainRouteidDay;
 import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,5 +33,16 @@ public class StationDAO {
         Session session = sessionFactory.getCurrentSession();
         List <Station> stationsList = session.createQuery("select s from Station s").getResultList();
         return stationsList;
+    }
+
+    public Station getStation(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Station.class,id);
+    }
+
+    public TrainRouteidDay getTRD(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Object obj = session.get(TrainRouteidDay.class,id);
+        return (TrainRouteidDay) obj;
     }
 }

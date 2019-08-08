@@ -52,12 +52,10 @@ public class TicketDAO {
         return obj;
     }
 
-    private void saveBuy (Ticket ticket) {
+
+    public void saveTicket(Ticket ticket) {
 
         Session session = sessionFactory.getCurrentSession();
-
         session.saveOrUpdate(ticket);
-
     }
-
 }

@@ -1,6 +1,7 @@
 package com.scatler.rrweb.service;
 
 import com.scatler.rrweb.dao.TicketDAO;
+import com.scatler.rrweb.entity.Ticket;
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,9 @@ public class TicketService {
     @Transactional
     public List<AvailableTrain> getAvailableTrains(int station_id1, int station_id2, Date day) {
         return ticketDAO.getAvailableTrains(station_id1,station_id2,day);
+    }
+    @Transactional
+    public void saveTicket(Ticket ticket) {
+        ticketDAO.saveTicket (ticket);
     }
 }

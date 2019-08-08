@@ -8,19 +8,7 @@ package com.scatler.rrweb.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -52,12 +40,13 @@ public class Station implements Serializable {
     @Column(name = "timezone")
     @Temporal(TemporalType.TIME)
     private Date timezone;
-    @OneToMany(mappedBy = "station1Id")
+    @OneToMany(mappedBy = "station1Id", fetch=FetchType.LAZY)
     private List<Ticket> ticketList;
-    @OneToMany(mappedBy = "station2Id")
+    @OneToMany(mappedBy = "station2Id", fetch=FetchType.LAZY)
     private List<Ticket> ticketList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stationId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stationId", fetch= FetchType.LAZY)
     private List<RouteStation> routeStationList;
+
     @JoinColumn(name = "line_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Line lineId;

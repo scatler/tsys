@@ -1,5 +1,7 @@
 package com.scatler.rrweb.util.crudformabstract.forms;
 
+import com.scatler.rrweb.entity.Station;
+import com.scatler.rrweb.entity.TrainRouteidDay;
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
 import com.scatler.rrweb.util.crudformabstract.AbstractCrudForm;
 import lombok.Getter;
@@ -12,12 +14,25 @@ import java.util.List;
 public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
 
     private String editLink = "buy";
+    private Integer currentSelection;
 
 
     public AvailableTrainForm(List<AvailableTrain> data) {
         super(data);
     }
 
+
+    public Station getStationFrom () {
+        return data.get(currentSelection).getStation1();
+    }
+
+    public Station getStationTo () {
+        return data.get(currentSelection).getStation2();
+    }
+
+    public Integer getTRD () {
+        return data.get(currentSelection).getTrainRouteDay();
+    }
 
     @Override
     protected String getId(AvailableTrain record) {
@@ -65,12 +80,9 @@ public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
         return editLink;
     }
 
-
-
     public String getUserFriendlyTypeName() {
         return null;
     }
-
 
     public String getJavaFieldNameAt(int column) {
         return "buy";

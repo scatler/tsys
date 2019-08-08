@@ -3,6 +3,7 @@ package com.scatler.rrweb.service;
 import com.scatler.rrweb.dao.StationDAO;
 
 import com.scatler.rrweb.entity.Station;
+import com.scatler.rrweb.entity.TrainRouteidDay;
 import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,15 @@ public class StationService {
     @Transactional
     public List<Station> getAllStations() {
         return stationDAO.getAllStations();
+    }
+
+    @Transactional
+    public Station getStation(int id) {
+        return stationDAO.getStation(id);
+    }
+    @Transactional
+
+    public TrainRouteidDay getTRD (int id ) {return
+    stationDAO.getTRD(id);
     }
 }

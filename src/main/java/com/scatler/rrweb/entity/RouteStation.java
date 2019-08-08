@@ -57,9 +57,11 @@ public class RouteStation implements Serializable {
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Route routeId;
+
     @JoinColumn(name = "station_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Station stationId;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
     private List<TrainRouteidDay> trainRouteidDayList;
 
