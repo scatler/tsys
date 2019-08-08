@@ -2,30 +2,26 @@ package com.scatler.rrweb.util.crudformabstract.forms;
 
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
 import com.scatler.rrweb.util.crudformabstract.AbstractCrudForm;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
 
-    private String editLink = "edit-link";
-    private String createLink = "create-link";
-    private String deleteLink = "delete-link";
+    private String editLink = "buy";
+
 
     public AvailableTrainForm(List<AvailableTrain> data) {
         super(data);
     }
 
-    public String getDeleteLink() {
-        return deleteLink;
-    }
-
-    public void setDeleteLink(String deleteLink) {
-        this.deleteLink = deleteLink;
-    }
 
     @Override
     protected String getId(AvailableTrain record) {
-        return null;
+        return String.valueOf(record.getTrainRouteDay());
     }
 
     @Override
@@ -69,26 +65,22 @@ public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
         return editLink;
     }
 
-    public void setEditLink(String editLink) {
-        this.editLink = editLink;
-    }
 
-    public String getCreateLink() {
-        return createLink;
-    }
-
-    public void setCreateLink(String createLink) {
-        this.createLink = createLink;
-    }
 
     public String getUserFriendlyTypeName() {
         return null;
     }
 
-    public String getGetJavaFieldNameAt(Object o) {
 
-        return "testJavaFieldNameAt";
+    public String getJavaFieldNameAt(int column) {
+        return "buy";
     }
 
+    public String getStationFrom(int row) {
+        return getDataAt(row,4);
+    }
 
+    public String getStationTo(int row) {
+        return getDataAt(row,9);
+    }
 }

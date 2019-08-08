@@ -14,7 +14,7 @@
         <form  class="form-inline" name="form" action="<c:url value="/station/getTimeTable"/>" method="post">
             <div class="form-group"><t:dropdown listCategory="${stations}" title="Select station:"/></div>
             <div class="form-group"><t:datepicker/></div>
-            <div class="form-group"><t:btnsubmit/></div>
+            <div class="form-group"><t:btnsearch/></div>
         </form>
         <t:ajaxresp/>
 

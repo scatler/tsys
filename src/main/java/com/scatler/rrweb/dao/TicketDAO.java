@@ -1,5 +1,6 @@
 package com.scatler.rrweb.dao;
 
+import com.scatler.rrweb.entity.Ticket;
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +32,7 @@ public class TicketDAO {
                     "(select rs4.arrivalTime  from RouteStation rs4 where stationId = '1013' and routeId = rs1.routeId )," +
                     // day when train arrive to 2nd station
                     "(select rs4.day  from RouteStation rs4 where stationId = '1013' and routeId = rs1.routeId )," +
-                    // 2nd station when train arrive to 2nd station
+                    // 2nd station itself
                     "(select st  from Station st where id = 1013 )," +
                     "(select count(*) from Ticket t where t.station1Id = '1001' and t.trd.id = trd.id)" +
 
@@ -49,6 +50,14 @@ public class TicketDAO {
         List obj = session.createQuery(hql).getResultList();
         System.out.println(obj);
         return obj;
+    }
+
+    private void saveBuy (Ticket ticket) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        session.saveOrUpdate(ticket);
+
     }
 
 }
