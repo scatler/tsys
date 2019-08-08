@@ -5,4 +5,4 @@ RRD.iml
 out\
 .idea\
 out\
-out\
+database.properties
