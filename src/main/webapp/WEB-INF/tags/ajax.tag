@@ -1,4 +1,5 @@
 <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--%>
+<%@attribute name="updateLink" required="true"  %>
 <script type="text/javascript">
     $(function() {
         /*  Submit form using Ajax */
@@ -6,13 +7,12 @@
 
             //Prevent default submission of form
             e.preventDefault();
-            //Remove all errors
-            //$('input').next().remove();
+
             console.log( $(this).serialize() );
 
             $.post({
-                url : 'getTimeTable',
-                data : $('form[name=getTimeTableForm]').serialize(),
+                url : '${updateLink}',
+                data : $('form[name=form]').serialize(),
 
                 success : function(res) {
 
@@ -34,9 +34,7 @@
                     }*/
                 },
                 error: function(res) {
-                    alert(res.responseType);
-                    alert (res.responseText);
-                    console.log(res.responseText);
+
                     $('#pagefooter').html(res);
                 }
             })

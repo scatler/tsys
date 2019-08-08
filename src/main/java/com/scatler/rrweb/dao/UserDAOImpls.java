@@ -55,16 +55,4 @@ public class UserDAOImpls implements UserDAO {
         session.delete(deluser);
     }
 
-
-
-/*
-    public void testMethod(int id) {
-
-        Session session = sessionFactory.getCurrentSession();
-        session.createQuery("SELECT FROM Users v");
-    }
-*/
-
-
-
 }

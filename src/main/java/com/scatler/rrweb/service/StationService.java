@@ -21,11 +21,10 @@ public class StationService {
     @Autowired
     private StationDAO stationDAO;
 
-
     @Transactional
     public List<StationTimeTable> getStationSchedule(int id, Date day) {
 
-        return stationDAO.getStationSchedule(id,day);
+        return stationDAO.getStationSchedule(id, day);
     }
 
     @Transactional

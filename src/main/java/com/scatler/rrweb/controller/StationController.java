@@ -1,6 +1,5 @@
 package com.scatler.rrweb.controller;
 
-
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
 import com.scatler.rrweb.entity.objects.selectors.TimeTableSelector;
@@ -31,7 +30,7 @@ public class StationController {
 
     //TODO how to transfer html and errors
     @PostMapping("/getTimeTable")
-    public ModelAndView getTimeTable (@ModelAttribute @Valid TimeTableSelector ts, BindingResult res) {
+    public ModelAndView getTimeTable(@ModelAttribute @Valid TimeTableSelector ts, BindingResult res) {
 
         int station_id = Integer.parseInt(ts.getId());
         Date day = new Date(ts.getDay()); //
@@ -51,23 +50,19 @@ public class StationController {
             System.out.printf("Errors");
 
         }
-        List<StationTimeTable> timetable = stationService.getStationSchedule(station_id,day);
-        ModelAndView mv = new ModelAndView("gettimetable","stations", timetable);
-
+        List<StationTimeTable> timetable = stationService.getStationSchedule(station_id, day);
+        ModelAndView mv = new ModelAndView("gettimetable", "stations", timetable);
         return mv;
     }
 
-
     //TODO rename
     @GetMapping("/timeTableTest")
-    public String getTimeTableTest (Model model ) {
+    public String getTimeTableTest(Model model) {
 
         //List<StationTimeTable> tt = stationService.getStationSchedule(1,new Date(2019,8,1));
         List<Station> stationsList = stationService.getAllStations();
 
-        model.addAttribute("stations",stationsList);
+        model.addAttribute("stations", stationsList);
         return "station-timetable";
     }
-
-
 }

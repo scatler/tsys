@@ -30,8 +30,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry
                 .addResourceHandler("/resources/**")// specifying resource folder
                 .addResourceLocations("/resources/");
-
-
     }
 
 }

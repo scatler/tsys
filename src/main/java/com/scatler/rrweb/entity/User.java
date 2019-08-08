@@ -1,8 +1,11 @@
 package com.scatler.rrweb.entity;
 
-
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by alexkpc on 27.07.2019.
@@ -10,7 +13,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Users")
 public class User {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,13 +1,10 @@
 package com.scatler.rrweb.dao;
 
-import com.scatler.rrweb.entity.Train;
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
-import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.Date;
 import java.util.List;
 

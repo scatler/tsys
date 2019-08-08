@@ -10,8 +10,8 @@
     <jsp:attribute name="footer"/>
 
     <jsp:body>
-        <t:ajax/>
-        <form  class="form-inline" name="getTimeTableForm" action="<c:url value="/station/getTimeTable"/>" method="post">
+        <t:ajax updateLink="getTimeTable"/>
+        <form  class="form-inline" name="form" action="<c:url value="/station/getTimeTable"/>" method="post">
             <div class="form-group"><t:dropdown listCategory="${stations}" title="Select station:"/></div>
             <div class="form-group"><t:datepicker/></div>
             <div class="form-group"><t:btnsubmit/></div>

@@ -1,4 +1,5 @@
 package com.scatler.rrweb.entity.objects.searchresult;
+
 import java.util.Date;
 
 /**
@@ -6,6 +7,14 @@ import java.util.Date;
  */
 
 public class StationTimeTable {
+
+    private int trainId;
+    private Date arrivalTime;
+
+    public StationTimeTable(int trainId, Date arrivalTime) {
+        this.trainId = trainId;
+        this.arrivalTime = arrivalTime;
+    }
 
     public int getTrainId() {
         return trainId;
@@ -20,14 +29,6 @@ public class StationTimeTable {
     }
 
     public void setArrivalTime(Date arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-
-    private int trainId;
-    private Date arrivalTime;
-
-    public StationTimeTable(int trainId, Date arrivalTime) {
-        this.trainId = trainId;
         this.arrivalTime = arrivalTime;
     }
 }

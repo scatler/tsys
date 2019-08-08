@@ -1,14 +1,11 @@
 package com.scatler.rrweb.dao;
 
-
 import com.scatler.rrweb.entity.Station;
-
 import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +17,6 @@ public class StationDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-
 
     public List<StationTimeTable> getStationSchedule(int station_id, Date day) {
 
