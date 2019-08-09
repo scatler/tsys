@@ -24,4 +24,9 @@ public class TicketService {
     public void saveTicket(Ticket ticket) {
         ticketDAO.saveTicket (ticket);
     }
+
+    @Transactional
+    public boolean findSamePassenger(Ticket ticket) {
+        return ticketDAO.findSamePassenger(ticket);
+    }
 }

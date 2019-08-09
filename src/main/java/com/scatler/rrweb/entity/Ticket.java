@@ -5,6 +5,9 @@
  */
 package com.scatler.rrweb.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -34,12 +37,19 @@ public class Ticket implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
+
+    @NotEmpty (message = "Name is required")
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+
+    @NotEmpty (message = "Surname is required")
     @Size(max = 45)
     @Column(name = "surname")
     private String surname;
+
+    @NotNull (message = "Birthday is required")
+    //@DateTimeFormat
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
     private Date birthday;

@@ -56,4 +56,11 @@ public class TicketDAO {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(ticket);
     }
+
+    public boolean findSamePassenger(Ticket ticket) {
+        Session session = sessionFactory.getCurrentSession();
+
+        return  session.createQuery("select t from Ticket t " +
+                "where t.birthday = '08/07/2019'"  ).getResultList().size()>0;
+    }
 }

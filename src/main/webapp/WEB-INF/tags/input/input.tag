@@ -8,5 +8,6 @@
     <label for="${field}" class="col-md-3 control-label">${title}</label>
     <div class="col-md-9">
         <form:input path="${field}" cssClass="form-control"/>
+        <form:errors path="${field}" cssClass="error" />
     </div>
 </div>
