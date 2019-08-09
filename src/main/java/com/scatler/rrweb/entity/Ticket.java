@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ticket.findByBirthday", query = "SELECT t FROM Ticket t WHERE t.birthday = :birthday")})
 public class Ticket implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;

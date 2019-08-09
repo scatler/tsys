@@ -62,8 +62,8 @@ public class RouteStation implements Serializable {
     @ManyToOne(optional = false)
     private Station stationId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
-    private List<TrainRouteidDay> trainRouteidDayList;
+/*    @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
+    private List<TrainRouteidDay> trainRouteidDayList;*/
 
     public RouteStation() {
     }
@@ -120,14 +120,14 @@ public class RouteStation implements Serializable {
         this.stationId = stationId;
     }
 
-    @XmlTransient
+/*    @XmlTransient
     public List<TrainRouteidDay> getTrainRouteidDayList() {
         return trainRouteidDayList;
     }
 
     public void setTrainRouteidDayList(List<TrainRouteidDay> trainRouteidDayList) {
         this.trainRouteidDayList = trainRouteidDayList;
-    }
+    }*/
 
     @Override
     public int hashCode() {

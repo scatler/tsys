@@ -1,38 +1,20 @@
 package com.scatler.rrweb.util.crudformabstract.forms;
 
 import com.scatler.rrweb.entity.Station;
-import com.scatler.rrweb.entity.TrainRouteidDay;
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
 import com.scatler.rrweb.util.crudformabstract.AbstractCrudForm;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
+
 public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
 
     private String editLink = "buy";
-    private Integer currentSelection;
-
 
     public AvailableTrainForm(List<AvailableTrain> data) {
         super(data);
     }
 
-
-    public Station getStationFrom () {
-        return data.get(currentSelection).getStation1();
-    }
-
-    public Station getStationTo () {
-        return data.get(currentSelection).getStation2();
-    }
-
-    public Integer getTRD () {
-        return data.get(currentSelection).getTrainRouteDay();
-    }
 
     @Override
     protected String getId(AvailableTrain record) {
@@ -76,8 +58,8 @@ public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
         return null;
     }
 
-    public String getEditLink() {
-        return editLink;
+    public String getEditLink(int row) {
+        return editLink+"?id="+getId(row)+"&stationFrom="+getStationFrom(row)+"&stationTo=" + getStationTo(row);
     }
 
     public String getUserFriendlyTypeName() {
@@ -89,10 +71,10 @@ public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
     }
 
     public String getStationFrom(int row) {
-        return getDataAt(row,4);
+        return String.valueOf(data.get(row).getStation1().getId());
     }
 
     public String getStationTo(int row) {
-        return getDataAt(row,9);
+        return String.valueOf(data.get(row).getStation2().getId());
     }
 }

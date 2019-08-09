@@ -39,8 +39,8 @@ public class TicketDAO {
                 ")" + //end of searchResultObject
 
                 "from Train t " +
-                "inner join t.trainRouteidDayList trd " +
-                "inner join trd.routeId rs1 " +
+                "join TrainRouteidDay trd on t.id = trd.trainId.id  " +
+                "join trd.routeId rs1 " +
                 "inner join rs1.stationId sid " +
                 "inner join rs1.routeId rid where rs1.stationId = '1001' and rs1.routeId in " +
                 "(select rs2.routeId from RouteStation rs2 where rs2.stationId = '1001') and rs1.id < " +
@@ -52,9 +52,7 @@ public class TicketDAO {
         return obj;
     }
 
-
     public void saveTicket(Ticket ticket) {
-
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(ticket);
     }

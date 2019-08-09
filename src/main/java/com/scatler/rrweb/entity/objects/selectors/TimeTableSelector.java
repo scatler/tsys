@@ -2,7 +2,6 @@ package com.scatler.rrweb.entity.objects.selectors;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import java.util.Date;
 
 public class TimeTableSelector {
 

@@ -39,8 +39,8 @@ public class TrainRouteidDay implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dayDept;
     //***
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trd")
-    private List<Ticket> ticketList;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "trd")
+    //private List<Ticket> ticketList;
     //***
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     @ManyToOne(optional = false)
@@ -77,14 +77,14 @@ public class TrainRouteidDay implements Serializable {
         this.dayDept = dayDept;
     }
 
-    @XmlTransient
+/*    @XmlTransient
     public List<Ticket> getTicketList() {
         return ticketList;
     }
 
     public void setTicketList(List<Ticket> ticketList) {
         this.ticketList = ticketList;
-    }
+    }*/
 
     public RouteStation getRouteId() {
         return routeId;

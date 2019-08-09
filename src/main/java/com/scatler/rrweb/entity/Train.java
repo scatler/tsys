@@ -46,9 +46,10 @@ public class Train implements Serializable {
     private String name;
     @Column(name = "seats")
     private Integer seats;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainId")
-    private List<TrainRouteidDay> trainRouteidDayList;
-
+    //**Kill one to many
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "trainId")
+    //private List<TrainRouteidDay> trainRouteidDayList;
+    // Kill one to many
     public Train() {
     }
 
@@ -80,14 +81,14 @@ public class Train implements Serializable {
         this.seats = seats;
     }
 
-    @XmlTransient
+/*    @XmlTransient
     public List<TrainRouteidDay> getTrainRouteidDayList() {
         return trainRouteidDayList;
     }
 
     public void setTrainRouteidDayList(List<TrainRouteidDay> trainRouteidDayList) {
         this.trainRouteidDayList = trainRouteidDayList;
-    }
+    }*/
 
     @Override
     public int hashCode() {

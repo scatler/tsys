@@ -8,7 +8,7 @@
             //Prevent default submission of form
             e.preventDefault();
 
-            console.log( $(this).serialize() );
+            console.log( $('form[name=form]').serialize() );
 
             $.post({
                 url : '${updateLink}',
@@ -34,7 +34,7 @@
                     }*/
                 },
                 error: function(res) {
-
+                    alert("error");
                     $('#pagefooter').html(res);
                 }
             })

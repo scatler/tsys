@@ -2,9 +2,8 @@ package com.scatler.rrweb.controller;
 
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.Ticket;
-import com.scatler.rrweb.entity.TrainRouteidDay;
-import com.scatler.rrweb.entity.objects.TestSessionTransferObject;
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
+import com.scatler.rrweb.entity.objects.selectors.AvailableTrainSelector;
 import com.scatler.rrweb.service.RouteService;
 import com.scatler.rrweb.service.StationService;
 import com.scatler.rrweb.service.TicketService;
@@ -12,15 +11,20 @@ import com.scatler.rrweb.util.crudformabstract.forms.AvailableTrainForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/tickets")
-@SessionAttributes(types = TestSessionTransferObject.class)
+@SessionAttributes(types = Ticket.class)
 public class TicketController {
 
     @Autowired
@@ -30,45 +34,53 @@ public class TicketController {
     @Autowired
     private RouteService routeService;
 
-    @GetMapping("")
+    @GetMapping("start")
     public String findTrains(Model model) {
         List<Station> stationsList = stationService.getAllStations();
         model.addAttribute("stations", stationsList);
-        return "find-trains";
+        return "tickets-find-trains";
     }
 
-    @GetMapping("/trains")
-    public String getAvailableTrainTable(Model model) {
-        List<AvailableTrain> trains = ticketService.getAvailableTrains(1001, 1013, new Date(2019, 1, 1));
-        AvailableTrainForm form = new AvailableTrainForm(trains);
-        model.addAttribute("genForm",form);
-        return "available-trains-table";
+    @PostMapping("/trains")
+    public ModelAndView getAvailableTrainTable(@ModelAttribute @Valid AvailableTrainSelector ts, BindingResult res) {
+
+        ModelAndView mv;
+        AvailableTrainForm form = null;
+        if (res.hasErrors()) {
+
+            Map<String, String> errors = res.getFieldErrors().stream()
+                    .collect(
+                            Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
+                    );
+        }
+        else {
+            List<AvailableTrain> trains = ticketService.getAvailableTrains(1001, 1013, new Date(2019, 1, 1));
+
+            form = new AvailableTrainForm(trains);
+        }
+
+        mv = new ModelAndView("available-trains-table","genForm",form);
+        return mv;
     }
 
     @GetMapping("/buy")
-    public String buyTicket(@RequestParam("id") int rowInResultSet,
-                            AvailableTrain trainForm,
+    public String buyTicket(@RequestParam("id") Integer trid,
+                            @RequestParam("stationFrom") Integer stationFrom,
+                            @RequestParam("stationTo") Integer stationTo,
                             Model model) {
 
-        TestSessionTransferObject to = new TestSessionTransferObject(rowInResultSet);
-        Ticket t = new Ticket();
-        Assert.notNull(trainForm);
-        model.addAttribute(to);
-        model.addAttribute("ticket", t);
+        Ticket ticket = new Ticket();
+        //ticket.setId(1);
+        ticket.setStation1Id(stationService.getStation(stationFrom));
+        ticket.setStation2Id(stationService.getStation(stationTo));
+        ticket.setTrd(routeService.getTrainRouteidDay(trid));
+        model.addAttribute("ticket",ticket);
         return "ticket-buy";
-
     }
 
     @PostMapping("/saveBuy")
-    public String saveBuy( TestSessionTransferObject to) {
-        Ticket ticket = new Ticket();
-        ticket.setId(222);
-        //ticket.setStation1Id(stationService.getStation(1001));
-        //ticket.setStation2Id(stationService.getStation(1013));
-        routeService.getTrainRouteidDay(55);
-        //stationService.getTRD(3);
+    public String saveBuy( Ticket ticket) {
         ticketService.saveTicket (ticket);
-        return "redirect:trains";
+        return "redirect:start";
     }
-
 }
