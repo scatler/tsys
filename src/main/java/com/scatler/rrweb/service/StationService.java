@@ -2,6 +2,7 @@ package com.scatler.rrweb.service;
 
 import com.scatler.rrweb.dao.StationDAO;
 
+import com.scatler.rrweb.entity.Line;
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.TrainRouteidDay;
 import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
@@ -37,9 +38,20 @@ public class StationService {
     public Station getStation(int id) {
         return stationDAO.getStation(id);
     }
-    @Transactional
 
+    @Transactional
     public TrainRouteidDay getTRD (int id ) {return
     stationDAO.getTRD(id);
+    }
+
+    @Transactional
+    public void saveStation(Station station) {
+        stationDAO.saveStation(station);
+    }
+
+    @Transactional
+    public List<Line> getAllLines() {
+       return stationDAO.getAllLines();
+
     }
 }

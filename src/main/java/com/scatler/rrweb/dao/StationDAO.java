@@ -1,5 +1,6 @@
 package com.scatler.rrweb.dao;
 
+import com.scatler.rrweb.entity.Line;
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.TrainRouteidDay;
 import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
@@ -49,5 +50,15 @@ public class StationDAO {
         Session session = sessionFactory.getCurrentSession();
         Object obj = session.get(TrainRouteidDay.class,id);
         return (TrainRouteidDay) obj;
+    }
+
+    public void saveStation(Station station) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(station);
+    }
+
+    public List<Line> getAllLines() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select l from Line l").getResultList();
     }
 }

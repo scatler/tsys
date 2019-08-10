@@ -5,90 +5,45 @@
  */
 package com.scatler.rrweb.entity;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 
 /**
  *
  * @author alexkpc
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "train")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Train.findAll", query = "SELECT t FROM Train t"),
-    @NamedQuery(name = "Train.findById", query = "SELECT t FROM Train t WHERE t.id = :id"),
-    @NamedQuery(name = "Train.findByName", query = "SELECT t FROM Train t WHERE t.name = :name"),
-    @NamedQuery(name = "Train.findBySeats", query = "SELECT t FROM Train t WHERE t.seats = :seats")})
-public class Train implements Serializable {
+public class Train extends AbstractEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GenericGenerator(name="gen",strategy="increment")
+    @GeneratedValue(generator="gen")
     @Column(name = "id")
     private Integer id;
+
+    @NotEmpty
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+
+    @NotNull
     @Column(name = "seats")
     private Integer seats;
-    //**Kill one to many
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "trainId")
-    //private List<TrainRouteidDay> trainRouteidDayList;
-    // Kill one to many
-    public Train() {
-    }
 
-    public Train(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getSeats() {
-        return seats;
-    }
-
-    public void setSeats(Integer seats) {
-        this.seats = seats;
-    }
-
-/*    @XmlTransient
-    public List<TrainRouteidDay> getTrainRouteidDayList() {
-        return trainRouteidDayList;
-    }
-
-    public void setTrainRouteidDayList(List<TrainRouteidDay> trainRouteidDayList) {
-        this.trainRouteidDayList = trainRouteidDayList;
-    }*/
 
     @Override
     public int hashCode() {

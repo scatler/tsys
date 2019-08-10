@@ -5,11 +5,21 @@
  */
 package com.scatler.rrweb.entity;
 
+import com.scatler.rrweb.entity.objects.validator.StationValidator;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.Constraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -28,18 +38,26 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Station.findByTimezone", query = "SELECT s FROM Station s WHERE s.timezone = :timezone")})
 public class Station implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
+    @GenericGenerator(name="gen",strategy="increment")
+    @GeneratedValue(generator="gen")
     private Integer id;
+
+    @NotEmpty (message = "Name is required")
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+
+
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    // @Pattern(regexp="[0-2][0-3]:\\d\\d:\\d\\d", message = "correct time format is hh:mm:ss")
     @Column(name = "timezone")
     @Temporal(TemporalType.TIME)
     private Date timezone;
+
     @OneToMany(mappedBy = "station1Id", fetch=FetchType.LAZY)
     private List<Ticket> ticketList;
     @OneToMany(mappedBy = "station2Id", fetch=FetchType.LAZY)
@@ -47,6 +65,8 @@ public class Station implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stationId", fetch= FetchType.LAZY)
     private List<RouteStation> routeStationList;
 
+
+    @NotNull(message = "Select line")
     @JoinColumn(name = "line_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Line lineId;

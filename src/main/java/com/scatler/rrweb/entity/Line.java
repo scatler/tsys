@@ -5,6 +5,10 @@
  */
 package com.scatler.rrweb.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -35,9 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Line implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "Select line")
     @Column(name = "id")
     private Integer id;
     @Size(max = 45)
