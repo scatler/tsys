@@ -1,5 +1,6 @@
-package com.scatler.rrweb.dto;
+package com.scatler.rrweb.dto.forms;
 
+import com.scatler.rrweb.dto.RouteStationDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

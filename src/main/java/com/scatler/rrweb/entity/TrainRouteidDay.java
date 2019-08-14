@@ -5,6 +5,8 @@
  */
 package com.scatler.rrweb.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author alexkpc
  */
+@Data
 @Entity
 @Table(name = "train_routeid_day")
 @XmlRootElement
@@ -61,70 +64,5 @@ public class TrainRouteidDay implements Serializable {
         this.dayDept = dayDept;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getDayDept() {
-        return dayDept;
-    }
-
-    public void setDayDept(Date dayDept) {
-        this.dayDept = dayDept;
-    }
-
-/*    @XmlTransient
-    public List<Ticket> getTicketList() {
-        return ticketList;
-    }
-
-    public void setTicketList(List<Ticket> ticketList) {
-        this.ticketList = ticketList;
-    }*/
-
-    public RouteStation getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(RouteStation routeId) {
-        this.routeId = routeId;
-    }
-
-    public Train getTrainId() {
-        return trainId;
-    }
-
-    public void setTrainId(Train trainId) {
-        this.trainId = trainId;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TrainRouteidDay)) {
-            return false;
-        }
-        TrainRouteidDay other = (TrainRouteidDay) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.scatler.rrweb.entity.TrainRouteidDay[ id=" + id + " ]";
-    }
-    
 }

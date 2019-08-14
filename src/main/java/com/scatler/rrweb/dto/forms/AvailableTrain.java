@@ -1,24 +1,18 @@
-package com.scatler.rrweb.entity.objects.searchresult;
+package com.scatler.rrweb.dto.forms;
 
-import com.scatler.rrweb.entity.Route;
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.Train;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class AvailableTrain implements Serializable {
 
-    //Todo change order, change object -> appropriate class
     private Train train;
     private Integer trainRouteDay;
-    private Route route;
-    private Station station1;
+    private Integer route;
+    private Integer station1;
     private Object dayOfStart;
     private Object arrivalToStation1Time;
     private Integer dayCountToStation1;

@@ -2,14 +2,13 @@ package com.scatler.rrweb.controller;
 
 import com.scatler.rrweb.dto.RouteDTO;
 import com.scatler.rrweb.dto.StationDTO;
-import com.scatler.rrweb.entity.Station;
+import com.scatler.rrweb.dto.TicketDTO;
 import com.scatler.rrweb.entity.Ticket;
-import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
+import com.scatler.rrweb.dto.forms.AvailableTrain;
 import com.scatler.rrweb.entity.objects.selectors.AvailableTrainSelector;
-import com.scatler.rrweb.service.TicketService;
-import com.scatler.rrweb.service.impls.StationService;
+import com.scatler.rrweb.service.impls.TicketService;
 import com.scatler.rrweb.service.interfaces.IService;
-import com.scatler.rrweb.util.crudformabstract.forms.AvailableTrainForm;
+import com.scatler.rrweb.dto.forms.AvailableTrainForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -44,7 +43,8 @@ public class TicketController {
     @Qualifier("stationService")
     private IService<StationDTO, Integer> stationService;
     @Autowired
-    private TicketService ticketService;
+    @Qualifier("ticketService")
+    private IService<TicketDTO,Integer> ticketService;
     @Autowired
     @Qualifier("routeService")
     private IService<RouteDTO, Integer> service;
@@ -69,7 +69,7 @@ public class TicketController {
                     );
         }
         else {
-            List<AvailableTrain> trains = ticketService.getAvailableTrains(1001, 1013, new Date(2019, 1, 1));
+            List<AvailableTrain> trains = ((TicketService) ticketService).getAvailableTrains(1001, 1013, new Date(2019, 1, 1));
 
             form = new AvailableTrainForm(trains);
         }
@@ -102,8 +102,9 @@ public class TicketController {
     }
 
     @PostMapping("/saveBuy")
-    public String saveBuy( @Validated Ticket ticket, BindingResult res, Model model) {
+    public String saveBuy( @Validated TicketDTO ticket, BindingResult res, Model model) {
 
+        //TODO rework true - method check
         if (true) {
 
             model.addAttribute("samePassengerError","Same passenger is already registered");
@@ -115,7 +116,7 @@ public class TicketController {
             return "ticket-buy-valid";
         }
 
-        ticketService.saveTicket (ticket);
+        ticketService.save(ticket);
         return "ticket-buy-confirm";
     }
 }

@@ -1,4 +1,4 @@
-package com.scatler.rrweb.util.crudformabstract;
+package com.scatler.rrweb.dto.forms;
 
 import java.io.Serializable;
 import java.util.Arrays;

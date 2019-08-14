@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Qualifier("lineService")
 public class LineService extends  AbstractService <Line, LineDTO>{
+
     @Autowired
     public LineService(IDao<Line, Integer> dao, IConverter<Line, LineDTO> converter) {
         super(dao, converter);

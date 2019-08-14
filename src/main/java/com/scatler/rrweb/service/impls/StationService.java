@@ -4,9 +4,8 @@ import com.scatler.rrweb.dao.impls.StationDAO;
 import com.scatler.rrweb.dao.interfaces.IDao;
 import com.scatler.rrweb.dto.StationDTO;
 import com.scatler.rrweb.entity.Station;
-import com.scatler.rrweb.dto.StationTimeTable;
+import com.scatler.rrweb.dto.forms.StationTimeTable;
 import com.scatler.rrweb.service.converter.IConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

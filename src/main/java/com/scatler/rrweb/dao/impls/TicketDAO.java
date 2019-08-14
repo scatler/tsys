@@ -1,29 +1,35 @@
-package com.scatler.rrweb.dao;
+package com.scatler.rrweb.dao.impls;
 
 import com.scatler.rrweb.entity.Ticket;
-import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
+import com.scatler.rrweb.dto.forms.AvailableTrain;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import java.util.Date;
 import java.util.List;
 
 @Repository
-public class TicketDAO {
+public class TicketDAO extends AbstractDAO<Ticket> {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    public TicketDAO() {
+        super(Ticket.class);
+    }
 
     public List<AvailableTrain> getAvailableTrains(int station_id1, int station_id2, Date day) {
 
         Session session = sessionFactory.getCurrentSession();
 
+        //TODO check object location
         String hql = "select " +
-                "new com.scatler.rrweb.entity.objects.searchresult.AvailableTrain (" + // start of searchResultObject
+                "new com.scatler.rrweb.dto.forms.AvailableTrain (" + // start of searchResultObject
                     "t," +
                     "trd.id," +
-                    "rs1.routeId," +
+                    "rs1.routeId.id," +
                     "rs1.stationId," +
                     "trd.dayDept, " +
                     "rs1.arrivalTime ," +
@@ -50,11 +56,6 @@ public class TicketDAO {
         List obj = session.createQuery(hql).getResultList();
         System.out.println(obj);
         return obj;
-    }
-
-    public void saveTicket(Ticket ticket) {
-        Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(ticket);
     }
 
     public boolean findSamePassenger(Ticket ticket) {

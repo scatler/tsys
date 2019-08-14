@@ -2,7 +2,7 @@ package com.scatler.rrweb.controller;
 
 import com.scatler.rrweb.dto.RouteDTO;
 import com.scatler.rrweb.dto.RouteStationDTO;
-import com.scatler.rrweb.dto.RouteStationForm;
+import com.scatler.rrweb.dto.forms.RouteStationForm;
 import com.scatler.rrweb.dto.StationDTO;
 import com.scatler.rrweb.dto.TrainDTO;
 import com.scatler.rrweb.service.interfaces.IService;

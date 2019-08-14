@@ -1,4 +1,4 @@
-package com.scatler.rrweb.dto;
+package com.scatler.rrweb.dto.forms;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

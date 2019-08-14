@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ticket.findByName", query = "SELECT t FROM Ticket t WHERE t.name = :name"),
     @NamedQuery(name = "Ticket.findBySurname", query = "SELECT t FROM Ticket t WHERE t.surname = :surname"),
     @NamedQuery(name = "Ticket.findByBirthday", query = "SELECT t FROM Ticket t WHERE t.birthday = :birthday")})
-public class Ticket implements Serializable {
+public class Ticket extends AbstractEntity implements Serializable {
 
     //private static final long serialVersionUID = 1L;
     @Id

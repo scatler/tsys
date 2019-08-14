@@ -2,7 +2,7 @@ package com.scatler.rrweb.controller;
 
 import com.scatler.rrweb.dto.LineDTO;
 import com.scatler.rrweb.dto.StationDTO;
-import com.scatler.rrweb.dto.StationTimeTable;
+import com.scatler.rrweb.dto.forms.StationTimeTable;
 import com.scatler.rrweb.entity.Line;
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.objects.selectors.TimeTableSelector;

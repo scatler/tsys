@@ -1,8 +1,4 @@
-package com.scatler.rrweb.util.crudformabstract.forms;
-
-import com.scatler.rrweb.entity.Station;
-import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
-import com.scatler.rrweb.util.crudformabstract.AbstractCrudForm;
+package com.scatler.rrweb.dto.forms;
 
 import java.util.List;
 
@@ -41,7 +37,7 @@ public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
             case 1:
                 return record.getRoute().getName();
             case  2:
-                return "ToDo add station to query";
+                return ;
             case  3:
                 return "ToDo add station to query";
 
