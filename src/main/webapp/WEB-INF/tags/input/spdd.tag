@@ -7,7 +7,7 @@
 <div class="form-group">
     <label for="select" class="col-md-3 control-label">${title}</label>
     <div class="col-md-9">
-        <form:select id="select" path="${field}">
+        <form:select id="select" path="${field}" cssClass="form-control">
             <form:option value="" label="--Select ${title}"/>
             <form:options items="${list}" itemValue="id" itemLabel="name"/>
         </form:select>

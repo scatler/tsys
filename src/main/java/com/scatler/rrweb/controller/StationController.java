@@ -1,13 +1,16 @@
 package com.scatler.rrweb.controller;
 
+import com.scatler.rrweb.dto.LineDTO;
+import com.scatler.rrweb.dto.StationDTO;
+import com.scatler.rrweb.dto.StationTimeTable;
 import com.scatler.rrweb.entity.Line;
 import com.scatler.rrweb.entity.Station;
-import com.scatler.rrweb.entity.Ticket;
-import com.scatler.rrweb.entity.objects.searchresult.StationTimeTable;
 import com.scatler.rrweb.entity.objects.selectors.TimeTableSelector;
 import com.scatler.rrweb.entity.objects.validator.StationValidator;
-import com.scatler.rrweb.service.StationService;
+import com.scatler.rrweb.service.impls.StationService;
+import com.scatler.rrweb.service.interfaces.IService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +18,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -26,16 +34,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created by alexkpc on 01.08.2019.
- */
 @Controller
 @RequestMapping("/station")
 @SessionAttributes(types = java.util.ArrayList.class)
 public class StationController {
 
     @Autowired
-    private StationService stationService;
+    @Qualifier("stationService")
+    private IService<StationDTO,Integer> stationService;
+
+    @Autowired
+    @Qualifier("lineService")
+    private IService<LineDTO,Integer> lineService;
 
     @Autowired
     private StationValidator stationValidator;
@@ -49,7 +59,7 @@ public class StationController {
         binder.addValidators(stationValidator);
     }
 
-    //TODO how to transfer html and errors
+    //TODO remove AJAX
     @PostMapping("/getTimeTable")
     public ModelAndView getTimeTable(@ModelAttribute @Valid TimeTableSelector ts, BindingResult res) {
 
@@ -71,36 +81,31 @@ public class StationController {
             System.out.printf("Errors");
 
         }
-        List<StationTimeTable> timetable = stationService.getStationSchedule(station_id, day);
+
+        List<StationTimeTable> timetable = ((StationService)stationService).getStationSchedule(station_id, day);
         ModelAndView mv = new ModelAndView("gettimetable", "stations", timetable);
         return mv;
     }
 
     //TODO rename
-    @GetMapping("/timeTableTest")
-    public String getTimeTableTest(Model model) {
-
-        //List<StationTimeTable> tt = stationService.getStationSchedule(1,new Date(2019,8,1));
-        List<Station> stationsList = stationService.getAllStations();
-
+    @GetMapping("/timeTable")
+    public String showTimeTable(Model model) {
+        List<StationDTO> stationsList = stationService.getAll();
         model.addAttribute("stations", stationsList);
         return "station-timetable";
     }
 
-
     @RequestMapping("/add")
     public String addStation (Model model) {
         Station station = new Station();
-        List<Line> lines = stationService.getAllLines();
+        List<LineDTO> lines = lineService.getAll();
         model.addAttribute(station);
         model.addAttribute("listLines",lines);
-        //model.addAttribute(lines);
-
         return "station-add";
     }
 
     @RequestMapping("/save")
-    public String  saveStation (@Validated Station station, BindingResult res,Model model, @ModelAttribute("listLines") ArrayList<Line> lines) {
+    public String  saveStation (@Validated StationDTO station, BindingResult res,Model model, @ModelAttribute("listLines") ArrayList<Line> lines) {
 
         if (res.hasErrors()){
             model.addAttribute(station);
@@ -108,7 +113,7 @@ public class StationController {
             return "station-add";
         }
 
-        stationService.saveStation(station);
+        stationService.save(station);
         model.addAttribute("confirmMessage","Station added");
         return "generic-confirm";
     }

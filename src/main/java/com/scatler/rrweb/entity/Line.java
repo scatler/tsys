@@ -5,6 +5,7 @@
  */
 package com.scatler.rrweb.entity;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.NumberFormat;
@@ -29,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author alexkpc
  */
+@Data
 @Entity
 @Table(name = "line")
 @XmlRootElement
@@ -36,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Line.findAll", query = "SELECT l FROM Line l"),
     @NamedQuery(name = "Line.findById", query = "SELECT l FROM Line l WHERE l.id = :id"),
     @NamedQuery(name = "Line.findByName", query = "SELECT l FROM Line l WHERE l.name = :name")})
-public class Line implements Serializable {
+public class Line extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,54 +60,5 @@ public class Line implements Serializable {
         this.id = id;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlTransient
-    public List<Station> getStationList() {
-        return stationList;
-    }
-
-    public void setStationList(List<Station> stationList) {
-        this.stationList = stationList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Line)) {
-            return false;
-        }
-        Line other = (Line) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.scatler.rrweb.entity.Line[ id=" + id + " ]";
-    }
     
 }

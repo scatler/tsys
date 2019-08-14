@@ -1,14 +1,17 @@
 package com.scatler.rrweb.controller;
 
+import com.scatler.rrweb.dto.RouteDTO;
+import com.scatler.rrweb.dto.StationDTO;
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.Ticket;
 import com.scatler.rrweb.entity.objects.searchresult.AvailableTrain;
 import com.scatler.rrweb.entity.objects.selectors.AvailableTrainSelector;
-import com.scatler.rrweb.service.RouteService;
-import com.scatler.rrweb.service.StationService;
 import com.scatler.rrweb.service.TicketService;
+import com.scatler.rrweb.service.impls.StationService;
+import com.scatler.rrweb.service.interfaces.IService;
 import com.scatler.rrweb.util.crudformabstract.forms.AvailableTrainForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +19,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -32,15 +41,17 @@ import java.util.stream.Collectors;
 public class TicketController {
 
     @Autowired
-    private StationService stationService;
+    @Qualifier("stationService")
+    private IService<StationDTO, Integer> stationService;
     @Autowired
     private TicketService ticketService;
     @Autowired
-    private RouteService routeService;
+    @Qualifier("routeService")
+    private IService<RouteDTO, Integer> service;
 
     @GetMapping("start")
     public String findTrains(Model model) {
-        List<Station> stationsList = stationService.getAllStations();
+        List<StationDTO> stationsList = stationService.getAll();
         model.addAttribute("stations", stationsList);
         return "tickets-find-trains";
     }
@@ -75,9 +86,10 @@ public class TicketController {
 
         Ticket ticket = new Ticket();
         //ticket.setId(1);
-        ticket.setStation1Id(stationService.getStation(stationFrom));
-        ticket.setStation2Id(stationService.getStation(stationTo));
-        ticket.setTrd(routeService.getTrainRouteidDay(trid));
+/*        ticket.setStation1Id(stationService.get(stationFrom));
+        ticket.setStation2Id(stationService.get(stationTo));*/
+        //TODO implement through DTO
+        //ticket.setTrd(routeService.getTrainRouteidDay(trid));
         model.addAttribute("ticket",ticket);
         return "ticket-buy-valid";
     }

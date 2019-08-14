@@ -1,4 +1,4 @@
-package com.scatler.rrweb.dao.Impls;
+package com.scatler.rrweb.dao.impls;
 
 import com.scatler.rrweb.dao.interfaces.IDao;
 import com.scatler.rrweb.entity.AbstractEntity;
@@ -8,14 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class AbstractDAO<T extends AbstractEntity> implements IDao<T,Integer> {
+public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T,Integer> {
+
+    private Class<?> entityClass;
+    public AbstractDAO(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
 
     @Autowired
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
+
 
     @Override
-    public Integer add(T entity) {
-        return null;
+    public void saveAll(List<T> entity) {
+        entity.forEach(this::save);
     }
 
     @Override
@@ -29,7 +35,7 @@ public class AbstractDAO<T extends AbstractEntity> implements IDao<T,Integer> {
     }
 
     @Override
-    public void removeWith(Integer id) {
+    public void removeById(Integer id) {
 
     }
 
@@ -40,13 +46,13 @@ public class AbstractDAO<T extends AbstractEntity> implements IDao<T,Integer> {
 
     @Override
     public List<T> getAll() {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return (List<T>) session.createQuery("from " + entityClass.getName(), entityClass).getResultList();
     }
 
     @Override
     public void save(T entity) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(entity);
-
     }
 }

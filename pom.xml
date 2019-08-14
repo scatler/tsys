@@ -11,6 +11,7 @@
 	<properties>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<spring.version>5.1.0.RELEASE</spring.version>
+		<spring-security.version>5.0.6.RELEASE</spring-security.version>
 		<hibernate.version>5.3.5.Final</hibernate.version>
 		<hibernate.validator>5.4.1.Final</hibernate.validator>
 		<c3p0.version>0.9.5.2</c3p0.version>
@@ -26,6 +27,21 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Spring Security Dependency -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+
+		<!-- Spring Security Config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+			<!--<scope>runtime</scope>-->
 		</dependency>
 
 		<!-- Spring ORM -->
@@ -79,7 +95,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-
 		<!-- JSP Dependency -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -94,6 +109,8 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.47</version>
 		</dependency>
+
+
 	</dependencies>
 
 	<build>

@@ -5,29 +5,21 @@
  */
 package com.scatler.rrweb.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-/**
- *
- * @author alexkpc
- */
-@Getter
-@Setter
+
+@Data
 @Entity
 @Table(name = "train")
 @XmlRootElement
 public class Train extends AbstractEntity implements Serializable {
 
-    //private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @GenericGenerator(name="gen",strategy="increment")
@@ -35,7 +27,6 @@ public class Train extends AbstractEntity implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty
     @Size(max = 45)
     @Column(name = "name")
     private String name;
@@ -44,30 +35,4 @@ public class Train extends AbstractEntity implements Serializable {
     @Column(name = "seats")
     private Integer seats;
 
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Train)) {
-            return false;
-        }
-        Train other = (Train) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.scatler.rrweb.entity.Train[ id=" + id + " ]";
-    }
-    
 }

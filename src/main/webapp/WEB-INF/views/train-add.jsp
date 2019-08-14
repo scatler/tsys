@@ -6,7 +6,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="ti" tagdir="/WEB-INF/tags/input" %>
 <t:genericpage>
-    <form:form method="POST" modelAttribute="train" action="save">
+    <form:form method="POST" modelAttribute="trainDTO" action="save">
         <ti:input field="name" title="Name"/>
         <ti:input field="seats" title="Seats"/>
         <ti:btnsubmit title="Save"/>

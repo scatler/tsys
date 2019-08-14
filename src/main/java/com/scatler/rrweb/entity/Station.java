@@ -1,68 +1,66 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.scatler.rrweb.entity;
 
-import com.scatler.rrweb.entity.objects.validator.StationValidator;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
-import javax.validation.Constraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author alexkpc
- */
 @Entity
 @Table(name = "station")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Station.findAll", query = "SELECT s FROM Station s"),
-    @NamedQuery(name = "Station.findById", query = "SELECT s FROM Station s WHERE s.id = :id"),
-    @NamedQuery(name = "Station.findByName", query = "SELECT s FROM Station s WHERE s.name = :name"),
-    @NamedQuery(name = "Station.findByTimezone", query = "SELECT s FROM Station s WHERE s.timezone = :timezone")})
-public class Station implements Serializable {
+        @NamedQuery(name = "Station.findAll", query = "SELECT s FROM Station s"),
+        @NamedQuery(name = "Station.findById", query = "SELECT s FROM Station s WHERE s.id = :id"),
+        @NamedQuery(name = "Station.findByName", query = "SELECT s FROM Station s WHERE s.name = :name"),
+        @NamedQuery(name = "Station.findByTimezone", query = "SELECT s FROM Station s WHERE s.timezone = :timezone")})
+@Data
+public class Station extends AbstractEntity implements Serializable {
 
-    //private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "id")
-    @GenericGenerator(name="gen",strategy="increment")
-    @GeneratedValue(generator="gen")
+    @GenericGenerator(name = "gen", strategy = "increment")
+    @GeneratedValue(generator = "gen")
     private Integer id;
 
-    @NotEmpty (message = "Name is required")
+    @NotEmpty(message = "Name is required")
     @Size(max = 45)
     @Column(name = "name")
     private String name;
 
 
     @DateTimeFormat(pattern = "HH:mm:ss")
-    // @Pattern(regexp="[0-2][0-3]:\\d\\d:\\d\\d", message = "correct time format is hh:mm:ss")
     @Column(name = "timezone")
     @Temporal(TemporalType.TIME)
     private Date timezone;
 
-    @OneToMany(mappedBy = "station1Id", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "station1Id", fetch = FetchType.LAZY)
     private List<Ticket> ticketList;
-    @OneToMany(mappedBy = "station2Id", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "station2Id", fetch = FetchType.LAZY)
     private List<Ticket> ticketList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stationId", fetch= FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stationId", fetch = FetchType.LAZY)
     private List<RouteStation> routeStationList;
 
 
@@ -78,88 +76,4 @@ public class Station implements Serializable {
         this.id = id;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getTimezone() {
-        return timezone;
-    }
-
-    public void setTimezone(Date timezone) {
-        this.timezone = timezone;
-    }
-
-    @XmlTransient
-    public List<Ticket> getTicketList() {
-        return ticketList;
-    }
-
-    public void setTicketList(List<Ticket> ticketList) {
-        this.ticketList = ticketList;
-    }
-
-    @XmlTransient
-    public List<Ticket> getTicketList1() {
-        return ticketList1;
-    }
-
-    public void setTicketList1(List<Ticket> ticketList1) {
-        this.ticketList1 = ticketList1;
-    }
-
-    @XmlTransient
-    public List<RouteStation> getRouteStationList() {
-        return routeStationList;
-    }
-
-    public void setRouteStationList(List<RouteStation> routeStationList) {
-        this.routeStationList = routeStationList;
-    }
-
-    public Line getLineId() {
-        return lineId;
-    }
-
-    public void setLineId(Line lineId) {
-        this.lineId = lineId;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Station)) {
-            return false;
-        }
-        Station other = (Station) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.scatler.rrweb.entity.Station[ id=" + id + " ]";
-    }
-    
 }
