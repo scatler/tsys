@@ -19,13 +19,16 @@ public class StationDAO extends AbstractDAO <Station> {
 
         Session session = sessionFactory.getCurrentSession();
         //TODO check object location
-        String hql = "select new com.scatler.rrweb.dto.forms.StationTimeTable(t.id,rs.arrivalTime) from Train t " +
+        String hql =
+                "select new com.scatler.rrweb.dto.forms.StationTimeTable(t.id,rs.arrivalTime) from Train t " +
                 "join TrainRouteidDay trd on trd.trainId.id = t.id " +
                 "inner join trd.routeId rs " +
                 "inner join rs.stationId sid " +
                 "inner join rs.routeId " +
                 "where sid = ?";
+        session.createQuery()
         return (List<StationTimeTable>) session.createQuery(hql).setString(0,String.valueOf(station_id)).getResultList();
+
     }
 
 }
