@@ -37,5 +37,4 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         return new Filter[] {filter};
     }
 
-
 }
