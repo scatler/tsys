@@ -6,7 +6,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="ti" tagdir="/WEB-INF/tags/input" %>
 <t:genericpage>
-    <form:form method="POST" modelAttribute="station" action="save">
+    <form:form method="POST" modelAttribute="station" action="save" cssClass="form-horizontal">
         <ti:input field="name" title="Name"/>
         <ti:input field="timezone" title="Timezone"/>
         <ti:spdd field="lineId.id" list="${listLines}" title="Select Line#"/>

@@ -1,29 +1,20 @@
 package com.scatler.rrweb.entity.objects.selectors;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TimeTableSelector {
 
-    @NotEmpty
-    private String id;
-    @NotEmpty
-    private String day;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
+    @NotNull
+    private Integer id;
+    @NotNull
+    private Date day;
 
 }

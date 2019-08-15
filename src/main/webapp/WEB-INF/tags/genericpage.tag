@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@tag description="Overall Page template" pageEncoding="UTF-8"%>
+<%@tag description="Overall Page template" pageEncoding="UTF-8" %>
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
-<%@attribute name="inner_title" fragment="true" %>
+<%@attribute name="inner_title" %>
+<%@attribute name="error" %>
 
 <html>
 <head>
@@ -17,23 +18,26 @@
 
 </head>
 <body>
-<div id="col-md-offset-1 col-md-10">
-   <t:menu/>
-
+<div id="col-md-offset-1 col-md-3">
+    <t:menu/>
     <jsp:invoke fragment="header"/>
-
 </div>
 <div class="container">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="panel-title">
-                    <jsp:invoke fragment="inner_title"/>
-                </div>
-            </div>
-            <div class="panel-body">
-                <jsp:doBody/>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                ${inner_title}
             </div>
         </div>
+        <div class="panel-body">
+            <jsp:doBody/>
+        </div>
+<%--        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            <jsp:invoke fragment="error"/>
+        </div>--%>
+    </div>
 </div>
 
 <div id="pagefooter">

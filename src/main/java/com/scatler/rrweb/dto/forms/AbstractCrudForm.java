@@ -1,6 +1,7 @@
 package com.scatler.rrweb.dto.forms;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,10 +11,27 @@ import java.util.List;
  */
 public abstract class AbstractCrudForm<T extends Serializable> {
 
-    protected List<T> data;
+    protected List<T> data = new ArrayList<>();
+
+    public boolean showButtons() {
+        return false;
+    }
+
+    public Boolean getShowEditDelete() {
+        return showEditDelete;
+    }
+
+    public void setShowEditDelete(Boolean showEditDelete) {
+        this.showEditDelete = showEditDelete;
+    }
+
+    protected Boolean showEditDelete = false;
 
     public AbstractCrudForm(List<T> data) {
         this.data = data;
+    }
+
+    public AbstractCrudForm() {
     }
 
     /**
@@ -109,7 +127,5 @@ public abstract class AbstractCrudForm<T extends Serializable> {
     public String getId(int row) {
         return getId(data.get(row));
     }
-
-
 
 }

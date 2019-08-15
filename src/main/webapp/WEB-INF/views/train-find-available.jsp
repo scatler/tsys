@@ -5,10 +5,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="ti" tagdir="/WEB-INF/tags/input" %>
-<t:genericpage>
-
-    <form:form class="form-horizontal" method="POST" modelAttribute="selector" action="/station/getTimeTable">
-        <ti:spdd field="id" list="${stations}" title="Station From"/>
+<t:genericpage inner_title="Tickets">
+    <form:form class="form-horizontal" method="POST" modelAttribute="trainSelector" action="/tickets/trains">
+        <ti:spdd field="stationFrom" list="${stations}" title="Station From"/>
+        <ti:spdd field="stationTo" list="${stations}" title="Station To"/>
         <ti:datevalid field="day" title="Date"/>
         <ti:btnsubmit title="Find!"/>
     </form:form>

@@ -18,4 +18,5 @@ public interface IDao<T, K> {
 
     void saveAll (List<T> entity);
 
+
 }

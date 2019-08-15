@@ -15,4 +15,9 @@ public class StationDTO extends AbstractDTO {
     private Integer lineId;
     private String name;
     private Date timezone;
+
+    public StationDTO(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

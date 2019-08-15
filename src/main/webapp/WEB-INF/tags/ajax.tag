@@ -35,7 +35,9 @@
                 },
                 error: function(res) {
                     alert("error");
-                    $('#pagefooter').html(res);
+                    alert(res.responseText);
+                    $('#resultContainer').html(res.responseText);
+                    $('#resultContainer').show();
                 }
             })
         });

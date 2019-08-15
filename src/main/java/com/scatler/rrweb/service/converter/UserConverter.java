@@ -3,6 +3,7 @@ package com.scatler.rrweb.service.converter;
 import com.scatler.rrweb.dto.UserDTO;
 import com.scatler.rrweb.entity.Authorities;
 import com.scatler.rrweb.entity.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -39,7 +40,7 @@ public class UserConverter implements IConverter<User, UserDTO> {
         user.setEmail(dto.getEmail());
         user.setLogin(dto.getLogin());
         user.setType(dto.getType());
-        user.setPassword(dto.getPassword());
+        user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
         user.setAuthorities(dto.getAuthorities()
                 .stream()
                 .map(Authorities::new)

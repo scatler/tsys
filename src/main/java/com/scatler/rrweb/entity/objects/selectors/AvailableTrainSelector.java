@@ -2,19 +2,23 @@ package com.scatler.rrweb.entity.objects.selectors;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class AvailableTrainSelector {
 
-    @NotEmpty
-    private String stationFrom;
-    @NotEmpty
-    private String stationTo;
-    @NotEmpty
-    private String day;
+    @NotNull
+    private Integer stationFrom;
+    @NotNull
+    private Integer stationTo;
+    @NotNull
+    private Date day;
 
 }

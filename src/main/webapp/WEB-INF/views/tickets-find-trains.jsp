@@ -16,6 +16,7 @@
             <div class="form-group"><t:datepicker/></div>
             <div class="form-group"><t:btnsearch/></div>
         </form>
+        <div id="error-panel"></div>
         <t:ajaxresp/>
     </jsp:body>
 </t:genericpage>

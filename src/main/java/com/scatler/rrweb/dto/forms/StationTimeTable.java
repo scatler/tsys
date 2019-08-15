@@ -4,15 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StationTimeTable {
+public class StationTimeTable implements Serializable {
 
-    private int trainId;
+    private Integer trainId;
+    private Integer routeId;
+    private String routeName;
     private Date arrivalTime;
-    //TODO add more
 }

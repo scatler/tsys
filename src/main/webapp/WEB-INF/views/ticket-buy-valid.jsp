@@ -6,10 +6,10 @@
 <%@taglib prefix="ti" tagdir="/WEB-INF/tags/input" %>
 <t:genericpage>
     ${samePassengerError}
-    <form:form method="POST" modelAttribute="ticket" action="saveBuy">
+    <form:form method="POST" modelAttribute="ticket" action="saveBuy" cssClass="form-horizontal">
         <ti:input field="name" title="Name"/>
         <ti:input field="surname" title="Surname"/>
-        <ti:datevalid field="birthday"/>
+        <ti:datevalid field="birthday" title="Birthday"/>
         <ti:btnsubmit title="Buy!"/>
     </form:form>
 </t:genericpage>

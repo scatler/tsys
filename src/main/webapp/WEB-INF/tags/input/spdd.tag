@@ -5,8 +5,8 @@
 <%@attribute name="list" required="true" type="java.util.ArrayList" %>
 <%@attribute name="title" required="true" %>
 <div class="form-group">
-    <label for="select" class="col-md-3 control-label">${title}</label>
-    <div class="col-md-9">
+    <label for="select" class="col-sm-4 control-label">${title}</label>
+    <div class="col-sm-4">
         <form:select id="select" path="${field}" cssClass="form-control">
             <form:option value="" label="--Select ${title}"/>
             <form:options items="${list}" itemValue="id" itemLabel="name"/>

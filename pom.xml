@@ -12,6 +12,7 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<spring.version>5.1.0.RELEASE</spring.version>
 		<spring-security.version>5.0.6.RELEASE</spring-security.version>
+		<org.slf4j-version>1.7.5</org.slf4j-version>
 		<hibernate.version>5.3.5.Final</hibernate.version>
 		<hibernate.validator>5.4.1.Final</hibernate.validator>
 		<c3p0.version>0.9.5.2</c3p0.version>
@@ -93,6 +94,49 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.8</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- JSP Dependency -->
