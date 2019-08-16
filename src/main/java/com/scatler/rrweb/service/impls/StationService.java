@@ -6,35 +6,37 @@ import com.scatler.rrweb.dto.StationDTO;
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.dto.forms.StationTimeTable;
 import com.scatler.rrweb.service.converter.IConverter;
+import com.scatler.rrweb.service.converter.StationConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Qualifier("stationService")
-public class StationService extends AbstractService<Station, StationDTO> implements IStationTimeTable {
+public class StationService  {
 
-    //@Autowired
-    public StationService(IDao<Station, Integer> dao, IConverter<Station, StationDTO> converter) {
-        super(dao, converter);
-    }
+    @Autowired
+    StationDAO dao;
 
-    @Override
-    IDao<Station, Integer> getDao() {
-        return dao;
-    }
-
-    @Override
-    IConverter<Station, StationDTO> getConverter() {
-        return converter;
-    }
+    @Autowired
+    StationConverter converter;
 
     @Transactional
     public List<StationTimeTable> getStationSchedule(Integer station_id, Date day) {
-        return ((StationDAO)dao).getStationSchedule(station_id,day);
+        return dao.getStationSchedule(station_id,day);
     }
 
+    @Transactional
+    public List<StationDTO> getAll() {
+        return dao.getAll().stream().map((a)->converter.toDto(a)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void save(StationDTO station) {
+        dao.save(converter.toEntity(station));
+    }
 }

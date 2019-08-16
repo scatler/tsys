@@ -1,29 +1,36 @@
 package com.scatler.rrweb.service.impls;
 
+import com.scatler.rrweb.dao.impls.LineDAO;
 import com.scatler.rrweb.dao.interfaces.IDao;
 import com.scatler.rrweb.dto.LineDTO;
 import com.scatler.rrweb.entity.Line;
 import com.scatler.rrweb.service.converter.IConverter;
+import com.scatler.rrweb.service.converter.LineConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
-@Qualifier("lineService")
-public class LineService extends  AbstractService <Line, LineDTO>{
+public class LineService {
 
     @Autowired
-    public LineService(IDao<Line, Integer> dao, IConverter<Line, LineDTO> converter) {
-        super(dao, converter);
-    }
+    LineDAO dao;
 
-    @Override
+    @Autowired
+    LineConverter converter;
+
     IDao<Line, Integer> getDao() {
         return dao;
     }
 
-    @Override
     IConverter<Line, LineDTO> getConverter() {
         return converter;
+    }
+
+    public List<LineDTO> getAll() {
+        return dao.getAll().stream().map((a)->converter.toDto(a)).collect(Collectors.toList());
     }
 }

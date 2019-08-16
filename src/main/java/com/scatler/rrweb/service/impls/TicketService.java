@@ -60,4 +60,9 @@ public class TicketService extends AbstractService<Ticket, TicketDTO> implements
     public boolean findSamePassenger(TicketDTO ticketDTO) {
         return ((TicketDAO) dao).findSamePassenger(converter.toEntity(ticketDTO));
     }
+
+    @Transactional
+    public List<AllPassengersDTO> getAllPassengers(Integer id, Date day) {
+        return ticketDAO.getAllPassengers(id,day);
+    }
 }

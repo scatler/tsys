@@ -21,7 +21,6 @@ public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
         super(data);
     }
 
-
     @Override
     protected String getId(AvailableTrain record) {
         return String.valueOf(record.getTrainRouteDay());
@@ -38,6 +37,8 @@ public class AvailableTrainForm extends AbstractCrudForm<AvailableTrain> {
 
         return columNames;
     }
+
+
 
     @Override
     protected String getDataAtColumn(AvailableTrain record, int column) {

@@ -2,10 +2,8 @@ package com.scatler.rrweb.controller;
 
 import com.scatler.rrweb.dto.UserDTO;
 import com.scatler.rrweb.entity.objects.exception.EmailExistsException;
-import com.scatler.rrweb.service.interfaces.IRegistrationService;
-import com.scatler.rrweb.service.interfaces.IService;
+import com.scatler.rrweb.service.impls.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -30,12 +28,7 @@ import javax.validation.Valid;
 public class AdminController {
 
     @Autowired
-    @Qualifier("userService")
-    IService<UserDTO, Integer> userService;
-
-    @Autowired
-    @Qualifier("userService")
-    IRegistrationService regService;
+    UserService userService;
 
     @GetMapping("/")
     public String index(Model model, Authentication au, HttpServletRequest request) {
@@ -75,7 +68,7 @@ public class AdminController {
     }
 
     private void createUserAccount(UserDTO accountDto, BindingResult result) throws EmailExistsException {
-        regService.registerNewUserAccount(accountDto);
+        userService.registerNewUserAccount(accountDto);
     }
 
     @ExceptionHandler(EmailExistsException.class)

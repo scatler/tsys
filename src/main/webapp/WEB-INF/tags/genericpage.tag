@@ -15,6 +15,8 @@
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="<c:url value="/resources/js/ui/1.12.1/jquery-ui.js" />"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 </head>
 <body>
@@ -29,7 +31,15 @@
                 ${inner_title}
             </div>
         </div>
+
         <div class="panel-body">
+            <c:if test="${not empty error}">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                        ${error}
+                </div>
+            </c:if>
             <jsp:doBody/>
         </div>
 <%--        <div class="alert alert-danger" role="alert">

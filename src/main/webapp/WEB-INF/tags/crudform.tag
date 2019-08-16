@@ -17,7 +17,7 @@
                     <th>${col}</th>
                 </c:forEach>
                 <!-- Add two more for delete and edit -->
-                <c:if test="${genForm.showEditDelete}">
+                <c:if test="${genForm.showButtons()}">
                     <th></th>
                     <th></th>
                 </c:if>
@@ -28,7 +28,6 @@
                     <td><spring:message code="common.crud.norecords"/></td>
                 </tr>
             </c:if>
-
             <c:if test="${genForm.resultsSize() > 0}">
                 <c:forEach var="row" begin="0" end="${genForm.resultsSize() - 1}">
                     <tr>

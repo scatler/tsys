@@ -1,10 +1,12 @@
 package com.scatler.rrweb.controller;
 
+import com.scatler.rrweb.dto.AllPassengersDTO;
 import com.scatler.rrweb.dto.RouteDTO;
 import com.scatler.rrweb.dto.StationDTO;
 import com.scatler.rrweb.dto.TicketDTO;
 import com.scatler.rrweb.dto.forms.AvailableTrain;
 import com.scatler.rrweb.dto.forms.AvailableTrainForm;
+import com.scatler.rrweb.dto.forms.ViewAllPassengersForm;
 import com.scatler.rrweb.entity.objects.exception.FoundSamePassengerException;
 import com.scatler.rrweb.entity.objects.selectors.AvailableTrainSelector;
 import com.scatler.rrweb.service.interfaces.ICustomTicketService;
@@ -39,8 +41,7 @@ import java.util.List;
 public class TicketController {
 
     @Autowired
-    @Qualifier("stationService")
-    private IService<StationDTO, Integer> stationService;
+    private StationService stationService;
     @Autowired
     @Qualifier("ticketService")
     private IService<TicketDTO, Integer> ticketService;
@@ -51,20 +52,6 @@ public class TicketController {
     @Qualifier("routeService")
     private IService<RouteDTO, Integer> service;
 
-    @GetMapping("start")
-    public String findTrains(Model model) {
-
-
-        List<StationDTO> stations  = stationService.getAll();
-        AvailableTrainSelector trainSelector = new AvailableTrainSelector();
-        AvailableTrainForm genForm = new AvailableTrainForm();
-        model.addAttribute("genForm", genForm);
-        model.addAttribute("trainSelector", trainSelector);
-        model.addAttribute("stations", stations);
-        return "train-find-available";
-    }
-
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -72,6 +59,16 @@ public class TicketController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
+    @GetMapping("/start")
+    public String findTrains(Model model) {
+        List<StationDTO> stations = stationService.getAll();
+        AvailableTrainSelector trainSelector = new AvailableTrainSelector();
+        AvailableTrainForm genForm = new AvailableTrainForm();
+        model.addAttribute("genForm", genForm);
+        model.addAttribute("trainSelector", trainSelector);
+        model.addAttribute("stations", stations);
+        return "train-find-available";
+    }
 
     @PostMapping("/trains")
     public ModelAndView getAvailableTrainTable(@ModelAttribute("trainSelector") @Valid AvailableTrainSelector ts, BindingResult res, Model model, @ModelAttribute("stations") List<StationDTO> stations) {
@@ -100,7 +97,6 @@ public class TicketController {
                             @RequestParam("stationFrom") Integer stationFrom,
                             @RequestParam("stationTo") Integer stationTo,
                             Model model) {
-
         TicketDTO ticket = new TicketDTO();
         ticket.setTrd(trid);
         ticket.setStation1Id(stationFrom);
@@ -109,9 +105,8 @@ public class TicketController {
         return "ticket-buy-valid";
     }
 
-
     @PostMapping("/saveBuy")
-    public String saveBuy(@ModelAttribute("ticket") @Validated TicketDTO ticket, BindingResult res, Model model) throws FoundSamePassengerException {
+    public String saveBuy(@ModelAttribute("ticket") @Validated TicketDTO ticket, BindingResult res, Model model) throws FoundSamePassengerException, NotEnoughTimeBeforeDeparture {
         if (res.hasErrors()) {
             return "ticket-buy-valid";
         }
@@ -119,12 +114,35 @@ public class TicketController {
         return "ticket-buy-confirm";
     }
 
-    @ExceptionHandler(FoundSamePassengerException.class)
-    public ModelAndView handleUsernameNotFoundException(HttpServletRequest request, Exception ex) {
+    @GetMapping("/viewAllPassengers") // View all passengers start page
+    public ModelAndView viewAllPassengers () {
+        List<RouteDTO> routeDtos = routeService.getAll();
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("ticket-buy-valid");
-        mv.addObject("error",ex.toString());
-        mv.addObject("ticket",new TicketDTO());
+        mv.setViewName("ticket-viewallpassengers");
+        mv.addObject("list",routeDtos);
+        mv.addObject("selector", new ViewAllPassengersSelector());
         return mv;
     }
+
+    @PostMapping("/loadAllPassengers")
+    public ModelAndView loadAllPassengers (@ModelAttribute("selector") @Validated ViewAllPassengersSelector vs,
+                                           BindingResult res,
+                                           @ModelAttribute("list") List<RouteDTO> routeDtos) {
+
+        ModelAndView mv = new ModelAndView();
+        if (res.hasErrors()) {
+            mv.addObject("selector",vs);
+            mv.addObject("list",routeDtos);
+            mv.setViewName("ticket-viewallpassengers");
+            return mv;
+        } else  {
+            List<AllPassengersDTO> passengers = ticketService.getAllPassengers(vs.getId(),vs.getDay());
+            ViewAllPassengersForm genForm = new ViewAllPassengersForm(passengers);
+            mv.addObject("genForm",genForm);
+            mv.setViewName("ticket-viewallpassengers");
+        }
+        return mv;
+    }
+
+
 }

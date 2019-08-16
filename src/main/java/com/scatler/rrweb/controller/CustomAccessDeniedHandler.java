@@ -1,4 +1,4 @@
-package com.scatler.rrweb.config;
+package com.scatler.rrweb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

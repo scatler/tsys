@@ -1,9 +1,8 @@
 package com.scatler.rrweb.controller;
 
 import com.scatler.rrweb.dto.UserDTO;
-import com.scatler.rrweb.service.interfaces.IService;
+import com.scatler.rrweb.service.impls.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    @Qualifier("userService")
-    private IService<UserDTO,Integer> userService;
+    private UserService userService;
 
     @GetMapping("/list")
     public String listUsers(Model model) {

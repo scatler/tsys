@@ -1,14 +1,11 @@
 package com.scatler.rrweb.service.impls;
 
 import com.scatler.rrweb.dao.impls.UserDAO;
-import com.scatler.rrweb.dao.interfaces.IDao;
 import com.scatler.rrweb.dto.UserDTO;
 import com.scatler.rrweb.entity.User;
 import com.scatler.rrweb.entity.objects.exception.EmailExistsException;
-import com.scatler.rrweb.service.converter.IConverter;
-import com.scatler.rrweb.service.interfaces.IRegistrationService;
+import com.scatler.rrweb.service.converter.UserConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,45 +14,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Qualifier("userService")
-public class UserService extends AbstractService<User, UserDTO> implements UserDetailsService, IRegistrationService {
+public class UserService {
 
     @Autowired
-    public UserService(IDao<User, Integer> dao, IConverter<User, UserDTO> converter) {
-        super(dao, converter);
-    }
+    UserDAO dao;
 
-    @Override
-    IDao<User, Integer> getDao() {
-        return dao;
-    }
+    @Autowired
+    UserConverter converter;
 
-    @Override
-    IConverter<User, UserDTO> getConverter() {
-        return converter;
-    }
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = ((UserDAO) dao).findUserByLogin(login);
-        UserDTO userDTO = converter.toDto(user);
-        UserBuilder builder = null;
-        if (userDTO != null) {
-            builder = org.springframework.security.core.userdetails.User.withUsername(login);
-            builder.password(userDTO.getPassword());
-            String[] authorities = userDTO.getAuthorities().toArray(new String[0]);
-            builder.authorities(authorities);
-        } else {
-            throw new UsernameNotFoundException("User not found.");
-        }
-        return builder.build();
-    }
 
     @Transactional
-    @Override
     public void registerNewUserAccount(UserDTO accountDto) throws EmailExistsException {
 
         if (emailExists(accountDto.getEmail())) {
@@ -68,12 +41,25 @@ public class UserService extends AbstractService<User, UserDTO> implements UserD
         dao.save(user);
     }
 
-    @Override
-    public boolean emailExists(String email) {
+    private boolean emailExists(String email) {
         User user = ((UserDAO) dao).findByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
+    }
+
+    public List<UserDTO> getAll() {
+        return dao.getAll().stream().map((a)->converter.toDto(a)).collect(Collectors.toList());
+
+    }
+
+    public void save(UserDTO userDTO) {
+        dao.save(converter.toEntity(userDTO));
+    }
+
+    public void removeById(int id) {
+        dao.removeById(id);
+    }
+
+    public UserDTO get(int id) {
+        return converter.toDto(dao.get(id));
     }
 }

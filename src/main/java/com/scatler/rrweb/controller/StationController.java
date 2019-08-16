@@ -8,16 +8,13 @@ import com.scatler.rrweb.entity.Line;
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.objects.selectors.TimeTableSelector;
 import com.scatler.rrweb.entity.objects.validator.StationValidator;
-import com.scatler.rrweb.service.impls.IStationTimeTable;
+import com.scatler.rrweb.service.impls.LineService;
 import com.scatler.rrweb.service.impls.StationService;
-import com.scatler.rrweb.service.interfaces.IService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/station")
@@ -42,16 +37,10 @@ import java.util.stream.Collectors;
 public class StationController {
 
     @Autowired
-    @Qualifier("stationService")
-    private IService<StationDTO, Integer> stationService;
+    private StationService stationService;
 
     @Autowired
-    @Qualifier("stationService")
-    private IStationTimeTable timeTableService;
-
-    @Autowired
-    @Qualifier("lineService")
-    private IService<LineDTO, Integer> lineService;
+    private LineService lineService;
 
     @Autowired
     private StationValidator stationValidator;
@@ -77,7 +66,9 @@ public class StationController {
     }
 
     @PostMapping("/getTimeTable")
-    public ModelAndView getTimeTable(@ModelAttribute("selector") @Valid TimeTableSelector ts, BindingResult res, @ModelAttribute("stations") List<StationDTO> stations) {
+    public ModelAndView getTimeTable(@ModelAttribute("selector") @Valid TimeTableSelector ts,
+                                     @ModelAttribute("stations") List<StationDTO> stations,
+                                     BindingResult res) {
 
         if (res.hasErrors()) {
             ModelAndView mv = new ModelAndView();
@@ -88,7 +79,7 @@ public class StationController {
 
         } else {
 
-            List<StationTimeTable> list = timeTableService.getStationSchedule(ts.getId(),ts.getDay());
+            List<StationTimeTable> list = stationService.getStationSchedule(ts.getId(),ts.getDay());
             StationTimeTableForm genForm = new StationTimeTableForm(list);
             ModelAndView mv = new ModelAndView();
             mv.setViewName("station-timetable");

@@ -1,13 +1,15 @@
 package com.scatler.rrweb.controller;
 
-import com.scatler.rrweb.dto.RouteDTO;
 import com.scatler.rrweb.dto.RouteStationDTO;
-import com.scatler.rrweb.dto.forms.RouteStationForm;
-import com.scatler.rrweb.dto.StationDTO;
 import com.scatler.rrweb.dto.TrainDTO;
-import com.scatler.rrweb.service.interfaces.IService;
+import com.scatler.rrweb.dto.ViewAllTrain;
+import com.scatler.rrweb.dto.forms.RouteStationForm;
+import com.scatler.rrweb.dto.forms.ViewAllTrainsForm;
+import com.scatler.rrweb.service.impls.RouteService;
+import com.scatler.rrweb.service.impls.RouteStationService;
+import com.scatler.rrweb.service.impls.StationService;
+import com.scatler.rrweb.service.impls.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 
 @Controller
 @RequestMapping("/train")
@@ -33,26 +35,19 @@ import java.util.Date;
 public class TrainController {
 
     @Autowired
-    private IService<TrainDTO, Integer> trainService;
-
+    private TrainService trainService;
     @Autowired
-    @Qualifier("routeService")
-    private IService<RouteDTO, Integer> routeService;
-
+    private RouteService routeService;
     @Autowired
-    @Qualifier("stationService")
-    private IService<StationDTO, Integer> stationService;
-
+    private RouteStationService routeStationService;
     @Autowired
-    @Qualifier("routeStationService")
-    private IService<RouteStationDTO, Integer> routeStationService;
+    private StationService stationService;
 
     @InitBinder("routeStationForm")
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-        //binder.addValidators(stationValidator);
     }
 
     @GetMapping("/add")
@@ -73,7 +68,6 @@ public class TrainController {
 
     @GetMapping("/addRouteStation")
     public String assignRouteToStation(Model model) {
-
         model.addAttribute("routesDtos", routeService.getAll());
         model.addAttribute("stationDtos", stationService.getAll());
         //--------------------------Initializing route----------------------
@@ -87,9 +81,7 @@ public class TrainController {
 
     @RequestMapping(value = "newRouteSubmisson", method = RequestMethod.POST)
     public ModelAndView addRow(RouteStationForm routeStationForm, String submit) {
-
         ModelAndView mv = new ModelAndView("route-station-add");
-
         if (submit.equals("addRow")) {
             routeStationForm.getRs().add(new RouteStationDTO());
             return mv;
@@ -100,4 +92,13 @@ public class TrainController {
         return mv;
     }
 
+    @GetMapping("/viewAllTrains")
+    public ModelAndView viewAllTrains (){
+        ModelAndView mv = new ModelAndView();
+        List<ViewAllTrain> list = trainService.viewAllTrains();
+        ViewAllTrainsForm genForm = new ViewAllTrainsForm(list);
+        mv.addObject("genForm",genForm);
+        mv.setViewName("trains-view-all");
+        return mv;
+    }
 }
