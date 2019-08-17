@@ -6,9 +6,8 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="ti" tagdir="/WEB-INF/tags/input" %>
 <t:genericpage>
-    <div class="form-group">
+    <div class="form-group form-horizontal">
         <form action='<spring:url value="/loginAction"/>' method="post">
-            ${error}
             <table>
                 <tr>
                     <td>Username</td>

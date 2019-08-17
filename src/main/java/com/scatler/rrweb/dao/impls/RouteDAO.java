@@ -4,8 +4,4 @@ import com.scatler.rrweb.entity.Route;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RouteDAO extends AbstractDAO<Route> {
-    public RouteDAO() {
-        super(Route.class);
-    }
-}
+public class RouteDAO extends AbstractDAO<Route> {}

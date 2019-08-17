@@ -4,10 +4,17 @@
 <%@attribute name="field" required="true" %>
 <%@attribute name="title" %>
 
+<c:set var="bindError"><form:errors path="${field}"/></c:set>
 <div class="form-group">
     <label for="${field}" class="col-sm-4 control-label">${title}</label>
     <div class="col-sm-4">
         <form:input path="${field}" cssClass="form-control"/>
-        <form:errors path="${field}" cssClass="error" />
+        <c:if test="${not empty bindError}">
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                <form:errors path="${field}" />
+            </div>
+        </c:if>
     </div>
 </div>

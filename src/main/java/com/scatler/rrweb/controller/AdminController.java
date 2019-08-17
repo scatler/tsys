@@ -26,13 +26,11 @@ import javax.validation.Valid;
 @Controller
 @ControllerAdvice
 public class AdminController {
-
     @Autowired
     UserService userService;
 
     @GetMapping("/")
     public String index(Model model, Authentication au, HttpServletRequest request) {
-
         String role_admin = au
                 .getAuthorities()
                 .stream()
@@ -41,14 +39,12 @@ public class AdminController {
                 .orElse("ROLE_ADMIN");
         if (role_admin.equals("ROLE_ADMIN"))
             request.getSession().setAttribute("isAdmin", true);
-
         model.addAttribute("message", "You are logged in as " + au.getName());
         return "index";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String showRegistrationForm(WebRequest request, Model model) {
-
         UserDTO userDto = new UserDTO();
         model.addAttribute("user", userDto);
         return "registration";
@@ -58,7 +54,6 @@ public class AdminController {
     public ModelAndView registerUserAccount(
             @ModelAttribute("user") @Valid UserDTO accountDto,
             BindingResult result, WebRequest request, Errors errors) throws EmailExistsException {
-
         if (result.hasErrors()) {
             return new ModelAndView("registration", "user", accountDto);
         } else {
@@ -69,14 +64,5 @@ public class AdminController {
 
     private void createUserAccount(UserDTO accountDto, BindingResult result) throws EmailExistsException {
         userService.registerNewUserAccount(accountDto);
-    }
-
-    @ExceptionHandler(EmailExistsException.class)
-    public ModelAndView handleUsernameNotFoundException(HttpServletRequest request, Exception ex) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("registration");
-        mv.addObject("error",ex.toString());
-        mv.addObject("user",new UserDTO());
-        return mv;
     }
 }

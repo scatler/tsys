@@ -9,11 +9,6 @@ import java.util.List;
 
 @Repository
 public class TrainDAO extends AbstractDAO<Train> {
-
-    public TrainDAO() {
-        super(Train.class);
-    }
-
     public List<ViewAllTrain> viewAllTrains() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("select distinct new com.scatler.rrweb.dto.ViewAllTrain(tr.id,tr.name,trd.routeId.routeId.id,r.name,tr.seats,trd.dayDept) from Train tr " +

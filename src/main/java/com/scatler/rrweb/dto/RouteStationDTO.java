@@ -17,5 +17,14 @@ public class RouteStationDTO extends AbstractDTO {
     private Integer day;
     private Integer routeId;
     private Integer stationId;
-}
+    private Boolean isDeleted;
 
+    public RouteStationDTO(Integer id, Date arrivalTime, Date stopMin, Integer day, Integer routeId, Integer stationId) {
+        this.id = id;
+        this.arrivalTime = arrivalTime;
+        this.stopMin = stopMin;
+        this.day = day;
+        this.routeId = routeId;
+        this.stationId = stationId;
+    }
+}

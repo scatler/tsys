@@ -1,6 +1,8 @@
 package com.scatler.rrweb.dto.forms;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,26 +14,17 @@ import java.util.List;
 public abstract class AbstractCrudForm<T extends Serializable> {
 
     protected List<T> data = new ArrayList<>();
-
-    public boolean showButtons() {
-        return false;
-    }
-
-    public Boolean getShowEditDelete() {
-        return showEditDelete;
-    }
-
-    public void setShowEditDelete(Boolean showEditDelete) {
-        this.showEditDelete = showEditDelete;
-    }
-
-    protected Boolean showEditDelete = false;
+    protected DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
     public AbstractCrudForm(List<T> data) {
         this.data = data;
     }
 
     public AbstractCrudForm() {
+    }
+
+    public boolean showButtons() {
+        return false;
     }
 
     /**

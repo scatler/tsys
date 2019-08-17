@@ -9,7 +9,11 @@ import org.springframework.stereotype.Component;
 public class StationConverter implements IConverter<Station, StationDTO > {
     @Override
     public StationDTO toDto(Station entity) {
-        return new StationDTO(entity.getId(),entity.getLineId().getId(),entity.getName(),entity.getTimezone());
+        return new StationDTO(
+                entity.getId(),
+                entity.getLineId().getId(),
+                entity.getName(),
+                entity.getTimezone());
     }
 
     @Override
@@ -17,10 +21,8 @@ public class StationConverter implements IConverter<Station, StationDTO > {
         Station station = new Station();
         station.setId(dto.getId());
         station.setName(dto.getName());
-        Line line = new Line();
-        line.setId(dto.getId());
-        station.setLineId(line);
+        station.setLineId(new Line(dto.getLineId()));
         station.setTimezone(dto.getTimezone());
-        return null;
+        return station;
     }
 }

@@ -11,9 +11,6 @@ import java.util.List;
 @Repository
 @SuppressWarnings("unchecked")
 public class StationDAO extends AbstractDAO <Station> {
-    public StationDAO() {
-        super(Station.class);
-    }
 
     public List<StationTimeTable> getStationSchedule(int station_id, Date day) {
 

@@ -3,33 +3,35 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="ti" tagdir="/WEB-INF/tags/input" %>
 <t:genericpage inner_title="Modify route">
-    <form:form action="/train/newRouteSubmisson" method="POST"  modelAttribute="routeStationForm" cssClass="form-horizontal">
+    <form:form action="/train/newRouteSubmisson" method="POST" modelAttribute="routeStationForm"
+               cssClass="form-horizontal">
         <table class="table table-striped table-bordered table-condensed text-center ">
             <thead class="thead-dark ">
             <tr>
                 <th>Station</th>
                 <th>Arrival time</th>
                 <th>Day count from start</th>
-                <th>Stop in minutes</th>
+                <th>Stop time</th>
+                <th>Select a row</th>
             </tr>
             </thead>
             <tbody>
             <ti:spdd field="routeId" list="${routesDtos}" title="Route"/>
-            <%--<td><ti:spdd field="${routeDtos}" list="" title=""/></td>--%>
-            <c:forEach varStatus="us" var="r" items="${routeStationForm.rs}" >
+            <c:forEach varStatus="us" var="r" items="${routeStationForm.rs}">
                 <tr>
-                    <td><ti:spdd field="rs[${us.index}].stationId" list="${stationDtos}" title=""/></td>
-                    <%--<td><form:input type="text" path="rs[${us.index}].arrivalTime" value="00:00:00"/> ${rs.arrivalTime}</td>--%>
-                    <td><ti:inputfmt field="rs[${us.index}].arrivalTime" title=""/></td>
-                    <td ><ti:inputfmt field="rs[${us.index}].day" title=""/></td>
-                    <td><ti:input field="rs[${us.index}].stopMin" title=""/></td>
-                    <td><form:input type="hidden" path="rs[${us.index}].id"/></td>
+                    <td><ti:spddfmt field="rs[${us.index}].stationId" list="${stationDtos}" title=""/></td>
+                    <td><ti:time field="rs[${us.index}].arrivalTime" title="" idtime="timer1${us.index}"/></td>
+                    <td><ti:inputfmt field="rs[${us.index}].day" title=""/></td>
+                    <td><ti:time field="rs[${us.index}].stopMin" title="" idtime="timer2${us.index}"/></td>
+                    <td><ti:chkbox field="rs[${us.index}].isDeleted" title=""/></td>
+                    <form:input type="hidden" path="rs[${us.index}].id"/>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-        <input type="submit" name="submit" value="addRow" class="btn-primary" />
-        <input type="submit" name="submit" value="go" class="btn-danger" />
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <input type="submit" name="submit" value="addRow" class="btn btn-primary"/>
+        <input type="submit" name="submit" value="go" class="btn btn-danger"/>
+        <input type="submit" name="submit" value="Delete rows" class="btn btn-danger"/>
+        <input type="submit" name="submit" value="Get data..." class="btn btn-danger"/>
     </form:form>
 </t:genericpage>

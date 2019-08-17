@@ -15,18 +15,11 @@ import java.util.List;
 
 @Repository
 public class TicketDAO extends AbstractDAO<Ticket> {
-
     @Autowired
     private SessionFactory sessionFactory;
 
-    public TicketDAO() {
-        super(Ticket.class);
-    }
-
     public List<AvailableTrain> getAvailableTrains(int station_id1, int station_id2, Date day) {
-
         Session session = sessionFactory.getCurrentSession();
-
         //TODO check object location
         String hql = "select " +
                 "new com.scatler.rrweb.dto.forms.AvailableTrain (" + // start of searchResultObject
@@ -37,7 +30,6 @@ public class TicketDAO extends AbstractDAO<Ticket> {
                 "rs1.stationId.name," +//5
                 "rs1.arrivalTime ," +//7
                 "adddays(trd.dayDept,rs1.day), " +//8
-
                 // 9 time when train arrive to 2nd station
                 "(select rs4.arrivalTime  from RouteStation rs4 where stationId.id = :station2 and routeId = rs1.routeId )," +
                 //10  day when train arrive to 2nd station
@@ -50,9 +42,7 @@ public class TicketDAO extends AbstractDAO<Ticket> {
                 "(select  st.name  from Station st where id = :station2 ) ," +
                 //13 freeseats
                 "(select (t.seats - count(*)) as ft from Ticket ti where ti.station1Id.id = :station1 and ti.trd.id = trd.id) " +
-
                 ")" + //end of searchResultObject
-
                 "from Train t " +
                 "join TrainRouteidDay trd on t.id = trd.trainId.id  " +
                 "join trd.routeId rs1 " +
@@ -63,7 +53,6 @@ public class TicketDAO extends AbstractDAO<Ticket> {
                 "and adddays(trd.dayDept,rs1.day) = :date " +
                 //"and (select (t.seats - count(*)) as ft from Ticket ti where ti.station1Id.id = :station1 and ti.trd.id = trd.id ) > 0" +
                 "";
-
         List obj = session.createQuery(hql)
                 .setParameter("station1", station_id1)
                 .setParameter("station2", station_id2)
@@ -77,7 +66,6 @@ public class TicketDAO extends AbstractDAO<Ticket> {
 
     public boolean findSamePassenger(Ticket ticket) {
         Session session = sessionFactory.getCurrentSession();
-
         return session.createQuery("select t from Ticket t " +
                 "where t.birthday = :date " +
                 "and t.name = :name " +
@@ -116,12 +104,10 @@ public class TicketDAO extends AbstractDAO<Ticket> {
                 "join Route r on r.id = trd.routeId.routeId.id " +
                 "where r.id = :route " +
                 "and trd.dayDept=:date";
-
         Query query = session.createQuery(
                 hql)
                 .setParameter("route", id)
                 .setParameter("date", day, TemporalType.DATE);
-
         return query.getResultList();
     }
 }

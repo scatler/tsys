@@ -9,27 +9,18 @@ import com.scatler.rrweb.service.converter.LineConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class LineService {
-
     @Autowired
     LineDAO dao;
-
     @Autowired
     LineConverter converter;
-
-    IDao<Line, Integer> getDao() {
-        return dao;
-    }
-
-    IConverter<Line, LineDTO> getConverter() {
-        return converter;
-    }
-
+    @Transactional
     public List<LineDTO> getAll() {
         return dao.getAll().stream().map((a)->converter.toDto(a)).collect(Collectors.toList());
     }

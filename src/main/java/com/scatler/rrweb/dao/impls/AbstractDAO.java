@@ -6,18 +6,25 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
-public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T,Integer> {
-
+public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T, Integer> {
     private Class<?> entityClass;
+
+    public AbstractDAO() {
+        Type t = getClass().getGenericSuperclass();
+        ParameterizedType pt = (ParameterizedType) t;
+        entityClass = (Class) pt.getActualTypeArguments()[0];
+    }
+
     public AbstractDAO(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
     @Autowired
     protected SessionFactory sessionFactory;
-
 
     @Override
     public void saveAll(List<T> entity) {
@@ -26,17 +33,14 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T,In
 
     @Override
     public void update(T entity) {
-
     }
 
     @Override
     public void remove(T entity) {
-
     }
 
     @Override
     public void removeById(Integer id) {
-
     }
 
     @Override

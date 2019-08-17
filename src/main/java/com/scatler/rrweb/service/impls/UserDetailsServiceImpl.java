@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
     @Autowired
     UserDAO dao;
     @Autowired
@@ -21,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = ((UserDAO) dao).findUserByLogin(login);
+        User user = dao.findUserByLogin(login);
         UserDTO userDTO = converter.toDto(user);
         org.springframework.security.core.userdetails.User.UserBuilder builder = null;
         if (userDTO != null) {

@@ -8,11 +8,13 @@ import com.scatler.rrweb.dto.forms.AvailableTrain;
 import com.scatler.rrweb.dto.forms.AvailableTrainForm;
 import com.scatler.rrweb.dto.forms.ViewAllPassengersForm;
 import com.scatler.rrweb.entity.objects.exception.FoundSamePassengerException;
+import com.scatler.rrweb.entity.objects.exception.NotEnoughTimeBeforeDeparture;
 import com.scatler.rrweb.entity.objects.selectors.AvailableTrainSelector;
-import com.scatler.rrweb.service.interfaces.ICustomTicketService;
-import com.scatler.rrweb.service.interfaces.IService;
+import com.scatler.rrweb.entity.objects.selectors.ViewAllPassengersSelector;
+import com.scatler.rrweb.service.impls.RouteService;
+import com.scatler.rrweb.service.impls.StationService;
+import com.scatler.rrweb.service.impls.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,20 +39,15 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/tickets")
-@SessionAttributes({"trainSelector","stations","ticket"})
+@SessionAttributes({"trainSelector", "stations", "ticket","selector", "list"})
 public class TicketController {
 
     @Autowired
     private StationService stationService;
     @Autowired
-    @Qualifier("ticketService")
-    private IService<TicketDTO, Integer> ticketService;
+    private TicketService ticketService;
     @Autowired
-    @Qualifier("ticketService")
-    private ICustomTicketService customTicketService;
-    @Autowired
-    @Qualifier("routeService")
-    private IService<RouteDTO, Integer> service;
+    private RouteService routeService;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -71,9 +68,10 @@ public class TicketController {
     }
 
     @PostMapping("/trains")
-    public ModelAndView getAvailableTrainTable(@ModelAttribute("trainSelector") @Valid AvailableTrainSelector ts, BindingResult res, Model model, @ModelAttribute("stations") List<StationDTO> stations) {
-
-
+    public ModelAndView getAvailableTrainTable(@ModelAttribute("trainSelector") @Valid AvailableTrainSelector ts,
+                                               BindingResult res,
+                                               @ModelAttribute("stations") List<StationDTO> stations
+                                               ){
         if (res.hasErrors()) {
             ModelAndView mv = new ModelAndView();
             mv.addObject("stations", stations);
@@ -81,15 +79,10 @@ public class TicketController {
             mv.setViewName("train-find-available");
             return mv;
         } else {
-
-            List<AvailableTrain> trains = (customTicketService
-                    .getAvailableTrains
-                            (ts.getStationFrom(), ts.getStationTo(), ts.getDay()));
-
+            List<AvailableTrain> trains = ticketService.getAvailableTrains(ts.getStationFrom(), ts.getStationTo(), ts.getDay());
             AvailableTrainForm form = new AvailableTrainForm(trains);
             return new ModelAndView("train-find-available", "genForm", form);
         }
-
     }
 
     @GetMapping("/buy")
@@ -110,7 +103,7 @@ public class TicketController {
         if (res.hasErrors()) {
             return "ticket-buy-valid";
         }
-        customTicketService.registerTicket(ticket);
+        ticketService.registerTicket(ticket);
         return "ticket-buy-confirm";
     }
 

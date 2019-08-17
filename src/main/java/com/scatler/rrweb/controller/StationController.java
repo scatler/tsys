@@ -5,9 +5,7 @@ import com.scatler.rrweb.dto.StationDTO;
 import com.scatler.rrweb.dto.forms.StationTimeTable;
 import com.scatler.rrweb.dto.forms.StationTimeTableForm;
 import com.scatler.rrweb.entity.Line;
-import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.entity.objects.selectors.TimeTableSelector;
-import com.scatler.rrweb.entity.objects.validator.StationValidator;
 import com.scatler.rrweb.service.impls.LineService;
 import com.scatler.rrweb.service.impls.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/station")
-@SessionAttributes({"stations","selector"})
+@SessionAttributes({"stations","station","selector","listLines"})
 public class StationController {
 
     @Autowired
@@ -42,15 +40,11 @@ public class StationController {
     @Autowired
     private LineService lineService;
 
-    @Autowired
-    private StationValidator stationValidator;
-
     @InitBinder("station")
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-        binder.addValidators(stationValidator);
     }
 
     @GetMapping("/timeTable") // First page
@@ -67,18 +61,16 @@ public class StationController {
 
     @PostMapping("/getTimeTable")
     public ModelAndView getTimeTable(@ModelAttribute("selector") @Valid TimeTableSelector ts,
-                                     @ModelAttribute("stations") List<StationDTO> stations,
-                                     BindingResult res) {
-
+                                     BindingResult res,
+                                     @ModelAttribute("stations") List<StationDTO> stations
+                                    ) {
         if (res.hasErrors()) {
             ModelAndView mv = new ModelAndView();
             mv.addObject("stations", stations);
             mv.addObject("selector", ts);
             mv.setViewName("station-timetable");
             return mv;
-
         } else {
-
             List<StationTimeTable> list = stationService.getStationSchedule(ts.getId(),ts.getDay());
             StationTimeTableForm genForm = new StationTimeTableForm(list);
             ModelAndView mv = new ModelAndView();
@@ -86,24 +78,26 @@ public class StationController {
             mv.addObject("genForm",genForm);
             return  mv;
         }
-
     }
 
-    @RequestMapping("/add")
+    @GetMapping("/add")
     public String addStation(Model model) {
-        Station station = new Station();
+        StationDTO station = new StationDTO();
         List<LineDTO> lines = lineService.getAll();
-        model.addAttribute(station);
+        model.addAttribute("station",station);
         model.addAttribute("listLines", lines);
         return "station-add";
     }
 
     @RequestMapping("/save")
-    public String saveStation(@Validated StationDTO station, BindingResult res, Model model, @ModelAttribute("listLines") ArrayList<Line> lines) {
-
+    public String saveStation(@ModelAttribute("station") @Valid StationDTO station,
+                              BindingResult res,
+                              @ModelAttribute("listLines") List<LineDTO> lines,
+                              Model model ) {
         if (res.hasErrors()) {
-            model.addAttribute(station);
-            model.addAttribute(lines);
+            model.addAttribute("hasErrors","true");
+            model.addAttribute("station",station);
+            model.addAttribute("listLines",lines);
             return "station-add";
         }
 

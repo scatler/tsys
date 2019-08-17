@@ -52,7 +52,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     }
 
-
     @Bean("messageSource")
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();

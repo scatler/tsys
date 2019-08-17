@@ -16,10 +16,7 @@ public class StationTimeTableForm extends AbstractCrudForm<StationTimeTable> {
         super(list);
     }
 
-    @Override
-    public Boolean getShowEditDelete() {
-        return true;
-    }
+
 
     @Override
     public boolean showButtons() {

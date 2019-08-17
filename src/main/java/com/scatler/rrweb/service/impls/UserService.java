@@ -19,36 +19,29 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-
     @Autowired
     UserDAO dao;
-
     @Autowired
     UserConverter converter;
 
-
-
     @Transactional
     public void registerNewUserAccount(UserDTO accountDto) throws EmailExistsException {
-
         if (emailExists(accountDto.getEmail())) {
             throw new EmailExistsException(
                     "There is an account with that email address:" + accountDto.getEmail());
         }
-
         accountDto.setAuthorities(Arrays.asList("ROLE_USER"));
         User user = converter.toEntity(accountDto);
         dao.save(user);
     }
 
     private boolean emailExists(String email) {
-        User user = ((UserDAO) dao).findByEmail(email);
+        User user = dao.findByEmail(email);
         return user != null;
     }
 
     public List<UserDTO> getAll() {
-        return dao.getAll().stream().map((a)->converter.toDto(a)).collect(Collectors.toList());
-
+        return dao.getAll().stream().map((a) -> converter.toDto(a)).collect(Collectors.toList());
     }
 
     public void save(UserDTO userDTO) {

@@ -7,11 +7,11 @@ import java.util.List;
 public class ViewAllTrainsForm extends AbstractCrudForm<ViewAllTrain> {
 
     private String editLink = "";
-    private String[] columNames = new String[]{"Train#", "Route#", "Route Name", "Total seats", "Day departure"};
+    private String[] columNames = new String[]{"Train#", "Train name","Route#", "Route Name", "Total seats", "Day departure"};
 
     @Override
     public boolean showButtons() {
-        return true;
+        return false;
     }
 
     public ViewAllTrainsForm() {
@@ -53,7 +53,7 @@ public class ViewAllTrainsForm extends AbstractCrudForm<ViewAllTrain> {
             case 4:
                 return String.valueOf(record.getTotalSeats());
             case 5:
-                return String.valueOf(record.getDayDept());
+                return dateFormat.format(record.getDayDept());
         }
         return null;
     }

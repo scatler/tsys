@@ -11,6 +11,13 @@
             <form:option value="" label="--Select ${title}"/>
             <form:options items="${list}" itemValue="id" itemLabel="name"/>
         </form:select>
-        <form:errors path="${field}" cssClass="error"/>
+        <c:set var="bindError"><form:errors path="${field}"/></c:set>
+        <c:if test="${not empty bindError}">
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                <form:errors path="${field}" />
+            </div>
+        </c:if>
     </div>
 </div>

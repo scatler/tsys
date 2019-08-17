@@ -6,6 +6,7 @@
 package com.scatler.rrweb.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,9 +16,9 @@ import java.io.Serializable;
 
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "train")
-@XmlRootElement
 public class Train extends AbstractEntity implements Serializable {
 
     @Id
@@ -34,5 +35,9 @@ public class Train extends AbstractEntity implements Serializable {
     @NotNull
     @Column(name = "seats")
     private Integer seats;
+
+    public Train(Integer id) {
+        this.id = id;
+    }
 
 }

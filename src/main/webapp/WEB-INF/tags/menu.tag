@@ -17,6 +17,7 @@
             <li><a href="/train/addRouteStation">Modify route</a></li>
             <li><a href="/tickets/viewAllPassengers"><spring:message code="view.all.passengers"/></a></li>
             <li><a href="/train/viewAllTrains"><spring:message code="view.all.trains"/></a></li>
+            <li><a href="/train/TRD"><spring:message code="assign.trains.to.route"/></a></li>
         </c:if>
         <li><a href="/tickets/start"><spring:message code="find.tickets.and.trains"/></a></li>
         <li><a href="/station/timeTable">Station timetable</a></li>

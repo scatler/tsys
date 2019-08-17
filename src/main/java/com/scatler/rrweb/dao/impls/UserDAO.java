@@ -8,21 +8,8 @@ import java.util.List;
 
 @Repository
 public class UserDAO extends AbstractDAO<User> {
-    public UserDAO() {
-        super(User.class);
-    }
-
-
     public User findUserByLogin(String login) {
-
-        User result = null;
-        try {
-            result = (User) sessionFactory.getCurrentSession().createQuery("select u from User u where u.login = :login").setParameter("login", login).getSingleResult();
-        } catch (HibernateException e) {
-            System.out.println("Exception in hibernate when find by login");
-            return null;
-        }
-        return result;
+        return (User) sessionFactory.getCurrentSession().createQuery("select u from User u where u.login = :login").setParameter("login", login).getSingleResult();
     }
 
     public User findByEmail(String email) {
@@ -30,7 +17,6 @@ public class UserDAO extends AbstractDAO<User> {
         if (resultList.size() > 0) {
             return (User) resultList.get(0);
         } else {
-
             return null;
         }
     }

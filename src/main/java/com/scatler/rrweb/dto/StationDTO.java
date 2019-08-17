@@ -4,7 +4,9 @@ import com.scatler.rrweb.dto.interfaces.AbstractDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -12,12 +14,11 @@ import java.util.Date;
 @NoArgsConstructor
 public class StationDTO extends AbstractDTO {
     private Integer id;
+    @NotNull
     private Integer lineId;
+    @NotNull
+    @NotEmpty
     private String name;
+    @NotNull
     private Date timezone;
-
-    public StationDTO(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }

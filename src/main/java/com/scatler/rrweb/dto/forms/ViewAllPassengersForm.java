@@ -17,10 +17,6 @@ public class ViewAllPassengersForm extends AbstractCrudForm<AllPassengersDTO> {
         super(list);
     }
 
-    @Override
-    public Boolean getShowEditDelete() {
-        return true;
-    }
 
     @Override
     public boolean showButtons() {

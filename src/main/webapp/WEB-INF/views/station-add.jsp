@@ -9,7 +9,7 @@
     <form:form method="POST" modelAttribute="station" action="save" cssClass="form-horizontal">
         <ti:input field="name" title="Name"/>
         <ti:input field="timezone" title="Timezone"/>
-        <ti:spdd field="lineId.id" list="${listLines}" title="Select Line#"/>
+        <ti:spdd field="lineId" list="${listLines}" title="Select Line#"/>
         <ti:btnsubmit title="Save"/>
     </form:form>
 </t:genericpage>
