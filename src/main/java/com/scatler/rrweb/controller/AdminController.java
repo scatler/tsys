@@ -31,15 +31,19 @@ public class AdminController {
 
     @GetMapping("/")
     public String index(Model model, Authentication au, HttpServletRequest request) {
-        String role_admin = au
-                .getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .findAny()
-                .orElse("ROLE_ADMIN");
-        if (role_admin.equals("ROLE_ADMIN"))
-            request.getSession().setAttribute("isAdmin", true);
-        model.addAttribute("message", "You are logged in as " + au.getName());
+        if (au != null) {
+            String role_admin = au
+                    .getAuthorities()
+                    .stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .findAny()
+                    .orElse("ROLE_ADMIN");
+            if (role_admin.equals("ROLE_ADMIN"))
+                request.getSession().setAttribute("isAdmin", true);
+            model.addAttribute("message", "You are logged in as " + au.getName());
+        } else {
+            return "login";
+        }
         return "index";
     }
 
@@ -58,7 +62,7 @@ public class AdminController {
             return new ModelAndView("registration", "user", accountDto);
         } else {
             createUserAccount(accountDto, result);
-            return new ModelAndView("successRegister", "user", accountDto);
+            return new ModelAndView("login", "success", "User has been registered");
         }
     }
 

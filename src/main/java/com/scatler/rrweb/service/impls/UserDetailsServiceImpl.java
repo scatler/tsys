@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (userDTO != null) {
             builder = org.springframework.security.core.userdetails.User.withUsername(login);
             builder.password(userDTO.getPassword());
-            String[] authorities = userDTO.getAuthorities().toArray(new String[0]);
+            String[] authorities = userDTO.getAuthorities();
             builder.authorities(authorities);
         } else {
             throw new UsernameNotFoundException("User not found.");

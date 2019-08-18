@@ -50,7 +50,7 @@ public class TrainController {
 
     @InitBinder("routeStationForm")
     public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
         binder.addValidators(routeStationFormValidator);
@@ -121,6 +121,7 @@ public class TrainController {
                     Integer routeId = routeStationForm.getRouteId();
                     ArrayList<RouteStationDTO> rsDTO = new ArrayList<>(routeStationService.getByRouteId(routeId));
                     RouteStationForm routeStationFormNew = new RouteStationForm();
+                    routeStationFormNew.setRouteId(routeStationForm.getRouteId());
                     routeStationFormNew.setRs(rsDTO);
                     mv.addObject("routeStationForm", routeStationFormNew);
                     return mv;

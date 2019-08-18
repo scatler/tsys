@@ -18,5 +18,6 @@ public interface IDao<T, K> {
 
     void saveAll (List<T> entity);
 
+    void merge(T entity);
 
 }

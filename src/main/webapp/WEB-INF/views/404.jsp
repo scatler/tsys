@@ -1,16 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: alexkpc
-  Date: 16.08.2019
-  Time: 20:02
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE HTML>
+
 <html>
 <head>
-    <title>404</title>
+    <link rel="stylesheet" href="/resources/css/404/main.css">
 </head>
+
+
 <body>
-Ошибочка 404
+<div class="filter">
+</div>
+
+<div class="error">
+    <h1>404</h1>
+    <p>Sorry, your page went for a long trip and we don't know when she will come.</p>
+
+    <a href="/login"><div class="btn">return home</div></a>
+</div>
 </body>
 </html>

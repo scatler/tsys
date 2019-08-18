@@ -48,13 +48,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EmailExistsException.class)
-    public ModelAndView handlEmailEsists(HttpServletRequest request, Exception ex) {
+    public ModelAndView handleEmailExists(HttpServletRequest request, EmailExistsException ex) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("registration");
+        mv.setViewName(ex.getViewname());
         mv.addObject("error", ex.toString());
         mv.addObject("user", new UserDTO());
         return mv;
     }
+
+
 
     @ExceptionHandler(FoundSamePassengerException.class)
     public ModelAndView handleUsernameNotFoundException(HttpServletRequest request, Exception ex) {

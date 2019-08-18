@@ -1,9 +1,12 @@
 package com.scatler.rrweb.service.impls;
 
+import com.scatler.rrweb.dao.AuDAO;
 import com.scatler.rrweb.dao.impls.UserDAO;
+import com.scatler.rrweb.dto.AuDTO;
 import com.scatler.rrweb.dto.UserDTO;
 import com.scatler.rrweb.entity.User;
 import com.scatler.rrweb.entity.objects.exception.EmailExistsException;
+import com.scatler.rrweb.service.converter.AuConverter;
 import com.scatler.rrweb.service.converter.UserConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User.UserBuilder;
@@ -23,14 +26,18 @@ public class UserService {
     UserDAO dao;
     @Autowired
     UserConverter converter;
+    @Autowired
+    AuDAO auDAO;
+    @Autowired
+    AuConverter auConverter;
 
     @Transactional
     public void registerNewUserAccount(UserDTO accountDto) throws EmailExistsException {
         if (emailExists(accountDto.getEmail())) {
             throw new EmailExistsException(
-                    "There is an account with that email address:" + accountDto.getEmail());
+                    "There is an account with that email address:" + accountDto.getEmail(), "registration");
         }
-        accountDto.setAuthorities(Arrays.asList("ROLE_USER"));
+        accountDto.setAuthorities(new String[]{"ROLE_USER"});
         User user = converter.toEntity(accountDto);
         dao.save(user);
     }
@@ -40,19 +47,34 @@ public class UserService {
         return user != null;
     }
 
+    @Transactional
     public List<UserDTO> getAll() {
         return dao.getAll().stream().map((a) -> converter.toDto(a)).collect(Collectors.toList());
     }
 
-    public void save(UserDTO userDTO) {
-        dao.save(converter.toEntity(userDTO));
+    @Transactional
+    public void save(UserDTO userDTO) throws EmailExistsException {
+        boolean userExists = userDTO.getId() != null;
+        boolean emailExists = dao.findByEmail(userDTO.getEmail()) != null;
+        if (emailExists && userExists) {
+            dao.merge(converter.toEntity(userDTO));
+        } else {
+            throw new EmailExistsException("The user with same e-mail is already registered", "user-add");
+        }
     }
 
+    @Transactional
     public void removeById(int id) {
         dao.removeById(id);
     }
 
+    @Transactional
     public UserDTO get(int id) {
         return converter.toDto(dao.get(id));
+    }
+
+    @Transactional
+    public List<AuDTO> getAllAu() {
+        return auDAO.getAll().stream().map((a) -> auConverter.toDto(a)).collect(Collectors.toList());
     }
 }

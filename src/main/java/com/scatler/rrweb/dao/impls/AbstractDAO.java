@@ -33,19 +33,24 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T, I
 
     @Override
     public void update(T entity) {
+        sessionFactory.getCurrentSession().saveOrUpdate(entity);
     }
 
     @Override
     public void remove(T entity) {
+        sessionFactory.getCurrentSession().delete(entity);
     }
 
     @Override
     public void removeById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        Object obj = session.get(entityClass, id);
+        sessionFactory.getCurrentSession().delete(obj);
     }
 
     @Override
     public T get(Integer id) {
-        return null;
+        return (T) sessionFactory.getCurrentSession().get(entityClass, id);
     }
 
     @Override
@@ -58,5 +63,12 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T, I
     public void save(T entity) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(entity);
+    }
+
+
+    @Override
+    public void merge(T entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(entity);
     }
 }

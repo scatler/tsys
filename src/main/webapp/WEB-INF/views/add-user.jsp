@@ -25,10 +25,10 @@
                 <div class="panel-title">Add Customer</div>
             </div>
             <div class="panel-body">
-                <form:form action="saveUser" cssClass="form-horizontal"
+                <form:form action="save" cssClass="form-horizontal"
                            method="post" modelAttribute="user">
 
-                    <!-- need to associate this data with customer id -->
+                    <!-- need to associate this data with user id -->
                     <form:hidden path="id" />
 
                     <div class="form-group">

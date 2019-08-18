@@ -6,45 +6,45 @@
 package com.scatler.rrweb.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.Date;
 
-/**
- *
- * @author alexkpc
- */
 @Data
 @Entity
 @Table(name = "train_routeid_day")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TrainRouteidDay.findAll", query = "SELECT t FROM TrainRouteidDay t"),
-    @NamedQuery(name = "TrainRouteidDay.findById", query = "SELECT t FROM TrainRouteidDay t WHERE t.id = :id"),
-    @NamedQuery(name = "TrainRouteidDay.findByDayDept", query = "SELECT t FROM TrainRouteidDay t WHERE t.dayDept = :dayDept")})
+        @NamedQuery(name = "TrainRouteidDay.findAll", query = "SELECT t FROM TrainRouteidDay t"),
+        @NamedQuery(name = "TrainRouteidDay.findById", query = "SELECT t FROM TrainRouteidDay t WHERE t.id = :id"),
+        @NamedQuery(name = "TrainRouteidDay.findByDayDept", query = "SELECT t FROM TrainRouteidDay t WHERE t.dayDept = :dayDept")})
 public class TrainRouteidDay extends AbstractEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GenericGenerator(name = "gen", strategy = "increment")
+    @GeneratedValue(generator = "gen")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "day_dept")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dayDept;
-    //***
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "trd")
-    //private List<Ticket> ticketList;
-    //***
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     @ManyToOne(optional = false)
     private RouteStation routeId;
@@ -63,6 +63,4 @@ public class TrainRouteidDay extends AbstractEntity implements Serializable {
         this.id = id;
         this.dayDept = dayDept;
     }
-
-
 }

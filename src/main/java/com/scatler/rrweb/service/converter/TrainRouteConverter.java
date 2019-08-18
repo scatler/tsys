@@ -21,7 +21,7 @@ public class TrainRouteConverter implements IConverter<TrainRouteidDay, TrainRou
     @Override
     public TrainRouteidDay toEntity(TrainRouteDTO dto) {
         TrainRouteidDay entity = new TrainRouteidDay();
-        RouteStation rs = new RouteStation();
+        RouteStation rs = new RouteStation(55555);
         rs.setRouteId(new Route(dto.getRouteId()));
         entity.setRouteId(rs);
         entity.setDayDept(dto.getDay());

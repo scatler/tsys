@@ -6,6 +6,7 @@
 package com.scatler.rrweb.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Basic;
@@ -25,8 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
-
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "route_station")
 @XmlRootElement
@@ -37,14 +38,11 @@ import java.util.Date;
         @NamedQuery(name = "RouteStation.findByStopMin", query = "SELECT r FROM RouteStation r WHERE r.stopMin = :stopMin"),
         @NamedQuery(name = "RouteStation.findByDay", query = "SELECT r FROM RouteStation r WHERE r.day = :day")})
 public class RouteStation extends AbstractEntity implements Serializable {
-
-
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
-    @GenericGenerator(name="gen",strategy="increment")
-    @GeneratedValue(generator="gen")
+    @GenericGenerator(name = "gen", strategy = "increment")
+    @GeneratedValue(generator = "gen")
     private Integer id;
     @Column(name = "arrival_time")
     @Temporal(TemporalType.TIME)
@@ -57,9 +55,11 @@ public class RouteStation extends AbstractEntity implements Serializable {
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Route routeId;
-
     @JoinColumn(name = "station_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Station stationId;
 
+    public RouteStation(Integer id) {
+        this.id = id;
+    }
 }

@@ -6,6 +6,7 @@ import com.scatler.rrweb.entity.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,11 +23,8 @@ public class UserConverter implements IConverter<User, UserDTO> {
         userDTO.setLogin(entity.getLogin());
         userDTO.setType(entity.getType());
         userDTO.setPassword(entity.getPassword());
-        userDTO.setAuthorities(entity
-                .getAuthorities()
-                .stream()
-                .map(Authorities::getAuthority)
-                .collect(Collectors.toList()));
+        userDTO.setMatchingPassword(entity.getPassword());
+        userDTO.setAuthorities(new String[]{"ROLE_ADMIN"});
         return userDTO;
 
     }
@@ -41,10 +39,9 @@ public class UserConverter implements IConverter<User, UserDTO> {
         user.setLogin(dto.getLogin());
         user.setType(dto.getType());
         user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
-        user.setAuthorities(dto.getAuthorities()
-                .stream()
-                .map(Authorities::new)
-                .collect(Collectors.toList()));
+        ArrayList<Authorities> authorities = new ArrayList<>();
+        authorities.add(new Authorities("ROLE_USER"));
+        user.setAuthorities(authorities);
         return user;
     }
 }

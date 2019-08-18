@@ -47,5 +47,5 @@ public class Route extends AbstractEntity implements Serializable {
         this.id = id;
     }
 
-    
+
 }

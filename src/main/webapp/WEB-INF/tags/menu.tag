@@ -21,6 +21,7 @@
         </c:if>
         <li><a href="/tickets/start"><spring:message code="find.tickets.and.trains"/></a></li>
         <li><a href="/station/timeTable">Station timetable</a></li>
+        <li><a href="/logout">Logout&Login</a></li>
     </ul>
     <div id="sidebar-btn">
         <span></span>

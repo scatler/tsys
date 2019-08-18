@@ -11,24 +11,29 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @PasswordMatches
 public class UserDTO extends AbstractDTO {
     private Integer id;
+    @NotNull
+    @NotEmpty
     private String firstName;
+    @NotNull
+    @NotEmpty
     private String lastName;
     @ValidEmail
     @NotNull
     @NotEmpty
     private String email;
+    @NotNull
+    @NotEmpty
     private String login;
+    @NotEmpty
     private String password;
+    @NotEmpty
     private String matchingPassword;
     private String type;
-    private List<String> Authorities;
-
-
+    private String[] Authorities;
 }

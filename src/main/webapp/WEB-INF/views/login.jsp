@@ -5,7 +5,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="ti" tagdir="/WEB-INF/tags/input" %>
-<t:genericpage>
+<t:genericpage inner_title="Welcome to RRD">
     <div class="form-group form-horizontal">
         <form action='<spring:url value="/loginAction"/>' method="post">
             <table>
