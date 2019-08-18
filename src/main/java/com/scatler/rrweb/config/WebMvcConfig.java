@@ -26,39 +26,37 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.scatler.rrweb.controller"})
 public class WebMvcConfig implements WebMvcConfigurer {
-
     @Bean
-    public InternalResourceViewResolver resolver () {
+    public InternalResourceViewResolver resolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setViewClass(JstlView.class);
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
-        return  resolver;
+        return resolver;
     }
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.jsp().prefix("/WEB-INF/views/").suffix(".jsp");
     }
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
     }
 
-    public void addResourceHandlers (ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/resources/**")// specifying resource folder
                 .addResourceLocations("/resources/");
-
     }
 
     @Bean("messageSource")
     public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:locale/messages");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }
-
 }

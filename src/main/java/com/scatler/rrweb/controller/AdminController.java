@@ -2,7 +2,7 @@ package com.scatler.rrweb.controller;
 
 import com.scatler.rrweb.dto.UserDTO;
 import com.scatler.rrweb.entity.objects.exception.EmailExistsException;
-import com.scatler.rrweb.service.impls.UserService;
+import com.scatler.rrweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;

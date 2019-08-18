@@ -1,7 +1,7 @@
 package com.scatler.rrweb.service.converter;
 
 
-import com.scatler.rrweb.dto.interfaces.AbstractDTO;
+import com.scatler.rrweb.dto.api.AbstractDTO;
 import com.scatler.rrweb.entity.AbstractEntity;
 
 public interface IConverter<E extends AbstractEntity, D extends AbstractDTO> {

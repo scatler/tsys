@@ -11,9 +11,9 @@ import com.scatler.rrweb.entity.objects.exception.FoundSamePassengerException;
 import com.scatler.rrweb.entity.objects.exception.NotEnoughTimeBeforeDeparture;
 import com.scatler.rrweb.entity.objects.selectors.AvailableTrainSelector;
 import com.scatler.rrweb.entity.objects.selectors.ViewAllPassengersSelector;
-import com.scatler.rrweb.service.impls.RouteService;
-import com.scatler.rrweb.service.impls.StationService;
-import com.scatler.rrweb.service.impls.TicketService;
+import com.scatler.rrweb.service.impl.RouteService;
+import com.scatler.rrweb.service.impl.StationService;
+import com.scatler.rrweb.service.impl.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,9 +37,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/tickets")
-@SessionAttributes({"trainSelector", "stations", "ticket","selector", "list"})
+@SessionAttributes({"trainSelector", "stations", "ticket", "selector", "list"})
 public class TicketController {
-
     @Autowired
     private StationService stationService;
     @Autowired
@@ -71,7 +68,7 @@ public class TicketController {
     public ModelAndView getAvailableTrainTable(@ModelAttribute("trainSelector") @Valid AvailableTrainSelector ts,
                                                BindingResult res,
                                                @ModelAttribute("stations") List<StationDTO> stations
-                                               ){
+    ) {
         if (res.hasErrors()) {
             ModelAndView mv = new ModelAndView();
             mv.addObject("stations", stations);
@@ -108,34 +105,31 @@ public class TicketController {
     }
 
     @GetMapping("/viewAllPassengers") // View all passengers start page
-    public ModelAndView viewAllPassengers () {
+    public ModelAndView viewAllPassengers() {
         List<RouteDTO> routeDtos = routeService.getAll();
         ModelAndView mv = new ModelAndView();
         mv.setViewName("ticket-viewallpassengers");
-        mv.addObject("list",routeDtos);
+        mv.addObject("list", routeDtos);
         mv.addObject("selector", new ViewAllPassengersSelector());
         return mv;
     }
 
     @PostMapping("/loadAllPassengers")
-    public ModelAndView loadAllPassengers (@ModelAttribute("selector") @Validated ViewAllPassengersSelector vs,
-                                           BindingResult res,
-                                           @ModelAttribute("list") List<RouteDTO> routeDtos) {
-
+    public ModelAndView loadAllPassengers(@ModelAttribute("selector") @Validated ViewAllPassengersSelector vs,
+                                          BindingResult res,
+                                          @ModelAttribute("list") List<RouteDTO> routeDtos) {
         ModelAndView mv = new ModelAndView();
         if (res.hasErrors()) {
-            mv.addObject("selector",vs);
-            mv.addObject("list",routeDtos);
+            mv.addObject("selector", vs);
+            mv.addObject("list", routeDtos);
             mv.setViewName("ticket-viewallpassengers");
             return mv;
-        } else  {
-            List<AllPassengersDTO> passengers = ticketService.getAllPassengers(vs.getId(),vs.getDay());
+        } else {
+            List<AllPassengersDTO> passengers = ticketService.getAllPassengers(vs.getId(), vs.getDay());
             ViewAllPassengersForm genForm = new ViewAllPassengersForm(passengers);
-            mv.addObject("genForm",genForm);
+            mv.addObject("genForm", genForm);
             mv.setViewName("ticket-viewallpassengers");
         }
         return mv;
     }
-
-
 }

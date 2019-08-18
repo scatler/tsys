@@ -1,7 +1,7 @@
-package com.scatler.rrweb.service.impls;
+package com.scatler.rrweb.service.impl;
 
-import com.scatler.rrweb.dao.AuDAO;
-import com.scatler.rrweb.dao.impls.UserDAO;
+import com.scatler.rrweb.dao.impl.AuDAO;
+import com.scatler.rrweb.dao.impl.UserDAO;
 import com.scatler.rrweb.dto.AuDTO;
 import com.scatler.rrweb.dto.UserDTO;
 import com.scatler.rrweb.entity.User;
@@ -9,14 +9,9 @@ import com.scatler.rrweb.entity.objects.exception.EmailExistsException;
 import com.scatler.rrweb.service.converter.AuConverter;
 import com.scatler.rrweb.service.converter.UserConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User.UserBuilder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

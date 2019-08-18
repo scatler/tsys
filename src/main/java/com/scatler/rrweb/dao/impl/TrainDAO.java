@@ -1,5 +1,6 @@
-package com.scatler.rrweb.dao.impls;
+package com.scatler.rrweb.dao.impl;
 
+import com.scatler.rrweb.dao.api.AbstractDAO;
 import com.scatler.rrweb.dto.ViewAllTrain;
 import com.scatler.rrweb.entity.Train;
 import org.hibernate.Session;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class TrainDAO extends AbstractDAO<Train> {
     public List<ViewAllTrain> viewAllTrains() {
         Session session = sessionFactory.getCurrentSession();

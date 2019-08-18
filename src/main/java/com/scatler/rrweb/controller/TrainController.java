@@ -8,10 +8,10 @@ import com.scatler.rrweb.dto.ViewAllTrain;
 import com.scatler.rrweb.dto.forms.RouteStationForm;
 import com.scatler.rrweb.dto.forms.ViewAllTrainsForm;
 import com.scatler.rrweb.entity.objects.validator.AddRouteStationFormValidator;
-import com.scatler.rrweb.service.impls.RouteService;
-import com.scatler.rrweb.service.impls.RouteStationService;
-import com.scatler.rrweb.service.impls.StationService;
-import com.scatler.rrweb.service.impls.TrainService;
+import com.scatler.rrweb.service.impl.RouteService;
+import com.scatler.rrweb.service.impl.RouteStationService;
+import com.scatler.rrweb.service.impl.StationService;
+import com.scatler.rrweb.service.impl.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -35,7 +35,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/train")
-@SessionAttributes({"routesDtos","stationDtos","routeStationForm"})
+@SessionAttributes({"routesDtos", "stationDtos", "routeStationForm"})
 public class TrainController {
     @Autowired
     private TrainService trainService;
@@ -78,7 +78,7 @@ public class TrainController {
             return mv;
         }
         trainService.save(trainDTO);
-        mv.addObject("success","Train has been added");
+        mv.addObject("success", "Train has been added");
         return mv;
     }
 
@@ -166,7 +166,7 @@ public class TrainController {
             return mv;
         } else {
             trainService.saveTRD(dto);
-            return new ModelAndView("train-trd","success","train assigned");
+            return new ModelAndView("train-trd", "success", "train assigned");
         }
     }
 }

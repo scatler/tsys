@@ -1,4 +1,4 @@
-package com.scatler.rrweb.dao.interfaces;
+package com.scatler.rrweb.dao.api;
 
 import java.util.List;
 

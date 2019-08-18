@@ -6,9 +6,7 @@ import org.hibernate.type.DateType;
 import org.hibernate.type.TimestampType;
 
 public class DateEnabledDialect extends MySQL5InnoDBDialect {
-
     public DateEnabledDialect() {
         registerFunction("adddays", new VarArgsSQLFunction(DateType.INSTANCE, "ADDDATE(", ",", ")"));
     }
-
 }

@@ -1,7 +1,7 @@
-package com.scatler.rrweb.service.impls;
+package com.scatler.rrweb.service.impl;
 
-import com.scatler.rrweb.dao.TrainRouteDAO;
-import com.scatler.rrweb.dao.impls.TrainDAO;
+import com.scatler.rrweb.dao.impl.TrainRouteDAO;
+import com.scatler.rrweb.dao.impl.TrainDAO;
 import com.scatler.rrweb.dto.TrainDTO;
 import com.scatler.rrweb.dto.TrainRouteDTO;
 import com.scatler.rrweb.dto.ViewAllTrain;

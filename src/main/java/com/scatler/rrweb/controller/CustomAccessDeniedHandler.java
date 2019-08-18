@@ -14,9 +14,7 @@ import java.io.IOException;
 
 @Component("customAccessDeniedHandler")
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-
     @Autowired
-    @Qualifier("myRequestCache")
     private RequestCache myRequestCache;
 
     public CustomAccessDeniedHandler() {
@@ -25,12 +23,9 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exc)
             throws IOException, ServletException {
-
         if (!response.isCommitted()) {
-
             //Save Target-Request
             myRequestCache.saveRequest(request, response);
-
             //Forward to the login page
             request.getRequestDispatcher("/login").forward(request, response);
         }

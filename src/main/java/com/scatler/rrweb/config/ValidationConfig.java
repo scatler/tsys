@@ -12,7 +12,8 @@ public class ValidationConfig {
         return new LocalValidatorFactoryBean();
     }
 
-    @Bean public MethodValidationPostProcessor methodValidationPostProcessor() {
+    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor() {
         return new MethodValidationPostProcessor();
     }
 }

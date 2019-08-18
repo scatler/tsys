@@ -32,7 +32,7 @@ public class AppContext {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan((new String[] {"com.scatler.rrweb"}));
+        sessionFactory.setPackagesToScan("com.scatler.rrweb");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

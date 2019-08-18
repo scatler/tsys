@@ -1,6 +1,6 @@
-package com.scatler.rrweb.service.impls;
+package com.scatler.rrweb.service.impl;
 
-import com.scatler.rrweb.dao.impls.TicketDAO;
+import com.scatler.rrweb.dao.impl.TicketDAO;
 import com.scatler.rrweb.dto.TicketDTO;
 import com.scatler.rrweb.dto.AllPassengersDTO;
 import com.scatler.rrweb.dto.forms.AvailableTrain;
@@ -38,7 +38,7 @@ public class TicketService {
         ticketDAO.save(ticketConverter.toEntity(ticketDTO));
     }
 
-    public boolean checkEnoughTimeBeforeDeparture(TicketDTO ticketDTO) {
+    private boolean checkEnoughTimeBeforeDeparture(TicketDTO ticketDTO) {
       return ticketDAO.checkEnoughTimeBeforeDeparture(ticketConverter.toEntity(ticketDTO));
     }
 

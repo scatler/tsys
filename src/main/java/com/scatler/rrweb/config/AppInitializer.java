@@ -9,11 +9,10 @@ import javax.servlet.ServletRegistration;
 /**
  * Created by alexkpc on 27.07.2019.
  */
-public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
-
+public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {
+        return new Class[]{
                 AppContext.class,
                 WebSecurityConfig.class
         };
@@ -21,26 +20,25 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {
+        return new Class[]{
                 WebMvcConfig.class
         };
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] {"/"};
+        return new String[]{"/"};
     }
-
 
     @Override
     protected Filter[] getServletFilters() {
         CharacterEncodingFilter filter = new CharacterEncodingFilter("UTF-8", true);
-        return new Filter[] {filter};
+        return new Filter[]{filter};
     }
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         boolean done = registration.setInitParameter("throwExceptionIfNoHandlerFound", "true"); // -> true
-        if(!done) throw new RuntimeException();
+        if (!done) throw new RuntimeException();
     }
 }

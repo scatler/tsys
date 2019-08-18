@@ -1,7 +1,7 @@
 package com.scatler.rrweb.controller;
 
 import com.scatler.rrweb.dto.RouteDTO;
-import com.scatler.rrweb.service.impls.RouteService;
+import com.scatler.rrweb.service.impl.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

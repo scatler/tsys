@@ -1,6 +1,5 @@
 package com.scatler.rrweb.config;
 
-import com.scatler.rrweb.service.impls.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,24 +13,17 @@ import org.springframework.security.web.savedrequest.RequestCache;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private UserDetailsService userService;
-
     @Autowired
-    //@Qualifier("myRequestCache")
-            RequestCache myRequestCache;
-
+    RequestCache myRequestCache;
     @Autowired
-    //@Qualifier("customAccessDeniedHandler")
-            AccessDeniedHandler customAccessDeniedHandler;
+    AccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    ;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -41,7 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
                 .authorizeRequests()
                 .antMatchers("/tickets/start", "/station/timeTable").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/station/add").hasRole("ADMIN")
@@ -58,6 +49,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(customAccessDeniedHandler);
-
     }
 }

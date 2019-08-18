@@ -56,8 +56,6 @@ public class GlobalExceptionHandler {
         return mv;
     }
 
-
-
     @ExceptionHandler(FoundSamePassengerException.class)
     public ModelAndView handleUsernameNotFoundException(HttpServletRequest request, Exception ex) {
         ModelAndView mv = new ModelAndView();

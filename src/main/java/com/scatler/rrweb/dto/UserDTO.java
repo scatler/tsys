@@ -1,6 +1,6 @@
 package com.scatler.rrweb.dto;
 
-import com.scatler.rrweb.dto.interfaces.AbstractDTO;
+import com.scatler.rrweb.dto.api.AbstractDTO;
 import com.scatler.rrweb.entity.objects.validator.PasswordMatches;
 import com.scatler.rrweb.entity.objects.validator.ValidEmail;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @NoArgsConstructor

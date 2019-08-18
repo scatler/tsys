@@ -1,6 +1,6 @@
-package com.scatler.rrweb.service.impls;
+package com.scatler.rrweb.service.impl;
 
-import com.scatler.rrweb.dao.impls.UserDAO;
+import com.scatler.rrweb.dao.impl.UserDAO;
 import com.scatler.rrweb.dto.UserDTO;
 import com.scatler.rrweb.entity.User;
 import com.scatler.rrweb.service.converter.UserConverter;
