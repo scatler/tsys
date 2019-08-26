@@ -26,6 +26,5 @@
             </table>
         </form>
     </div>
-
     <a class="btn btn-primary" href="<c:url value="/registration"/>" role="button">Register</a>
 </t:genericpage>

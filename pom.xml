@@ -79,7 +79,9 @@
 			<version>${tld.version}</version>
 		</dependency>
 
+
 		<!-- Servlet Dependency -->
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -94,6 +96,14 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.8</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- Rabbit MQ Dependency -->
+
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>5.1.2</version>
 		</dependency>
 
 		<!-- Logging -->
