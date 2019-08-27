@@ -8,10 +8,12 @@ import com.scatler.rrweb.dto.ViewAllTrain;
 import com.scatler.rrweb.dto.forms.RouteStationForm;
 import com.scatler.rrweb.dto.forms.ViewAllTrainsForm;
 import com.scatler.rrweb.entity.objects.validator.AddRouteStationFormValidator;
+import com.scatler.rrweb.service.SenderServiceMQ;
 import com.scatler.rrweb.service.impl.RouteService;
 import com.scatler.rrweb.service.impl.RouteStationService;
 import com.scatler.rrweb.service.impl.StationService;
 import com.scatler.rrweb.service.impl.TrainService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -28,10 +30,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 @Controller
 @RequestMapping("/train")
@@ -47,6 +51,9 @@ public class TrainController {
     private StationService stationService;
     @Autowired
     private AddRouteStationFormValidator routeStationFormValidator;
+    @Autowired
+    private SenderServiceMQ mq;
+
 
     @InitBinder("routeStationForm")
     public void initBinder(WebDataBinder binder) {
@@ -96,7 +103,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = "newRouteSubmisson", method = RequestMethod.POST)
-    public ModelAndView addRow(@Validated RouteStationForm routeStationForm, BindingResult res, String submit) {
+    public ModelAndView addRow(@Validated RouteStationForm routeStationForm, BindingResult res, String submit) throws IOException, TimeoutException {
         ModelAndView mv = new ModelAndView("route-station-add");
         switch (submit) {
             case "addRow":
@@ -107,6 +114,7 @@ public class TrainController {
                     routeStationForm.prepareData();
                     routeStationService.saveAll(routeStationForm.getRs());
                     mv.addObject("success", "New route has been submitted");
+                    mq.send("Update");
                     return mv;
                 } else {
                     mv.addObject("hasErrors", true);
@@ -158,7 +166,7 @@ public class TrainController {
     }
 
     @PostMapping("/saveTRD")
-    public ModelAndView saveAssginTrainToRoute(@ModelAttribute("trd") @Validated TrainRouteDTO dto, BindingResult res) {
+    public ModelAndView saveAssginTrainToRoute(@ModelAttribute("trd") @Validated TrainRouteDTO dto, BindingResult res) throws IOException, TimeoutException {
         if (res.hasErrors()) {
             ModelAndView mv = new ModelAndView();
             mv.addObject("trd", dto);
@@ -166,6 +174,7 @@ public class TrainController {
             return mv;
         } else {
             trainService.saveTRD(dto);
+            mq.send("Update");
             return new ModelAndView("train-trd", "success", "train assigned");
         }
     }

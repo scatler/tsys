@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class StationTimeTable implements Serializable {
-
     private Integer trainId;
     private Integer routeId;
     private String routeName;

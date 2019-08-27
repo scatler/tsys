@@ -1,8 +1,4 @@
-target\
+target
 desktop.ini
 RRD.iml
-.idea\
-out\
-.idea\
-out\
-database.properties
+.idea

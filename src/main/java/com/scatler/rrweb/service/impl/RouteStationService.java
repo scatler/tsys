@@ -2,6 +2,7 @@ package com.scatler.rrweb.service.impl;
 
 import com.scatler.rrweb.dao.impl.RouteStationDAO;
 import com.scatler.rrweb.dto.RouteStationDTO;
+import com.scatler.rrweb.service.SenderServiceMQ;
 import com.scatler.rrweb.service.converter.RouteStationConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class RouteStationService {
     RouteStationDAO dao;
     @Autowired
     RouteStationConverter converter;
+
 
     @Transactional
     public void saveAll(ArrayList<RouteStationDTO> rs) {

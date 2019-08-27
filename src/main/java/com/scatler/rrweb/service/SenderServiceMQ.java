@@ -1,4 +1,4 @@
-package com.scatler.rrweb.controller;
+package com.scatler.rrweb.service;
 
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
@@ -6,8 +6,10 @@ import com.rabbitmq.client.Connection;
 import java.util.concurrent.TimeoutException;
 
 import com.rabbitmq.client.Channel;
+import org.springframework.stereotype.Component;
 
-public class SenderService {
+@Component
+public class SenderServiceMQ {
     private final static String QUEUE_NAME = "hello";
 
     public void send(String message) throws java.io.IOException, TimeoutException {
