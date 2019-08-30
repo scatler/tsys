@@ -31,7 +31,7 @@ public class AdminController {
     //test changing
     @GetMapping("/")
     public String index(Model model, Authentication au, HttpServletRequest request) {
-        if (au != null) {
+/*        if (au != null) {
             String role_admin = au
                     .getAuthorities()
                     .stream()
@@ -43,7 +43,7 @@ public class AdminController {
             model.addAttribute("message", "You are logged in as " + au.getName());
         } else {
             return "login";
-        }
+        }*/
         return "index";
     }
 

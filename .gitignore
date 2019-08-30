@@ -2,3 +2,4 @@ target
 desktop.ini
 RRD.iml
 .idea
+/src/main/webapp/bower_components
