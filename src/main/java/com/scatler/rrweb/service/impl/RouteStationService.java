@@ -29,4 +29,14 @@ public class RouteStationService {
     public List<RouteStationDTO> getByRouteId(Integer routeId) {
         return dao.getByRouteId(routeId).stream().map((a)->converter.toDto(a)).collect(Collectors.toList());
     }
+
+    @Transactional
+    public List<RouteStationDTO> getAll() {
+        return dao.getAll().stream().map((a)->converter.toDto(a)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void update(RouteStationDTO dto) {
+        dao.update(converter.toEntity(dto));
+    }
 }

@@ -1,5 +1,6 @@
 package com.scatler.rrweb.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.scatler.rrweb.dto.api.AbstractDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,9 @@ import java.util.Date;
 @Data
 public class RouteStationDTO extends AbstractDTO {
     private Integer id;
+    @JsonFormat(pattern = "HH:mm:ss")
     private Date arrivalTime;
+    @JsonFormat(pattern = "HH:mm:ss")
     private Date stopMin;
     private Integer day;
     private Integer routeId;

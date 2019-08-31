@@ -1,52 +1,32 @@
 package com.scatler.rrweb.controller;
 
-import com.scatler.rrweb.dto.RouteDTO;
 import com.scatler.rrweb.dto.RouteStationDTO;
-import com.scatler.rrweb.dto.TrainDTO;
-import com.scatler.rrweb.dto.TrainRouteDTO;
-import com.scatler.rrweb.dto.ViewAllTrain;
-import com.scatler.rrweb.dto.forms.RouteStationForm;
-import com.scatler.rrweb.dto.forms.ViewAllTrainsForm;
 import com.scatler.rrweb.entity.objects.validator.AddRouteStationFormValidator;
 import com.scatler.rrweb.service.SenderServiceMQ;
 import com.scatler.rrweb.service.impl.RouteService;
 import com.scatler.rrweb.service.impl.RouteStationService;
 import com.scatler.rrweb.service.impl.StationService;
 import com.scatler.rrweb.service.impl.TrainService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
-@Controller
-@RequestMapping("/train")
-@SessionAttributes({"routesDtos", "stationDtos", "routeStationForm"})
+
+/*@SessionAttributes({"routesDtos", "stationDtos", "routeStationForm"})*/
 public class TrainController {
     @Autowired
     private TrainService trainService;
     @Autowired
     private RouteService routeService;
-    @Autowired
-    private RouteStationService routeStationService;
+
     @Autowired
     private StationService stationService;
     @Autowired
@@ -55,7 +35,8 @@ public class TrainController {
     private SenderServiceMQ mq;
 
 
-    @InitBinder("routeStationForm")
+
+/*    @InitBinder("routeStationForm")
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         sdf.setLenient(true);
@@ -68,8 +49,9 @@ public class TrainController {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-    }
+    }*/
 
+/*
     @GetMapping("/add")
     public String add(Model model) {
         TrainDTO trainDTO = new TrainDTO();
@@ -88,8 +70,13 @@ public class TrainController {
         mv.addObject("success", "Train has been added");
         return mv;
     }
+*/
 
-    @GetMapping("/addRouteStation")
+
+
+
+
+/*    @GetMapping("/addRouteStation")
     public String assignRouteToStation(Model model) {
         model.addAttribute("routesDtos", routeService.getAll());
         model.addAttribute("stationDtos", stationService.getAll());
@@ -100,8 +87,8 @@ public class TrainController {
         routeStationForm.setRs(rsDTO);
         model.addAttribute(routeStationForm);
         return "route-station-add";
-    }
-
+    }*/
+/*
     @RequestMapping(value = "newRouteSubmisson", method = RequestMethod.POST)
     public ModelAndView addRow(@Validated RouteStationForm routeStationForm, BindingResult res, String submit) throws IOException, TimeoutException {
         ModelAndView mv = new ModelAndView("route-station-add");
@@ -177,5 +164,5 @@ public class TrainController {
             mq.send("Update");
             return new ModelAndView("train-trd", "success", "train assigned");
         }
-    }
+    }*/
 }
