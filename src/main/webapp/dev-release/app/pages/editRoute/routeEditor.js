@@ -34,7 +34,7 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
             {name: 'stationId', enableCellEdit: false, width: '10%'},
             {name: 'name', enableCellEdit: true, width: '10%'},
             {name: 'lineId', enableCellEdit: true, width: '10%'}
-        ]
+        ];
 
         vm.deleteRow = function (row) {
             console.log("Perform delete");
@@ -43,9 +43,8 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
 
 
         vm.saveRow = function (rowEntity) {
-            // create a fake promise - normally you'd use the promise returned by $http or $resource
             var deferred = $q.defer();
-            vm.gridApi.rowEdit.setSavePromise(rowEntity, deferred.promise);
+            $scope.gridApi.rowEdit.setSavePromise(rowEntity, deferred.promise);
             $http({
                 method: 'PUT',
                 url: 'http://localhost:8080/saveRoute',
