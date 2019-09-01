@@ -9,18 +9,19 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
         vm.gridOptions = {};
         vm.stationGrid = {};
 
-        function loadData () {
-
+        function loadData(dataPath, dropDownPath, dropdowncoln, table) {
+            $http.get('http://localhost:8080/' + dataPath)
+                .then(function (response) {
+                    table.data = response.data;
+                });
+            $http({method: 'GET', url: 'http://localhost:8080/' + dropDownPath})
+                .then(function success(response) {
+                    table.columnDefs[dropdowncoln].editDropdownOptionsArray = response.data;
+                });
         }
 
-        $http.get('http://localhost:8080/routes')
-        .then(function (response) {
-            vm.gridOptions.data = response.data;
-        });
-        $http({method: 'GET', url: 'http://localhost:8080/stations'}).then(function success(response) {
-            vm.gridOptions.columnDefs[1].editDropdownOptionsArray = response.data;
-        });
-        
+        loadData('routes', 'stations', '1', vm.gridOptions);
+        loadData('stations', 'lines', '1', vm.stationGrid);
         $http.get('http://localhost:8080/stations')
             .then(function (response) {
                 vm.stationGrid.data = response.data;
@@ -43,7 +44,15 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
         vm.stationGrid.columnDefs = [
             {name: 'stationId', enableCellEdit: false, width: '10%'},
             {name: 'name', enableCellEdit: true, width: '10%'},
-            {name: 'lineId', enableCellEdit: true, width: '10%'}
+            {
+                name: 'line',
+                enableCellEdit: true,
+                editableCellTemplate: 'ui-grid/dropdownEditor',
+                width: '30%',
+                editDropdownValueLabel: 'name',
+                editDropdownIdLabel: 'id',
+                cellFilter: 'griddropdown:this'
+            }
         ];
         vm.deleteRow = function (row) {
             console.log("Perform delete");
@@ -68,7 +77,6 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
             vm.gridApi = gridApi;
             gridApi.rowEdit.on.saveRow($scope, vm.saveRow);
         };
-
     }]
 )
     .filter('griddropdown', function () {
