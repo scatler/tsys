@@ -21,7 +21,7 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
         }
 
         loadData('routes', 'stations', '1', vm.gridOptions);
-        loadData('stations', 'lines', '1', vm.stationGrid);
+        loadData('stations', 'lines', '2', vm.stationGrid);
         $http.get('http://localhost:8080/stations')
             .then(function (response) {
                 vm.stationGrid.data = response.data;
@@ -42,10 +42,10 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
             }
         ];
         vm.stationGrid.columnDefs = [
-            {name: 'stationId', enableCellEdit: false, width: '10%'},
+            {name: 'id', enableCellEdit: false, width: '10%'},
             {name: 'name', enableCellEdit: true, width: '10%'},
             {
-                name: 'line',
+                name: 'lineId',
                 enableCellEdit: true,
                 editableCellTemplate: 'ui-grid/dropdownEditor',
                 width: '30%',
