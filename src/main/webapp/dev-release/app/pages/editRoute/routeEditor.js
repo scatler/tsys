@@ -52,17 +52,19 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
                 editDropdownValueLabel: 'name',
                 editDropdownIdLabel: 'id',
                 cellFilter: 'griddropdown:this'
-            }
+            },
+            {name: 'timezone', enableCellEdit: true, width: '10%'},
         ];
         vm.deleteRow = function (row) {
             console.log("Perform delete");
         };
-        vm.saveRow = function (rowEntity) {
+
+        function saveRowToDb (rowEntity,path,tableApi) {
             var deferred = $q.defer();
-            vm.gridApi.rowEdit.setSavePromise(rowEntity, deferred.promise);
+            tableApi.rowEdit.setSavePromise(rowEntity, deferred.promise);
             $http({
                 method: 'PUT',
-                url: 'http://localhost:8080/saveRoute',
+                url: 'http://localhost:8080/'+path,
                 data: rowEntity
             }).then(function success(response) {
                     deferred.resolve(response.data.question);
@@ -71,13 +73,24 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
                 }
             );
             return deferred.promise;
+        }
+        vm.saveRowStation = function (rowEntity) {
+            saveRowToDb(rowEntity,'saveStation',vm.stationGridApi)
         };
+
+        vm.saveRowRoute = function (rowEntity) {
+            saveRowToDb(rowEntity,'saveRoute',vm.stationGridApi)
+        };
+
         vm.gridOptions.onRegisterApi = function (gridApi) {
-            //set gridApi on scope
-            vm.gridApi = gridApi;
-            gridApi.rowEdit.on.saveRow($scope, vm.saveRow);
-        };
-    }]
+                vm.gridApi = gridApi;
+                gridApi.rowEdit.on.saveRow($scope, vm.saveRowRoute);
+            };
+            vm.stationGrid.onRegisterApi = function (gridApi) {
+                vm.stationGridApi = gridApi;
+                gridApi.rowEdit.on.saveRow ($scope,vm.saveRowStation)
+            }
+        }]
 )
     .filter('griddropdown', function () {
         return function (input, context) {

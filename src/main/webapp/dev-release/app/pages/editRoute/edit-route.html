@@ -2,13 +2,31 @@
     <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid"></div>
     <button ng-click="" type="submit" class="btn btn-danger">Submit</button>
 </div>-->
-<div class="col-md-12 col-lg-4">
+<!--<div class="col-md-12 col-lg-4">
     <div class="panel panel-default bootstrap-panel xsmall-panel">
         <div class="panel-heading">Panel Heading</div>
         <div class="panel-body" ng-controller="routeEditCtrl as $ctrl">
-            <div ui-grid="$ctrl.stationGrid" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="table"></div>
-
-            <div ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="table"></div>
+            <div ui-grid="$ctrl.stationGrid" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
+                 class="grid"></div>
+            <div ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
+                 class="grid"></div>
+            <button ng-click="" type="submit" class="btn btn-danger">Submit</button>
+        </div>
+    </div>
+</div>-->
+<div ng-controller="routeEditCtrl as $ctrl">
+    <div class="panel  xsmall-panel  light-text animated zoomIn" zoom-in="" >
+        <div class="panel-heading clearfix"><h3 class="panel-title">Station</h3></div>
+        <div class="panel-body">
+            <div ui-grid="$ctrl.stationGrid" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
+                 class="grid"></div>
+        </div>
+    </div>
+    <div class="panel medium-panel   light-text animated zoomIn" zoom-in="">
+        <div class="panel-heading clearfix"><h3 class="panel-title">Route</h3></div>
+        <div class="panel-body">
+            <div ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
+                 class="grid table table-hover"></div>
             <button ng-click="" type="submit" class="btn btn-danger">Submit</button>
         </div>
     </div>

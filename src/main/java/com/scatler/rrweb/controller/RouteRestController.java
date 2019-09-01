@@ -1,7 +1,9 @@
 package com.scatler.rrweb.controller;
 
+import com.scatler.rrweb.dto.LineDTO;
 import com.scatler.rrweb.dto.RouteStationDTO;
 import com.scatler.rrweb.dto.StationDTO;
+import com.scatler.rrweb.service.impl.LineService;
 import com.scatler.rrweb.service.impl.RouteStationService;
 import com.scatler.rrweb.service.impl.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class RouteRestController {
     private RouteStationService routeStationService;
     @Autowired
     private StationService stationService;
+    @Autowired
+    private LineService lineService;
 
     @RequestMapping(path = "/routes", produces = "application/json")
     public List<RouteStationDTO> sendData(HttpServletResponse response) throws IOException {
@@ -29,15 +33,30 @@ public class RouteRestController {
     @RequestMapping(value = "/saveRoute", //
             method = RequestMethod.PUT, //
             consumes = "application/json")
-    public RouteStationDTO update(@RequestBody RouteStationDTO dto) {
+    public RouteStationDTO updateRoute(@RequestBody RouteStationDTO dto) {
         System.out.println("(Service Side) Editing employee with Id: " + dto.getId());
         routeStationService.update(dto);
+        return new RouteStationDTO();
+    }
+
+    @RequestMapping(value = "/saveStation", //
+            method = RequestMethod.PUT, //
+            consumes = "application/json")
+    public RouteStationDTO updateStation(@RequestBody StationDTO dto) {
+        System.out.println("(Service Side) Editing employee with Id: " + dto.getId());
+        stationService.save(dto);
         return new RouteStationDTO();
     }
 
     @RequestMapping(path = "/stations", produces = "application/json")
     public List<StationDTO> getAllStations(HttpServletResponse response) throws IOException {
         return stationService.getAll();
+    }
+
+
+    @RequestMapping(path = "/lines", produces = "application/json")
+    public List<LineDTO> getAllLines(HttpServletResponse response) throws IOException {
+        return lineService.getAll();
     }
 
 
