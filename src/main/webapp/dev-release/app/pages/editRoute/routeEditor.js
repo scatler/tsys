@@ -4,7 +4,7 @@ angular.module('addressFormatter', []).filter('address', function () {
         return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
     };
 });
-routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope','stationManager', '$http', '$q', '$interval', function ($scope, $rootScope, $http, $q, $interval, stationService) {
+routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope','$http', 'Station', '$q', '$interval', 'stationsManager', function ($scope, $rootScope, $http, $q, $interval, stationService) {
         var vm = this;
         vm.gridOptions = {};
         vm.stationGrid = {};
