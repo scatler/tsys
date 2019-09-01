@@ -4,28 +4,41 @@ angular.module('addressFormatter', []).filter('address', function () {
         return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
     };
 });
-routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', '$interval', function ($scope, $rootScope, $http, $q, $interval, stationService) {
+routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope','stationManager', '$http', '$q', '$interval', function ($scope, $rootScope, $http, $q, $interval, stationService) {
         var vm = this;
         vm.gridOptions = {};
         vm.stationGrid = {};
+        vm.stationsList = [];
+
+        function loadStations() {
+            $http({method: 'GET', url: 'http://localhost:8080/stations'})
+                .then(function success(response) {
+                    vm.stationsList = response.data;
+                    vm.gridOptions.columnDefs[1].editDropdownOptionsArray = vm.stationsList;
+                    vm.stationGrid.data = vm.stationsList;
+                });
+        }
+
+        loadStations();
 
         function loadData(dataPath, dropDownPath, dropdowncoln, table) {
             $http.get('http://localhost:8080/' + dataPath)
                 .then(function (response) {
                     table.data = response.data;
                 });
-            $http({method: 'GET', url: 'http://localhost:8080/' + dropDownPath})
+/*            $http({method: 'GET', url: 'http://localhost:8080/' + dropDownPath})
                 .then(function success(response) {
                     table.columnDefs[dropdowncoln].editDropdownOptionsArray = response.data;
-                });
+                    /!*vm.stationsList = response.data;*!/
+                });*/
         }
 
         loadData('routes', 'stations', '1', vm.gridOptions);
         loadData('stations', 'lines', '2', vm.stationGrid);
-        $http.get('http://localhost:8080/stations')
+/*        $http.get('http://localhost:8080/stations')
             .then(function (response) {
                 vm.stationGrid.data = response.data;
-            });
+            });*/
         vm.gridOptions.columnDefs = [
             {name: 'routeId', enableCellEdit: false, width: '10%'},
             {
@@ -38,7 +51,7 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
             {
                 name: 'Delete',
                 width: '10%',
-                cellTemplate: '<button class="status-button btn btn-xs btn-danger" ng-click="grid.appScope.deleteRow(row)">Delete</button>'
+                cellTemplate: '<button class="status-button btn btn-xs btn-danger" ng-click="vm.deleteRow(row)">Delete</button>'
             }
         ];
         vm.stationGrid.columnDefs = [
@@ -59,38 +72,37 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
             console.log("Perform delete");
         };
 
-        function saveRowToDb (rowEntity,path,tableApi) {
+        function saveRowToDb(rowEntity, path, tableApi) {
             var deferred = $q.defer();
             tableApi.rowEdit.setSavePromise(rowEntity, deferred.promise);
             $http({
                 method: 'PUT',
-                url: 'http://localhost:8080/'+path,
+                url: 'http://localhost:8080/' + path,
                 data: rowEntity
             }).then(function success(response) {
-                    deferred.resolve(response.data.question);
+                    deferred.resolve(response.data);
                 }, function error(response) {
                     deferred.reject(response.status);
                 }
             );
             return deferred.promise;
         }
+
         vm.saveRowStation = function (rowEntity) {
-            saveRowToDb(rowEntity,'saveStation',vm.stationGridApi)
+            saveRowToDb(rowEntity, 'saveStation', vm.stationGridApi)
         };
-
         vm.saveRowRoute = function (rowEntity) {
-            saveRowToDb(rowEntity,'saveRoute',vm.stationGridApi)
+            saveRowToDb(rowEntity, 'saveRoute', vm.gridApi)
         };
-
         vm.gridOptions.onRegisterApi = function (gridApi) {
-                vm.gridApi = gridApi;
-                gridApi.rowEdit.on.saveRow($scope, vm.saveRowRoute);
-            };
-            vm.stationGrid.onRegisterApi = function (gridApi) {
-                vm.stationGridApi = gridApi;
-                gridApi.rowEdit.on.saveRow ($scope,vm.saveRowStation)
-            }
-        }]
+            vm.gridApi = gridApi;
+            gridApi.rowEdit.on.saveRow($scope, vm.saveRowRoute);
+        };
+        vm.stationGrid.onRegisterApi = function (gridApi) {
+            vm.stationGridApi = gridApi;
+            gridApi.rowEdit.on.saveRow($scope, vm.saveRowStation)
+        }
+    }]
 )
     .filter('griddropdown', function () {
         return function (input, context) {
