@@ -8,6 +8,7 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
         var vm = this;
         vm.gridOptions = {};
         vm.stationGrid = {};
+        vm.routeGrid = {};
         vm.stationList = {};
         stationsManager.loadAll().then(function (data) {
             vm.stationList = data;
@@ -65,11 +66,17 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
             },
             {name: 'timezone', enableCellEdit: true, width: '10%'},
         ];
+
+        vm.routeGrid.columnDefs = [
+            {name: 'id', enableCellEdit: false, width: '10%'},
+            {name: 'name', enableCellEdit: true, width: '30%'},
+        ];
+
         vm.deleteRow = function (row) {
             console.log("Perform delete");
         };
         /*Copy rows function*/
-        vm.copyRows = function () {
+        vm.copyRows = function (tableApi) {
             var selectedObject = vm.gridApi.selection.getSelectedRows(),
                 newData = [],
                 selectedIndexData = [],
@@ -103,7 +110,7 @@ routeEditor.controller('routeEditCtrl', ['$scope', '$rootScope', '$http', '$q', 
                 data: rowEntity
             }).then(function success(response) {
                     deferred.resolve(response.data);
-                    rowEntity.id = 787878;
+                    rowEntity.id = response.data;
                 }, function error(response) {
                     deferred.reject(response.status);
                 }
