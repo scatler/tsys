@@ -7,6 +7,7 @@ import com.scatler.rrweb.service.impl.LineService;
 import com.scatler.rrweb.service.impl.RouteStationService;
 import com.scatler.rrweb.service.impl.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,16 +37,16 @@ public class RouteRestController {
     public RouteStationDTO updateRoute(@RequestBody RouteStationDTO dto) {
         System.out.println("(Service Side) Editing employee with Id: " + dto.getId());
         routeStationService.update(dto);
-        return new RouteStationDTO();
+        return dto;
     }
 
     @RequestMapping(value = "/saveStation", //
             method = RequestMethod.PUT, //
             consumes = "application/json")
-    public RouteStationDTO updateStation(@RequestBody StationDTO dto) {
+    public StationDTO updateStation(@RequestBody StationDTO dto) {
         System.out.println("(Service Side) Editing employee with Id: " + dto.getId());
         stationService.save(dto);
-        return new RouteStationDTO();
+        return dto;
     }
 
     @RequestMapping(path = "/stations", produces = "application/json")
@@ -53,12 +54,13 @@ public class RouteRestController {
         return stationService.getAll();
     }
 
+    @RequestMapping(path = "/stations/{id}", produces = "application/json")
+    public StationDTO getStationByID(@PathVariable Integer id) throws IOException {
+        return stationService.get(id);
+    }
 
     @RequestMapping(path = "/lines", produces = "application/json")
     public List<LineDTO> getAllLines(HttpServletResponse response) throws IOException {
         return lineService.getAll();
     }
-
-
-
 }

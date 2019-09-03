@@ -1,33 +1,46 @@
-<!--<div ng-controller="routeEditCtrl">
-    <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid"></div>
-    <button ng-click="" type="submit" class="btn btn-danger">Submit</button>
-</div>-->
-<!--<div class="col-md-12 col-lg-4">
-    <div class="panel panel-default bootstrap-panel xsmall-panel">
-        <div class="panel-heading">Panel Heading</div>
-        <div class="panel-body" ng-controller="routeEditCtrl as $ctrl">
-            <div ui-grid="$ctrl.stationGrid" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
-                 class="grid"></div>
-            <div ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
-                 class="grid"></div>
-            <button ng-click="" type="submit" class="btn btn-danger">Submit</button>
+
+<div class="col-md-12 col-lg-4">
+    <div ng-controller="routeEditCtrl as $ctrl">
+        <!--Add station-->
+<!--        <div class="panel panel-primary medium-panel  light-text animated zoomIn" zoom-in="">
+            <div class="panel-heading clearfix"><h3 class="panel-title">Station</h3></div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="input01">Text</label>
+                        <input type="text" class="form-control" id="input01" placeholder="Text">
+                    </div>
+                    <div class="form-group">
+                        <label for="input02">Password</label>
+                        <input type="password" class="form-control" id="input02" placeholder="Password">
+                    </div>
+
+                </form>
+            </div>
+        </div>-->
+        <!--Station list -->
+        <div class="panel  medium-panel  light-text animated zoomIn" zoom-in="">
+            <div class="panel-heading clearfix"><h3 class="panel-title">Station</h3></div>
+            <div class="panel-body">
+                <div ui-grid="$ctrl.stationGrid" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
+                     class="grid"></div>
+                <button ng-click="$ctrl.addData()" type="submit" class="btn btn-danger">Add station</button>
+            </div>
         </div>
-    </div>
-</div>-->
-<div ng-controller="routeEditCtrl as $ctrl">
-    <div class="panel  xsmall-panel  light-text animated zoomIn" zoom-in="" >
-        <div class="panel-heading clearfix"><h3 class="panel-title">Station</h3></div>
-        <div class="panel-body">
-            <div ui-grid="$ctrl.stationGrid" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
-                 class="grid"></div>
+        <!--Station list-->
+        <!--Route list-->
+        <div class="panel medium-panel   light-text animated zoomIn" zoom-in="">
+            <div class="panel-heading clearfix"><h3 class="panel-title">Route</h3></div>
+            <div class="panel-body">
+                <!--Table itself-->
+                <div ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection ui-grid-auto-resize
+                     class="grid table table-hover"></div>
+                <!--Copy selected row-->
+                <button ng-click="$ctrl.copyRows()" type="submit" class="btn btn-danger">Add row</button>
+                <!--Send update to 2nd app-->
+                <button ng-click="" type="submit" class="btn btn-danger">Send updates</button>
+            </div>
         </div>
-    </div>
-    <div class="panel medium-panel   light-text animated zoomIn" zoom-in="">
-        <div class="panel-heading clearfix"><h3 class="panel-title">Route</h3></div>
-        <div class="panel-body">
-            <div ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
-                 class="grid table table-hover"></div>
-            <button ng-click="" type="submit" class="btn btn-danger">Submit</button>
-        </div>
+        <!--Route list-->
     </div>
 </div>

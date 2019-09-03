@@ -26,11 +26,6 @@ import java.util.Set;
 @Entity
 @Table(name = "Users")
 public class User extends AbstractEntity implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Integer id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")

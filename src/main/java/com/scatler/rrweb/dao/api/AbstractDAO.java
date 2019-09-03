@@ -1,6 +1,5 @@
 package com.scatler.rrweb.dao.api;
 
-import com.scatler.rrweb.dao.api.IDao;
 import com.scatler.rrweb.entity.AbstractEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,6 +33,11 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T, I
     @Override
     public void update(T entity) {
         sessionFactory.getCurrentSession().saveOrUpdate(entity);
+    }
+
+    public Integer add (T entity) {
+        Session session = sessionFactory.getCurrentSession();
+        return entity.getId();
     }
 
     @Override

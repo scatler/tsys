@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "authorities")
 public class Authorities extends AbstractEntity {
-    @Id
+
     @Column(name = "auth")
     private String authority;
 

@@ -38,13 +38,6 @@ import java.util.List;
 @Data
 public class Station extends AbstractEntity implements Serializable {
 
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id")
-    @GenericGenerator(name = "gen", strategy = "increment")
-    @GeneratedValue(generator = "gen")
-    private Integer id;
-
     @NotEmpty(message = "Name is required")
     @Size(max = 45)
     @Column(name = "name")
