@@ -36,7 +36,13 @@ public class StationService  {
         dao.save(converter.toEntity(station));
     }
 
+
     public StationDTO get(Integer id) {
-        return converter.toDto(dao.get(id));
+            return converter.toDto(dao.get(id));
+    }
+
+    @Transactional
+    public Integer addOrUpdate(StationDTO dto) {
+        return dao.addOrUpdate(converter.toEntity(dto));
     }
 }

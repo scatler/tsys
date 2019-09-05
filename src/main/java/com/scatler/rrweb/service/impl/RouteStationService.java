@@ -39,4 +39,9 @@ public class RouteStationService {
     public void update(RouteStationDTO dto) {
         dao.update(converter.toEntity(dto));
     }
+
+    @Transactional
+    public Integer addOrUpdate(RouteStationDTO dto) {
+        return dao.addOrUpdate(converter.toEntity(dto));
+    }
 }

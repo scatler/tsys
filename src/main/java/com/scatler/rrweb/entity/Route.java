@@ -27,13 +27,6 @@ import java.util.List;
     @NamedQuery(name = "Route.findByName", query = "SELECT r FROM Route r WHERE r.name = :name")})
 public class Route extends AbstractEntity implements Serializable {
 
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id")
-    @GenericGenerator(name="gen",strategy="increment")
-    @GeneratedValue(generator="gen")
-    private Integer id;
     @Size(max = 45)
     @Column(name = "name")
     private String name;

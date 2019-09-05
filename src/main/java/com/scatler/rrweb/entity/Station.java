@@ -37,26 +37,20 @@ import java.util.List;
         @NamedQuery(name = "Station.findByTimezone", query = "SELECT s FROM Station s WHERE s.timezone = :timezone")})
 @Data
 public class Station extends AbstractEntity implements Serializable {
-
     @NotEmpty(message = "Name is required")
     @Size(max = 45)
     @Column(name = "name")
     private String name;
-
-
     @DateTimeFormat(pattern = "HH:mm:ss")
     @Column(name = "timezone")
     @Temporal(TemporalType.TIME)
     private Date timezone;
-
     @OneToMany(mappedBy = "station1Id", fetch = FetchType.LAZY)
     private List<Ticket> ticketList;
     @OneToMany(mappedBy = "station2Id", fetch = FetchType.LAZY)
     private List<Ticket> ticketList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stationId", fetch = FetchType.LAZY)
     private List<RouteStation> routeStationList;
-
-
     @NotNull(message = "Select line")
     @JoinColumn(name = "line_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -68,5 +62,4 @@ public class Station extends AbstractEntity implements Serializable {
     public Station(Integer id) {
         this.id = id;
     }
-
 }

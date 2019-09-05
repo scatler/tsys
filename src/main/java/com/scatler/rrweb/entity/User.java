@@ -40,6 +40,7 @@ public class User extends AbstractEntity implements Serializable {
     private String type;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private List<Authorities> authorities;
+
     public User(Integer id) {
         this.id = id;
     }

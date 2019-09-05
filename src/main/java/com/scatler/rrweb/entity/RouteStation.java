@@ -38,12 +38,7 @@ import java.util.Date;
         @NamedQuery(name = "RouteStation.findByStopMin", query = "SELECT r FROM RouteStation r WHERE r.stopMin = :stopMin"),
         @NamedQuery(name = "RouteStation.findByDay", query = "SELECT r FROM RouteStation r WHERE r.day = :day")})
 public class RouteStation extends AbstractEntity implements Serializable {
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id")
-    @GenericGenerator(name = "gen", strategy = "increment")
-    @GeneratedValue(generator = "gen")
-    private Integer id;
+
     @Column(name = "arrival_time")
     @Temporal(TemporalType.TIME)
     private Date arrivalTime;

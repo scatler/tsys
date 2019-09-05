@@ -29,4 +29,12 @@ public class RouteService {
         return dao.getAll().stream().map((a)->converter.toDto(a)).collect(Collectors.toList());
     }
 
+    @Transactional
+    public Integer addOrUpdate(RouteDTO dto) {
+        return dao.addOrUpdate(converter.toEntity(dto));
+    }
+
+    public RouteDTO get(Integer id) {
+        return converter.toDto(dao.get(id));
+    }
 }

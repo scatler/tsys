@@ -12,7 +12,6 @@ angular.module('BlurAdmin', [
   'ui.slimscroll',
   'ngJsTree',
   'angular-progress-button-styles',
-  'routeEditor',
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ]);

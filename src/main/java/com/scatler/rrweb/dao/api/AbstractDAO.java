@@ -35,8 +35,9 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T, I
         sessionFactory.getCurrentSession().saveOrUpdate(entity);
     }
 
-    public Integer add (T entity) {
+    public Integer addOrUpdate (T entity) {
         Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(entity);
         return entity.getId();
     }
 

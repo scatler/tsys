@@ -21,13 +21,6 @@ import java.io.Serializable;
 @Table(name = "train")
 public class Train extends AbstractEntity implements Serializable {
 
-    @Id
-    @Basic(optional = false)
-    @GenericGenerator(name="gen",strategy="increment")
-    @GeneratedValue(generator="gen")
-    @Column(name = "id")
-    private Integer id;
-
     @Size(max = 45)
     @Column(name = "name")
     private String name;

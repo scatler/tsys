@@ -34,12 +34,7 @@ import java.util.Date;
         @NamedQuery(name = "TrainRouteidDay.findById", query = "SELECT t FROM TrainRouteidDay t WHERE t.id = :id"),
         @NamedQuery(name = "TrainRouteidDay.findByDayDept", query = "SELECT t FROM TrainRouteidDay t WHERE t.dayDept = :dayDept")})
 public class TrainRouteidDay extends AbstractEntity implements Serializable {
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id")
-    @GenericGenerator(name = "gen", strategy = "increment")
-    @GeneratedValue(generator = "gen")
-    private Integer id;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "day_dept")

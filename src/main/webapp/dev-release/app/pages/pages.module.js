@@ -16,6 +16,7 @@
     'BlurAdmin.pages.maps',
     'BlurAdmin.pages.profile',
     'BlurAdmin.pages.editRoute',
+    'BlurAdmin.pages.buyTickets',
   ])
       .config(routeConfig);
 

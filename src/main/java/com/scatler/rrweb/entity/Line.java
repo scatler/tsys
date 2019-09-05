@@ -42,11 +42,6 @@ public class Line extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Basic(optional = false)
-    @NotNull(message = "Select line")
-    @Column(name = "id")
-    private Integer id;
     @Size(max = 45)
     @Column(name = "name")
     private String name;

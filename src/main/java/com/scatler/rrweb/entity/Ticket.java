@@ -31,12 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Ticket extends AbstractEntity implements Serializable {
 
     //private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    //@NotNull
-    @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
 
     @NotEmpty (message = "Name is required")
     @Size(max = 45)
