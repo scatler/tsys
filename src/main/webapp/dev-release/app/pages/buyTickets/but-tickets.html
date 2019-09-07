@@ -1,134 +1,215 @@
-<div ng-controller="AccordionDemoCtrl as ctrl">
-    <script type="text/ng-template" id="group-template.html">
-        <div class="panel-heading">
-            <h4 class="panel-title" style="color:#fa39c3">
-                <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()"
-                   uib-accordion-transclude="heading">
-          <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
-            {{heading}}
-          </span>
-                </a>
-            </h4>
-        </div>
-        <div class="panel-collapse collapse" uib-collapse="!isOpen">
-            <div class="panel-body" style="text-align: right" ng-transclude></div>
-        </div>
-    </script>
-    <p>
-        <button type="button" class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel
-        </button>
-        <button type="button" class="btn btn-default btn-sm"
-                ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel
-        </button>
-    </p>
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" ng-model="oneAtATime">
-            Open only one at a time
-        </label>
-    </div>
-    <!--    <script>
-            $(function () {
-                $("#dayStart").datepicker();
-                $("#dayFinish").datepicker();
-            });
+<div class="panel  medium-panel  panel-info animated zoomIn col-md-12 col-lg-4">
+    <div ng-controller="AccordionDemoCtrl as $ctrl">
+        <script id="group-template.html" type="text/ng-template">
+            <div class="panel-heading">
+                <h4 class="panel-title" style="color:#fa39c3">
+                    <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()"
+                       uib-accordion-transclude="heading">
+           <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+             {{heading}}
+           </span>
+                    </a>
+                </h4>
+            </div>
+            <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                <div class="panel-body" style="text-align: right" ng-transclude></div>
+            </div>
         </script>
-        <input type="text" id="dayStart">
-        <input type="text" id="datFinish">
+        <!--Day pick bootstrap-->
+        <style>
+            .full button span {
+                background-color: limegreen;
+                border-radius: 32px;
+                color: black;
+            }
 
-        -->
-    <!--Day pick bootstrap-->
-    <style>
-        .full button span {
-            background-color: limegreen;
-            border-radius: 32px;
-            color: black;
-        }
+            .partially button span {
+                background-color: orange;
+                border-radius: 32px;
+                color: black;
+            }
+        </style>
+        <div>
+            <p class="input-group">
+                <input alt-input-formats="altInputFormats" class="form-control" close-text="Close"
+                       datepicker-options="$ctrl.dateOptions"
+                       is-open="$ctrl.popup1.opened" ng-model="$ctrl.df" ng-required="true"
+                       type="text" uib-datepicker-popup="{{$ctrl.format}}"/>
+                <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="$ctrl.open1()" type="button">
+                            <i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </p>
+            <p class="input-group">
+                <input alt-input-formats="altInputFormats" class="form-control" close-text="Close"
+                       datepicker-options="$ctrl.dateOptions"
+                       is-open="$ctrl.popup2.opened" ng-model="$ctrl.dt" ng-required="true"
+                       type="text" uib-datepicker-popup="{{$ctrl.format}}"/>
+                <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="$ctrl.open2()" type="button">
+                            <i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </p>
+            <style>
+                .select2 > .select2-choice.ui-select-match {
+                    /* Because of the inclusion of Bootstrap */
+                    height: 29px;
+                }
 
-        .partially button span {
-            background-color: orange;
-            border-radius: 32px;
-            color: black;
-        }
-    </style>
-    <div> <!--ng-controller="DatepickerPopupDemoCtrl"-->
-        <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
-        <h4>Popup</h4>
-        <div class="row">
+                .selectize-control > .selectize-dropdown {
+                    top: 36px;
+                }
+
+                /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+                .select-box {
+                    background: #fff;
+                    position: relative;
+                    z-index: 1;
+                }
+
+                .alert-info.positioned {
+                    margin-top: 1em;
+                    position: relative;
+                    z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+                }
+
+                .top {
+                    z-index: 10000;
+                }
+            </style>
             <div class="col-md-6">
-                <p class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt"
-                           is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true"
-                           close-text="Close" alt-input-formats="altInputFormats"/>
-                    <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open1()"><i
-                    class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-                </p>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">From</label>
+                    <div class="col-sm-6">
+                        <ui-select ng-model="$ctrl.stationFrom" theme="selectize" title="Choose a station">
+                            <ui-select-match placeholder="From...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in $ctrl.stationList | filter: $select.search">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                                <small ng-bind-html="item.id | highlight: $select.search"></small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
-                <p class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened"
-                           datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
-                    <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open2()"><i
-                    class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-                </p>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">To</label>
+                    <div class="col-sm-6">
+                        <ui-select ng-model="$ctrl.stationTo" theme="selectize" title="Choose a station">
+                            <ui-select-match placeholder="To...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in $ctrl.stationList | filter: $select.search">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                                <small ng-bind-html="item.id | highlight: $select.search"></small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
             </div>
+            <hr/>
+            <button class="btn btn-sm btn-info"
+                    ng-click="$ctrl.searchForTrains($ctrl.stationFrom, $ctrl.stationTo, $ctrl.df,$ctrl.dt)"
+                    type="button">Find trains
+            </button>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Format: <span
-                        class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select
-                    class="form-control" ng-model="format" ng-options="f for f in formats">
-                <option></option>
-            </select>
+        <!--Day pick bootstrap-->
+        <uib-accordion close-others="oneAtATime">
+            <!--Find trains table-->
+            <div class="panel-default" heading="Trains" is-open="$ctrl.panels.trainOpen" uib-accordion-group>
+                <div class="grid-accord table table-hover" ui-grid="$ctrl.findTrains"
+                     ui-grid-cellNav
+                     ui-grid-edit
+                     ui-grid-row-edit
+                     ui-grid-selection>
+                </div>
             </div>
+            <div class="panel-default" heading="Tickets" is-open="$ctrl.panels.ticketOpen" uib-accordion-group>
+                <form class="ng-pristine ng-scope ng-invalid ng-invalid-required ng-valid-email"
+                      name="$ctrl.personalInfoForm"
+                      novalidate="" style="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback"
+                                 ng-class="{'has-error': $ctrl.personalInfoForm.name.$invalid &amp;&amp; ($ctrl.personalInfoForm.name.$dirty || $ctrl.personalInfoForm.$submitted)}">
+                                <label for="name">Name</label>
+                                <input
+                                    class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"
+                                    id="name"
+                                    name="name" ng-model="$ctrl.personalInfo.name" placeholder="Your name"
+                                    required="" style="" type="text">
+                                <span class="help-block error-block basic-block">Required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback"
+                                 ng-class="{'has-error': $ctrl.personalInfoForm.surname.$invalid &amp;&amp; ($ctrl.personalInfoForm.surname.$dirty || $ctrl.personalInfoForm.$submitted)}">
+                                <label for="surname">Surname</label>
+                                <input
+                                    class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"
+                                    id="surname"
+                                    name="name" ng-model="$ctrl.personalInfo.surname" placeholder="Your surname"
+                                    required="" style="" type="text">
+                                <span class="help-block error-block basic-block">Required</span>
+                            </div>
+                            <div class="col-md-6 top">
+                                <p class="input-group">
+                                    <input alt-input-formats="altInputFormats" class="form-control" close-text="Close"
+                                           datepicker-options="$ctrl.dateOptions"
+                                           is-open="$ctrl.popup3.opened" ng-model="$ctrl.personalInfoForm.birthday"
+                                           ng-required="true"
+                                           type="text" uib-datepicker-popup="{{$ctrl.format}}"/>
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="$ctrl.open3()" type="button">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                    </span>
+                                </p>
+                            </div>
+                            <button class="btn btn-sm btn-info" ng-click="$ctrl.buyTicket()" type="button">Buy ticket
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-default" heading="Info" is-open="$ctrl.panels.infoOpen" uib-accordion-group>
+                You bought a ticket. Your ticket id is : {{$ctrl.ticketId}}
+            </div>
+        </uib-accordion>
+        <!---Modal-->
+        <div lass="modal-demo">
+            <script id="myModalContent.html" type="text/ng-template">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title">I'm a modal!</h3></div>
+                <div class="modal-body" id="modal-body">
+                    {{$ctrl.items}}
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+                        <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+                    </div>
+                </div>
+            </script>
+            <script id="stackedModal.html" type="text/ng-template">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title-{{name}}">The {{name}} modal!</h3></div>
+                <div class="modal-body" id="modal-body-{{name}}"> Having multiple modals open at once is probably bad UX
+                                                                  but it's technically possible.
+                </div>
+            </script>
+            <button class="btn btn-default" ng-click="$ctrl.open()" type="button">Open me!</button>
+            <!-- <button type="button" class="btn btn-default" ng-click="$ctrl.open()">Open me!</button>
+             <button type="button" class="btn btn-default" ng-click="$ctrl.open('lg')">Large modal</button>
+             <button type="button" class="btn btn-default" ng-click="$ctrl.open('sm')">Small modal</button>
+             <button type="button" class="btn btn-default" ng-click="$ctrl.open('sm', '.modal-parent')"> Modal appended to a custom parent </button>
+             <button type="button" class="btn btn-default" ng-click="$ctrl.toggleAnimation()">Toggle Animation ({{ $ctrl.animationsEnabled }})</button>
+             <button type="button" class="btn btn-default" ng-click="$ctrl.openComponentModal()">Open a component modal!</button>
+             <button type="button" class="btn btn-default" ng-click="$ctrl.openMultipleModals()"> Open multiple modals at once </button>
+             <div ng-show="$ctrl.selected">Selection from a modal: {{ $ctrl.selected }}</div>
+             <div class="modal-parent"> </div>-->
         </div>
-        <hr/>
-        <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-        <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2009, 7, 24)">2009-08-24</button>
-        <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-        <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()"
-                uib-tooltip="After today restriction">Min date
-        </button>
+        <!--Modal-->
     </div>
-    <!--Day pick bootstrap-->
-    <uib-accordion close-others="oneAtATime">
-        <div uib-accordion-group class="panel-default" heading="Static Header, initially expanded"
-             is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-            This content is straight in the template.
-        </div>
-        <div uib-accordion-group class="panel-default" heading="{{group.title}}" ng-repeat="group in groups">
-            {{group.content}}
-        </div>
-        <div uib-accordion-group class="panel-default" heading="Dynamic Body Content">
-            <p>The body of the uib-accordion group grows to fit the contents</p>
-            <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
-            <div ng-repeat="item in items">{{item}}</div>
-        </div>
-        <div uib-accordion-group class="panel-default" heading="Custom template" template-url="group-template.html">
-            Hello
-        </div>
-        <div uib-accordion-group class="panel-default" is-open="status.isCustomHeaderOpen"
-             template-url="group-template.html">
-            <uib-accordion-heading>
-                Custom template with custom header template <i class="pull-right glyphicon"
-                                                               ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
-            </uib-accordion-heading>
-            World
-        </div>
-        <div uib-accordion-group class="panel-danger" heading="Delete account">
-            <p>Please, to delete your account, click the button below</p>
-            <button class="btn btn-danger">Delete</button>
-        </div>
-        <div uib-accordion-group class="panel-default" is-open="status.open">
-            <uib-accordion-heading>
-                I can have markup, too! <i class="pull-right glyphicon"
-                                           ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-            </uib-accordion-heading>
-            This is just some content to illustrate fancy headings.
-        </div>
-    </uib-accordion>
 </div>
+

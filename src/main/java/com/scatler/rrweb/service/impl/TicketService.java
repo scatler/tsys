@@ -28,14 +28,14 @@ public class TicketService {
     }
 
     @Transactional
-    public void registerTicket(TicketDTO ticketDTO) throws FoundSamePassengerException, NotEnoughTimeBeforeDeparture {
-        if (checkEnoughTimeBeforeDeparture(ticketDTO)){
+    public Integer registerTicket(TicketDTO ticketDTO) throws FoundSamePassengerException, NotEnoughTimeBeforeDeparture {
+/*        if (checkEnoughTimeBeforeDeparture(ticketDTO)){
             throw new NotEnoughTimeBeforeDeparture("Not enough time before train departure");
-        }
-        if (findSamePassenger(ticketDTO)) {
+        }*/
+/*        if (findSamePassenger(ticketDTO)) {
             throw new FoundSamePassengerException("Same passenger found");
-        }
-        ticketDAO.save(ticketConverter.toEntity(ticketDTO));
+        }*/
+        return ticketDAO.addOrUpdate(ticketConverter.toEntity(ticketDTO));
     }
 
     private boolean checkEnoughTimeBeforeDeparture(TicketDTO ticketDTO) {

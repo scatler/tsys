@@ -1,4 +1,4 @@
-var routeEditor = angular.module('routeEditor', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.resizeColumns', 'ui.grid.selection']);
+var routeEditor = angular.module('routeEditor', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection']);
 
 routeEditor.controller('routeEditCtrl', [
         '$scope',
@@ -20,7 +20,7 @@ routeEditor.controller('routeEditCtrl', [
         vm.routeList = {};
         vm.allApi = [];
 
-        vm.refreshAllTables = function () {
+/*        vm.refreshAllTables = function () {
             vm.allApi.forEach(function (api) {
                 //resetData(api.grid.options);
                 $timeout(function () {
@@ -37,7 +37,7 @@ routeEditor.controller('routeEditCtrl', [
             $timeout (function () {
                 grid.data = temp
             },50)
-        }
+        }*/
 
         RouteManager.loadAll().then(function (data) {
                 vm.routeList = data;

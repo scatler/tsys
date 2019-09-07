@@ -1,4 +1,4 @@
-angular.module('buyTicketsApp').controller('DatepickerPopupDemoCtrl', function ($scope) {
+angular.module('buyTicketsApp').controller('datePickerCtrl', function ($scope) {
     $scope.today = function() {
         $scope.dt = new Date();
     };
@@ -51,6 +51,7 @@ angular.module('buyTicketsApp').controller('DatepickerPopupDemoCtrl', function (
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[0];
     $scope.altInputFormats = ['M!/d!/yyyy'];
+
 
     $scope.popup1 = {
         opened: false
