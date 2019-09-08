@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -34,18 +35,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 */
 
-/*
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-    }
-
-*/
-
     @Bean
-    public Logger logger(){
+    public Logger logger() {
         return LoggerFactory.getLogger("RRD");
     }
+
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     /*    registry
                 .addResourceHandler("/resources/**")// specifying resource folder
@@ -53,8 +47,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/scripts/**").addResourceLocations("/scripts");
         registry.addResourceHandler("/styles/**").addResourceLocations("/styles");*/
         //registry.addResourceHandler("/*.html/**").addResourceLocations("/WEB-INF/admin");
-        //registry.addResourceHandler("index.html").addResourceLocations("/index.html");
         registry.addResourceHandler("/**").addResourceLocations("/");
+        registry.addResourceHandler("/dev-release/**").addResourceLocations("/dev-release/");
+        registry.addResourceHandler("/app/**").addResourceLocations("/dev-release/app/");
+        registry.addResourceHandler("/lib/**").addResourceLocations("/dev-release/lib/");
+        registry.addResourceHandler("/fonts/**").addResourceLocations("/dev-release/fonts/");
+        registry.addResourceHandler("/sass/**").addResourceLocations("/dev-release/sass/");
+        registry.addResourceHandler("/assets/**").addResourceLocations("/dev-release/assets/");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        //registry.addViewController("/").setViewName("forward:/dev-release/index.html");
+        //registry.addViewController("/login").setViewName("forward:/dev-release/auth.html");
+        //registry.addViewController("/login").setViewName("forward:/dev-release/auth.html");
     }
 
     @Bean("messageSource")

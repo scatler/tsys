@@ -10,6 +10,13 @@
             .state('editRoute', {
                 url: '/editRoute',
                 templateUrl: 'app/pages/editRoute/edit-route.html',
+                resolve: {
+                    security: ['$q', function($q){
+                        if(true){
+                            return $q.reject("Not Authorized");
+                        }
+                    }]
+                },
                 title: 'Edit route',
                 sidebarMeta: {
                     order: 800,

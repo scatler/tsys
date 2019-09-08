@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,12 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+/*
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
+*/
 
-    @Override
+/*    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
@@ -49,5 +52,55 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(customAccessDeniedHandler);
+
+
+    }*/
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser("user")
+                .password("password")
+                .roles("USER");
     }
+
+    @Override
+    protected void configure(HttpSecurity http)
+            throws Exception {
+            http.csrf().disable()
+/*                    .authorizeRequests()
+                    //.antMatchers("/**").not().hasAuthority("ROLE_CANDIDATE")
+                    //.antMatchers("/**").hasRole("USER")
+                    .antMatchers("/anonymous*").anonymous()
+                    .antMatchers("/login").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin().loginPage("/login").loginProcessingUrl("/loginPerform").permitAll();*/
+                    .authorizeRequests()
+                    //.antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/anonymous*").anonymous()
+                    .antMatchers("/dev-release/auth.html").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginPage("/dev-release/auth.html")
+                    .loginProcessingUrl("/perform_login")
+                    .defaultSuccessUrl("/dev-release/index.html", true);
+/*                    //.failureUrl("/login.html?error=true")
+                    //.failureHandler(authenticationFailureHandler())
+                    .and()
+                    .logout()
+                    .logoutUrl("/perform_logout")
+                    .deleteCookies("JSESSIONID");
+                    //.logoutSuccessHandler(logoutSuccessHandler());*/
+    }
+
+/*    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/app/**") //TODO check why?
+                .antMatchers("/app/**"); //TODO check why?
+    }*/
 }
