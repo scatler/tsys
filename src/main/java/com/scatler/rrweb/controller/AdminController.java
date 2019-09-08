@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Base64;
 
 @Controller
 public class AdminController {
@@ -44,9 +47,25 @@ public class AdminController {
                 request.getSession().setAttribute("isAdmin", true);
             model.addAttribute("message", "You are logged in as " + au.getName());
         } else {
-            return "forward:/dev-release/auth.html";
+            return "/dev-release/auth.html";
         }
         return "forward:/dev-release/index.html";
+    }
+
+    @RequestMapping(value = "/user", produces = "application/json")
+    @ResponseBody
+    public Principal user(HttpServletRequest request, Authentication au) {
+        /*String authToken = request.getHeader("Authorization")
+                .substring("Basic".length()).trim();*/
+        String role_admin = au
+                .getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .findAny()
+                .orElse("ROLE_ADMIN");
+        return au;
+    /*    return () ->  new String(Base64.getDecoder()
+                .decode(authToken)).split(":")[0];*/
     }
 
 /*    @GetMapping("/login")

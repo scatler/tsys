@@ -69,16 +69,33 @@
                 = 'Basic ' + JSON.parse(userData).authData;
         }
 
-        $rootScope
+        $rootScope.isAdmin = false;
+
+        $http({
+            url: 'http://localhost:8080/user',
+            method: "GET"
+        }).then(function (response) {
+            $rootScope.isAdmin = response.data.authorities[0].authority === "ROLE_ADMIN";
+
+        })
+/*        $rootScope
             .$on('$locationChangeStart', function (event, next, current) {
                 var restrictedPage
-                    = $.inArray($location.path(), ['/login']) === -1;
-                var loggedIn
-                    = $window.sessionStorage.getItem('userData');
-                if (restrictedPage && !loggedIn) {
+                    = $.inArray($location.path(), ['/login','/editRoute']) === -1;
+                var isAdmin;
+                $http({
+                  url: 'http://localhost:8080/user',
+                  method: "GET"
+                }).then(function (response) {
+                   isAdmin = response.data.authorities[0].authority === "ROLE_ADMIN";
+                }, function (error) {
+                  console.log(error);
+                });
+
+                if (!isAdmin && restrictedPage) {
                     $location.path('/login');
                 }
-            });
+            });*/
     }
 
 

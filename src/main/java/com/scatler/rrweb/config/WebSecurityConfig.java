@@ -14,17 +14,19 @@ import org.springframework.security.web.savedrequest.RequestCache;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsService userService;
+   /* @Autowired
+    private UserDetailsService userService;*/
     @Autowired
     RequestCache myRequestCache;
     @Autowired
     AccessDeniedHandler customAccessDeniedHandler;
 
+/*
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+*/
 
 /*
     @Override
@@ -57,13 +59,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }*/
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("user")
-                .password("password")
-                .roles("USER");
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.inMemoryAuthentication()
+                .withUser("user").password("{noop}user").roles("USER")
+                .and()
+                .withUser("admin").password("{noop}password").roles("ADMIN");
+
     }
 
     @Override
@@ -79,9 +81,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .formLogin().loginPage("/login").loginProcessingUrl("/loginPerform").permitAll();*/
                     .authorizeRequests()
-                    //.antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/dev-release/index.html").hasRole("ADMIN")
                     .antMatchers("/anonymous*").anonymous()
                     .antMatchers("/dev-release/auth.html").permitAll()
+                    .antMatchers("/dev-release/lib/*").permitAll()
+                    .antMatchers("/dev-release/assets/*").permitAll()
+                    .antMatchers("/dev-release/fonts/*").permitAll()
+                    .antMatchers("/dev-release/sass/*").permitAll()
+                    .antMatchers("/dev-release/app/*").permitAll()
+                    .antMatchers("/dev-release/assets/img/rrd.jpg").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
