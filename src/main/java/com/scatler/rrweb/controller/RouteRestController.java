@@ -4,10 +4,14 @@ import com.scatler.rrweb.dto.LineDTO;
 import com.scatler.rrweb.dto.RouteDTO;
 import com.scatler.rrweb.dto.RouteStationDTO;
 import com.scatler.rrweb.dto.StationDTO;
+import com.scatler.rrweb.dto.TrainDTO;
+import com.scatler.rrweb.dto.TrainRouteDTO;
 import com.scatler.rrweb.service.impl.LineService;
 import com.scatler.rrweb.service.impl.RouteService;
 import com.scatler.rrweb.service.impl.RouteStationService;
 import com.scatler.rrweb.service.impl.StationService;
+import com.scatler.rrweb.service.impl.TrainService;
+import com.scatler.rrweb.service.impl.TrdService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +35,13 @@ public class RouteRestController {
     @Autowired
     private RouteService routeService;
     @Autowired
+    private TrainService trainService;
+    @Autowired
+    private TrdService trdService;
+    @Autowired
     private Logger log;
 
+    //------------------Saving
     @RequestMapping(value = "/saveStation", //
             method = RequestMethod.PUT, //
             consumes = "application/json")
@@ -56,6 +65,25 @@ public class RouteRestController {
         log.debug("Add or update modified route" + dto.getId());
         return routeStationService.addOrUpdate(dto);
     }
+
+    @RequestMapping(value = "/saveTrain", //
+            method = RequestMethod.PUT, //
+            consumes = "application/json")
+    public Integer updateTrain(@RequestBody TrainDTO dto) {
+        log.debug("Add or update modified train" + dto.getId());
+        return trainService.addOrUpdate(dto);
+    }
+
+    @RequestMapping(value = "/saveTrd", //
+            method = RequestMethod.PUT, //
+            consumes = "application/json")
+    public Integer updateTrd(@RequestBody TrainRouteDTO dto) {
+        log.debug("Add or update modified trd" + dto.getTrainId() + "->" +
+                "->" + dto.getDay() +
+                "->" + dto.getRouteId());
+        return trdService.addOrUpdate(dto);
+    }
+    //-----------------------Get service
 
     @RequestMapping(path = "/stations", produces = "application/json")
     public List<StationDTO> getAllStations(HttpServletResponse response) throws IOException {
@@ -85,5 +113,27 @@ public class RouteRestController {
     @RequestMapping(path = "/routesStations", produces = "application/json")
     public List<RouteStationDTO> sendData(HttpServletResponse response) throws IOException {
         return routeStationService.getAll();
+    }
+
+    //-----------------------Trains-----------------------------
+    @RequestMapping(path = "/trains", produces = "application/json")
+    public List<TrainDTO> getAllTrains() throws IOException {
+        return trainService.getAll();
+    }
+
+    @RequestMapping(path = "/trains/{id}", produces = "application/json")
+    public TrainDTO getTrainById(@PathVariable Integer id) throws IOException {
+        return trainService.get(id);
+    }
+
+    //-------------------------TRD-------------------------------
+    @RequestMapping(path = "/trd", produces = "application/json")
+    public List<TrainRouteDTO> getAllTrd() throws IOException {
+        return trdService.getAll();
+    }
+
+    @RequestMapping(path = "/trd/{id}", produces = "application/json")
+    public TrainRouteDTO getTrdById(@PathVariable Integer id) throws IOException {
+        return trdService.get(id);
     }
 }

@@ -30,8 +30,8 @@ public class Route extends AbstractEntity implements Serializable {
     @Size(max = 45)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
-    private List<RouteStation> routeStationList;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
+    //private List<RouteStation> routeStationList;
 
     public Route() {
     }
@@ -40,5 +40,8 @@ public class Route extends AbstractEntity implements Serializable {
         this.id = id;
     }
 
-
+    @Override
+    public String toString() {
+        return "Route{}" + id;
+    }
 }

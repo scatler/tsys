@@ -20,10 +20,10 @@ public class AvailableTrain implements Serializable {
     private Object station1Name;//5
     //private Object dayOfStart;//6
     private Object arrivalTimeToStation1;//7
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT+3")
     private Date arrivalDayToStation1;//8
     private Object arrivalTimeToStation2;//9
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT+3")
     private Date arrivalDayToStation2;//10
     private Object station2id;//11
     private Object station2name;//12

@@ -81,7 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .formLogin().loginPage("/login").loginProcessingUrl("/loginPerform").permitAll();*/
                     .authorizeRequests()
-                    .antMatchers("/dev-release/index.html").hasRole("ADMIN")
+                    .antMatchers("/dev-release/index.html").hasAnyRole("ADMIN", "USER")
                     .antMatchers("/anonymous*").anonymous()
                     .antMatchers("/dev-release/auth.html").permitAll()
                     .antMatchers("/dev-release/lib/*").permitAll()
@@ -89,20 +89,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/dev-release/fonts/*").permitAll()
                     .antMatchers("/dev-release/sass/*").permitAll()
                     .antMatchers("/dev-release/app/*").permitAll()
+                    .antMatchers("/update/*").permitAll()
                     .antMatchers("/dev-release/assets/img/rrd.jpg").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
                     .loginPage("/dev-release/auth.html")
                     .loginProcessingUrl("/perform_login")
-                    .defaultSuccessUrl("/dev-release/index.html", true);
-/*                    //.failureUrl("/login.html?error=true")
+                    .defaultSuccessUrl("/dev-release/index.html#/buyTickets", true)
+                    //.failureUrl("/login.html?error=true")
                     //.failureHandler(authenticationFailureHandler())
                     .and()
                     .logout()
                     .logoutUrl("/perform_logout")
                     .deleteCookies("JSESSIONID");
-                    //.logoutSuccessHandler(logoutSuccessHandler());*/
+                    //.logoutSuccessHandler(logoutSuccessHandler());
     }
 
 /*    @Override

@@ -6,11 +6,14 @@
 package com.scatler.rrweb.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "train_routeid_day")
 @XmlRootElement
@@ -34,17 +38,16 @@ import java.util.Date;
         @NamedQuery(name = "TrainRouteidDay.findById", query = "SELECT t FROM TrainRouteidDay t WHERE t.id = :id"),
         @NamedQuery(name = "TrainRouteidDay.findByDayDept", query = "SELECT t FROM TrainRouteidDay t WHERE t.dayDept = :dayDept")})
 public class TrainRouteidDay extends AbstractEntity implements Serializable {
-
     @Basic(optional = false)
     @NotNull
     @Column(name = "day_dept")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dayDept;
-    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
-    @ManyToOne(optional = false)
-    private RouteStation routeId;
+    @JoinColumn(name = "route_id", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Route routeId;
     @JoinColumn(name = "train_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private Train trainId;
 
     public TrainRouteidDay() {
@@ -57,5 +60,10 @@ public class TrainRouteidDay extends AbstractEntity implements Serializable {
     public TrainRouteidDay(Integer id, Date dayDept) {
         this.id = id;
         this.dayDept = dayDept;
+    }
+
+    @Override
+    public String toString() {
+        return "TrainRouteidDay" + id;
     }
 }

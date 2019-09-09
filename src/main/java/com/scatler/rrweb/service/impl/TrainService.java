@@ -44,4 +44,12 @@ public class TrainService {
     public void saveTRD(TrainRouteDTO dto) {
         trainRouteDAO.save(trainRouteConverter.toEntity(dto));
     }
+
+    public TrainDTO get(Integer id) {
+        return converter.toDto(dao.get(id));
+    }
+
+    public Integer addOrUpdate(TrainDTO dto) {
+        return dao.addOrUpdate(converter.toEntity(dto));
+    }
 }

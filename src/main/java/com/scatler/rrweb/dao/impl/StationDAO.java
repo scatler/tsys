@@ -4,6 +4,7 @@ import com.scatler.rrweb.dao.api.AbstractDAO;
 import com.scatler.rrweb.entity.Station;
 import com.scatler.rrweb.dto.forms.StationTimeTable;
 import org.hibernate.Session;
+import org.hibernate.type.DateType;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -29,9 +30,10 @@ public class StationDAO extends AbstractDAO<Station> {
                         "join Route r on r.id = rs.routeId.id " +
                         "where sid.id = :station " +
                         "and adddays(trd.dayDept,rs.day)=:date";
+                        //"and adddays(trd.dayDept,rs.day)='09/09/2019'";
         List<StationTimeTable> resultList = session.createQuery(hql)
                 .setParameter("station", station_id)
-                .setDate("date", day)
+                .setParameter("date", day, DateType.INSTANCE)
                 .getResultList();
         return resultList;
     }

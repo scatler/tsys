@@ -28,7 +28,7 @@ public class UpdateDataController {
         return new StationTimeTableWrapper(list);
     }
 
-    @RequestMapping("/register/{stationId}")
+/*    @RequestMapping("/register/{stationId}")
     public void registerListener(@PathVariable Integer stationId) {
-    }
+    }*/
 }

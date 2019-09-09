@@ -13,9 +13,9 @@ import java.util.Date;
 @Data
 public class RouteStationDTO extends AbstractDTO {
     private Integer id;
-    @JsonFormat(pattern = "HH:mm:ss")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+3")
     private Date arrivalTime;
-    @JsonFormat(pattern = "HH:mm:ss")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+4")
     private Date stopMin;
     private Integer day;
     private Integer routeId;

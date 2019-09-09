@@ -61,7 +61,8 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDao<T, I
     @Override
     public List<T> getAll() {
         Session session = sessionFactory.getCurrentSession();
-        return (List<T>) session.createQuery("from " + entityClass.getName(), entityClass).getResultList();
+        List<T> resultList = (List<T>) session.createQuery("from " + entityClass.getName(), entityClass).getResultList();
+        return resultList;
     }
 
     @Override
