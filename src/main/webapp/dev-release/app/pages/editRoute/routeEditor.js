@@ -1,55 +1,61 @@
 var routeEditor = angular.module('routeEditor', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection']);
-
 routeEditor.controller('routeEditCtrl', [
-        '$scope',
-        '$rootScope',
-        '$http',
-        '$q',
-        '$timeout',
-        'stationsManager',
-        'Station',
-        '$interval',
-        'RouteManager' ,
-        'Route',
-        function ($scope, $rootScope, $http, $q, $timeout, stationsManager, Station, $interval,RouteManager,Route) {
+    '$scope',
+    '$rootScope',
+    '$http',
+    '$q',
+    '$timeout',
+    'stationsManager',
+    'Station',
+    '$interval',
+    'RouteManager',
+    'Route',
+    'toastr',
+    'TrainManager',
+    'Train',
+    'TrdManager',
+    function ($scope, $rootScope, $http, $q, $timeout, stationsManager, Station, $interval, RouteManager, Route, toastr, TrainManager, Train, TrdManager) {
+        "ngInject";
         var vm = this;
         vm.gridOptions = {};
         vm.stationGrid = {};
         vm.routeGrid = {};
+        vm.trainGrid = {};
+        vm.trdGrid = {};
         vm.stationList = {};
         vm.routeList = {};
+        vm.trainList = {};
         vm.allApi = [];
 
-/*        vm.refreshAllTables = function () {
-            vm.allApi.forEach(function (api) {
-                //resetData(api.grid.options);
-                $timeout(function () {
-                    api.core.notifyDataChange('all');
-                    $scope.$apply();
-                },50);
-
-            })
-        }
-
-        function resetData (grid){
-            var temp = grid.data;
-            grid.data = [];
-            $timeout (function () {
-                grid.data = temp
-            },50)
-        }*/
-
+        vm.sendMessage = function () {
+            $http.get('http://localhost:8080/sendMessage')
+                .then(function (response) {
+                    toastr.sendMessage("Message sent");
+                });
+        };
         RouteManager.loadAll().then(function (data) {
-                vm.routeList = data;
-                vm.routeGrid.data = data;
-                vm.gridOptions.columnDefs[1].editDropdownOptionsArray = data;
+            vm.routeList = data;
+            vm.routeGrid.data = data;
+            vm.gridOptions.columnDefs[1].editDropdownOptionsArray = data;
         });
 
+        TrainManager.loadAll().then (function (data) {
+            vm.trainList = data;
+            vm.trainGrid.data = data;
+
+        });
         stationsManager.loadAll().then(function (data) {
             vm.stationList = data;
             vm.stationGrid.data = vm.stationList;
             vm.gridOptions.columnDefs[2].editDropdownOptionsArray = vm.stationList;
         });
+
+        TrdManager.loadAll().then(function (data) {
+            vm.trdList = data;
+            vm.trdGrid.data = data;
+
+        });
+
 
         function loadData(dataPath, table) {
             $http.get('http://localhost:8080/' + dataPath)
@@ -60,7 +66,6 @@ routeEditor.controller('routeEditCtrl', [
 
         loadData('routesStations', vm.gridOptions);
         //loadData('routes', vm.routeGrid);
-
         vm.gridOptions.columnDefs = [
             {name: 'id', enableCellEdit: true, width: '10%'},
             {
@@ -71,7 +76,6 @@ routeEditor.controller('routeEditCtrl', [
                 editDropdownValueLabel: 'name',
                 editDropdownIdLabel: 'id',
                 cellFilter: 'griddropdown:this'
-
             },
             {
                 name: 'stationId',
@@ -85,10 +89,8 @@ routeEditor.controller('routeEditCtrl', [
             {name: 'arrivalTime', enableCellEdit: true, width: '10%'},
             {name: 'stopMin', enableCellEdit: true, width: '10%'},
             {name: 'day', width: '10%', enableCellEdit: true},
-
         ];
         vm.gridOptions.enableFiltering = true;
-
         vm.stationGrid.columnDefs = [
             {name: 'id', enableCellEdit: false, width: '10%'},
             {name: 'name', enableCellEdit: true, width: '30%'},
@@ -107,8 +109,19 @@ routeEditor.controller('routeEditCtrl', [
             {name: 'id', enableCellEdit: false, width: '10%'},
             {name: 'name', enableCellEdit: true, width: '30%'},
         ];
+        //vm.routeGrid.enableRowHashing = false;
+        vm.trainGrid.columnDefs = [
+            {name: 'id', enableCellEdit: false, width: '10%'},
+            {name: 'name', enableCellEdit: true, width: '30%'},
+            {name: 'seats', enableCellEdit: true, width: '30%'},
+        ];
 
-        vm.routeGrid.enableRowHashing = false;
+        vm.trdGrid.columnDefs = [
+            {name: 'trainId', enableCellEdit: false, width: '10%'},
+            {name: 'routeId', enableCellEdit: true, width: '30%'},
+            {name: 'day', enableCellEdit: true, width: '30%'}
+        ];
+
 
         vm.deleteRow = function (row) {
             console.log("Perform delete");
@@ -163,17 +176,21 @@ routeEditor.controller('routeEditCtrl', [
         /*Saving functions*/
         vm.saveRowStation = function (rowEntity) {
             saveRowToDb(rowEntity, 'saveStation', vm.stationGridApi);
-
         };
         vm.saveRowRoute = function (rowEntity) {
             saveRowToDb(rowEntity, 'saveRoute', vm.routeGridApi);
             $timeout(function () {
                 $scope.$digest();
             }, 200);
-
         };
         vm.saveRowRouteStation = function (rowEntity) {
             saveRowToDb(rowEntity, 'saveRouteStation', vm.gridApi)
+        };
+        vm.saveRowTrain = function (rowEntity) {
+            saveRowToDb(rowEntity, 'saveTrain', vm.trainGridApi);
+        };
+        vm.saveRowTrd = function (rowEntity) {
+            saveRowToDb(rowEntity, 'saveTrd', vm.trdGridApi);
         };
         /*------------Saving function*/
         /*Register api------------*/
@@ -189,14 +206,24 @@ routeEditor.controller('routeEditCtrl', [
         };
         vm.routeGrid.onRegisterApi = function (gridApi) {
             vm.routeGridApi = gridApi;
-            gridApi.rowEdit.on.saveRow($scope, vm.saveRowRoute)
+            gridApi.rowEdit.on.saveRow($scope, vm.saveRowRoute);
+            vm.allApi.push(gridApi);
+        };
+        vm.trainGrid.onRegisterApi = function (gridApi) {
+            vm.trainGridApi = gridApi;
+            gridApi.rowEdit.on.saveRow($scope, vm.saveRowTrain);
+            vm.allApi.push(gridApi);
+        };
+        vm.trdGrid.onRegisterApi = function (gridApi) {
+            vm.trdGridApi = gridApi;
+            gridApi.rowEdit.on.saveRow($scope, vm.saveRowTrain);
             vm.allApi.push(gridApi);
         }
         /*-----------Register api*/
     }]
 )
     .filter('griddropdown', function () {
-         function mapFilter(input, context) {
+        function mapFilter(input, context) {
             var map = context.col.colDef.editDropdownOptionsArray;
             var idField = context.col.colDef.editDropdownIdLabel;
             var valueField = context.col.colDef.editDropdownValueLabel;
@@ -210,9 +237,8 @@ routeEditor.controller('routeEditCtrl', [
             } else if (initial) {
                 return initial;
             }
-
             return input;
         };
-         mapFilter.$stateful = true;
-         return mapFilter;
+        mapFilter.$stateful = true;
+        return mapFilter;
     });
