@@ -58,7 +58,7 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
     //TODO replace hardcode
     function loadData(dataPath, table, dateFrom, dateTo, stFrom, stTo) {
         $http.get('http://localhost:8080/' + dataPath,
-            {params: {stationFrom: 1001, stationTo: 1013, day: dateFrom}})
+            {params: {stationFrom: 1013, stationTo: 1001, day: dateFrom}})
             .then(function (response) {
                 table.data = response.data;
                 if (response) vm.panels.trainOpen = true;

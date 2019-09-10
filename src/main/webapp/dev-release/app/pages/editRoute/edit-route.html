@@ -4,10 +4,10 @@
         <div class="panel  medium-panel  panel-info animated zoomIn" zoom-in="">
             <div class="panel-heading clearfix"><h3 class="panel-title">Add route</h3></div>
             <div class="panel-body">
-                <div ui-grid="$ctrl.routeGrid" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
-                     ui-grid-selection
-                     class="grid"></div>
-                <button ng-click="$ctrl.copyRows($ctrl.routeGridApi)" type="submit" class="btn btn-danger">Copy row
+                <div class="grid" ui-grid="$ctrl.routeGrid" ui-grid-auto-resize ui-grid-cellNav ui-grid-edit
+                     ui-grid-row-edit
+                     ui-grid-selection></div>
+                <button class="btn btn-danger" ng-click="$ctrl.copyRows($ctrl.routeGridApi)" type="submit">Copy row
                 </button>
             </div>
         </div>
@@ -16,10 +16,10 @@
         <div class="panel  medium-panel  light-text animated zoomIn" zoom-in="">
             <div class="panel-heading clearfix"><h3 class="panel-title">Station</h3></div>
             <div class="panel-body">
-                <div ui-grid="$ctrl.stationGrid" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
-                     ui-grid-selection
-                     class="grid"></div>
-                <button ng-click="$ctrl.copyRows($ctrl.stationGridApi)" type="submit" class="btn btn-danger">Copy row
+                <div class="grid" ui-grid="$ctrl.stationGrid" ui-grid-auto-resize ui-grid-cellNav ui-grid-edit
+                     ui-grid-row-edit
+                     ui-grid-selection></div>
+                <button class="btn btn-danger" ng-click="$ctrl.copyRows($ctrl.stationGridApi)" type="submit">Copy row
                 </button>
             </div>
         </div>
@@ -31,16 +31,40 @@
             <div class="panel-heading clearfix"><h3 class="panel-title">Modify route</h3></div>
             <div class="panel-body">
                 <!--Table itself-->
-                <div ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection
-                     ui-grid-auto-resize
-                     class="grid table table-hover"></div>
+                <div class="grid table table-hover" ui-grid="$ctrl.gridOptions" ui-grid-auto-resize ui-grid-cellNav ui-grid-edit
+                     ui-grid-row-edit
+                     ui-grid-selection></div>
                 <!--Copy selected row-->
-                <button ng-click="$ctrl.copyRows($ctrl.gridApi)" type="submit" class="btn btn-danger">Copy row</button>
-                <button ng-click="$ctrl.refreshAllTables()" type="submit" class="btn btn-danger">Refresh data</button>
+                <button class="btn btn-danger" ng-click="$ctrl.copyRows($ctrl.gridApi)" type="submit">Copy row</button>
+                <button class="btn btn-danger" ng-click="$ctrl.refreshAllTables()" type="submit">Refresh data</button>
                 <!--Send update to 2nd app-->
-                <button ng-click="" type="submit" class="btn btn-danger">Send updates</button>
+                <button class="btn btn-danger" ng-click="$ctrl.sendMessage()" type="submit">Send updates</button>
             </div>
         </div>
         <!--Route list-->
+    </div>
+    <div class="col-md-4">
+        <div class="panel  medium-panel  light-text animated zoomIn" zoom-in="">
+            <div class="panel-heading clearfix"><h3 class="panel-title">Add train</h3></div>
+            <div class="panel-body">
+                <div class="grid" ui-grid="$ctrl.trainGrid" ui-grid-auto-resize ui-grid-cellNav ui-grid-edit
+                     ui-grid-row-edit
+                     ui-grid-selection></div>
+                <button class="btn btn-danger" ng-click="$ctrl.copyRows($ctrl.trainGridApi)" type="submit">Copy row
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel  medium-panel  light-text animated zoomIn" zoom-in="">
+            <div class="panel-heading clearfix"><h3 class="panel-title">Assign Train to Route</h3></div>
+            <div class="panel-body">
+                <div class="grid" ui-grid="$ctrl.trdGrid" ui-grid-auto-resize ui-grid-cellNav ui-grid-edit
+                     ui-grid-row-edit
+                     ui-grid-selection></div>
+                <button class="btn btn-danger" ng-click="$ctrl.copyRows($ctrl.trdGridApi)" type="submit">Copy row
+                </button>
+            </div>
+        </div>
     </div>
 </div>

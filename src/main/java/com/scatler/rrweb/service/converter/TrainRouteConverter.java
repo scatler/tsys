@@ -13,7 +13,7 @@ public class TrainRouteConverter implements IConverter<TrainRouteidDay, TrainRou
     public TrainRouteDTO toDto(TrainRouteidDay entity) {
         TrainRouteDTO dto = new TrainRouteDTO();
         dto.setTrainId(entity.getTrainId().getId());
-        dto.setRouteId(entity.getRouteId().getRouteId().getId());
+        dto.setRouteId(entity.getRouteId().getId());
         dto.setDay(entity.getDayDept());
         return dto;
     }
@@ -21,9 +21,7 @@ public class TrainRouteConverter implements IConverter<TrainRouteidDay, TrainRou
     @Override
     public TrainRouteidDay toEntity(TrainRouteDTO dto) {
         TrainRouteidDay entity = new TrainRouteidDay();
-        RouteStation rs = new RouteStation(5555);
-        rs.setRouteId(new Route(dto.getRouteId()));
-        entity.setRouteId(rs);
+        entity.setRouteId(new Route(dto.getRouteId()));
         entity.setDayDept(dto.getDay());
         entity.setTrainId(new Train(dto.getTrainId()));
         return entity;

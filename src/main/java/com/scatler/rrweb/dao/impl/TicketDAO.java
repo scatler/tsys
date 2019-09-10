@@ -46,9 +46,10 @@ public class TicketDAO extends AbstractDAO<Ticket> {
                 ")" + //end of searchResultObject
                 "from Train t " +
                 "join TrainRouteidDay trd on t.id = trd.trainId.id  " +
-                "join trd.routeId rs1 " +
-                "inner join rs1.stationId sid " +
-                "inner join rs1.routeId rid where rs1.stationId.id = :station1 and rs1.routeId in " +
+                "join Route rid on trd.routeId = rid.id " +
+                "join RouteStation rs1 on rid.id = rs1.routeId " +
+                "join Station sid on sid.id = rs1.stationId " +
+                "where rs1.stationId.id = :station1 and rs1.routeId in " +
                 "(select rs2.routeId from RouteStation rs2 where rs2.stationId.id = :station1) and rs1.id < " +
                 "(select rs3.id from RouteStation rs3 where rs3.stationId.id = :station2 and rs3.routeId = rs1.routeId)" +
                 "and adddays(trd.dayDept,rs1.day) = :date " +

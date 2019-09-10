@@ -1,20 +1,19 @@
 var routeEditor = angular.module('routeEditor', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection']);
-routeEditor.controller('routeEditCtrl', [
-    '$scope',
-    '$rootScope',
-    '$http',
-    '$q',
-    '$timeout',
-    'stationsManager',
-    'Station',
-    '$interval',
-    'RouteManager',
-    'Route',
-    'toastr',
-    'TrainManager',
-    'Train',
-    'TrdManager',
-    function ($scope, $rootScope, $http, $q, $timeout, stationsManager, Station, $interval, RouteManager, Route, toastr, TrainManager, Train, TrdManager) {
+routeEditor.controller('routeEditCtrl',
+    function ($scope,
+              $rootScope,
+              $http,
+              $q,
+              $timeout,
+              stationsManager,
+              Station,
+              $interval,
+              RouteManager,
+              Route,
+              toastr,
+              TrainManager,
+              Train,
+              TrdManager) {
         "ngInject";
         var vm = this;
         vm.gridOptions = {};
@@ -26,7 +25,6 @@ routeEditor.controller('routeEditCtrl', [
         vm.routeList = {};
         vm.trainList = {};
         vm.allApi = [];
-
         vm.sendMessage = function () {
             $http.get('http://localhost:8080/sendMessage')
                 .then(function (response) {
@@ -38,24 +36,19 @@ routeEditor.controller('routeEditCtrl', [
             vm.routeGrid.data = data;
             vm.gridOptions.columnDefs[1].editDropdownOptionsArray = data;
         });
-
-        TrainManager.loadAll().then (function (data) {
+        TrainManager.loadAll().then(function (data) {
             vm.trainList = data;
             vm.trainGrid.data = data;
-
         });
         stationsManager.loadAll().then(function (data) {
             vm.stationList = data;
             vm.stationGrid.data = vm.stationList;
             vm.gridOptions.columnDefs[2].editDropdownOptionsArray = vm.stationList;
         });
-
         TrdManager.loadAll().then(function (data) {
             vm.trdList = data;
             vm.trdGrid.data = data;
-
         });
-
 
         function loadData(dataPath, table) {
             $http.get('http://localhost:8080/' + dataPath)
@@ -115,14 +108,11 @@ routeEditor.controller('routeEditCtrl', [
             {name: 'name', enableCellEdit: true, width: '30%'},
             {name: 'seats', enableCellEdit: true, width: '30%'},
         ];
-
         vm.trdGrid.columnDefs = [
             {name: 'trainId', enableCellEdit: false, width: '10%'},
             {name: 'routeId', enableCellEdit: true, width: '30%'},
             {name: 'day', enableCellEdit: true, width: '30%'}
         ];
-
-
         vm.deleteRow = function (row) {
             console.log("Perform delete");
         };
@@ -220,7 +210,7 @@ routeEditor.controller('routeEditCtrl', [
             vm.allApi.push(gridApi);
         }
         /*-----------Register api*/
-    }]
+    }
 )
     .filter('griddropdown', function () {
         function mapFilter(input, context) {

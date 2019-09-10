@@ -109,6 +109,53 @@ angular.module('routeEditor')
         };
         return Route
     }]);
+
 angular.module('routeEditor')
     .service('AbstractManager', ['Route', '$http', '$q', AbstractManager])
     .service('RouteManager', ['AbstractManager', RouteManager]);
+
+//--------------Train am
+function TrainManager(AbstractManager) {
+    angular.extend(TrainManager.prototype, AbstractManager);
+    this.serv = "http://localhost:8080/trains/";
+}
+
+angular.module('routeEditor')
+    .service('AbstractEntity', ['$http', AbstractEntity])
+    .factory('Train', ['AbstractEntity', function (AbstractEntity) {
+        angular.extend(Train.prototype, AbstractEntity);
+        this.serv = "http://localhost:8080/trains/";
+        function Train(data) {
+            if (data) {
+                this.setData(data)
+            }
+        };
+        return Train
+    }]);
+
+angular.module('routeEditor')
+    .service('AbstractManager', ['Train', '$http', '$q', AbstractManager])
+    .service('TrainManager', ['AbstractManager', TrainManager]);
+
+//-------------------------------TRD----------------------------------------------
+function TrdManager(AbstractManager) {
+    angular.extend(TrdManager.prototype, AbstractManager);
+    this.serv = "http://localhost:8080/trd/";
+}
+
+angular.module('routeEditor')
+    .service('AbstractEntity', ['$http', AbstractEntity])
+    .factory('Trd', ['AbstractEntity', function (AbstractEntity) {
+        angular.extend(Trd.prototype, AbstractEntity);
+        this.serv = "http://localhost:8080/trd/";
+        function Trd(data) {
+            if (data) {
+                this.setData(data)
+            }
+        };
+        return Trd
+    }]);
+
+angular.module('routeEditor')
+    .service('AbstractManager', ['Trd', '$http', '$q', AbstractManager])
+    .service('TrdManager', ['AbstractManager', TrdManager]);

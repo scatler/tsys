@@ -24,10 +24,10 @@ public class StationDAO extends AbstractDAO<Station> {
                         ")" +
                         "from Train t " +
                         "join TrainRouteidDay trd on trd.trainId.id = t.id " +
-                        "inner join trd.routeId rs " +
+                        "inner join trd.routeId r " +
+                        "join RouteStation rs on r.id = rs.routeId " +
                         "inner join rs.stationId sid " +
                         "inner join rs.routeId " +
-                        "join Route r on r.id = rs.routeId.id " +
                         "where sid.id = :station " +
                         "and adddays(trd.dayDept,rs.day)=:date";
                         //"and adddays(trd.dayDept,rs.day)='09/09/2019'";
