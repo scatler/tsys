@@ -14,7 +14,7 @@ public class TicketDTO extends AbstractDTO {
     private Integer id;
     private String name;
     private String surname;
-    @JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+3")
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT+3")
     private Date birthday;
     private Integer station1Id;
     private Integer station2Id;

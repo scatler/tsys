@@ -1,10 +1,11 @@
-package com.scatler.rrweb.controllers;
+package com.scatler.rrweb.services;
 
 import com.scatler.rrweb.dao.impl.RouteDAO;
 import com.scatler.rrweb.dao.impl.TicketDAO;
-import com.scatler.rrweb.dto.RouteDTO;
 import com.scatler.rrweb.dto.TicketDTO;
 import com.scatler.rrweb.entity.Ticket;
+import com.scatler.rrweb.entity.objects.exception.FoundSamePassengerException;
+import com.scatler.rrweb.entity.objects.exception.NoMoreFreeSeatsException;
 import com.scatler.rrweb.entity.objects.exception.NotEnoughTimeBeforeDeparture;
 import com.scatler.rrweb.service.converter.TicketConverter;
 import com.scatler.rrweb.service.impl.TicketService;
@@ -15,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.jmx.export.annotation.ManagedOperation;
 
 import java.util.Date;
 
@@ -54,6 +54,39 @@ class TicketServiceTest {
         verify(mockTicketDAO, times(0)).findSamePassenger(ticket);
         verifyNoMoreInteractions(mockTicketDAO);
         verifyZeroInteractions(mockRouteDao);
+    }
+
+    @Test
+    void samePassengerTest() {
+        TicketDTO ticketDTO = new TicketDTO();
+        Ticket ticket = mockConverter.toEntity(ticketDTO);
+        ticketDTO.setBirthday(new Date());
+        when(mockTicketDAO.findSamePassenger(ticket)).thenReturn(true);
+        assertThrows(FoundSamePassengerException.class, () -> mockTicketService
+                .registerTicket(ticketDTO));
+        verify(mockTicketDAO, times(1)).checkEnoughTimeBeforeDeparture(ticket);
+        verify(mockTicketDAO, times(1)).findSamePassenger(ticket);
+        verifyNoMoreInteractions(mockTicketDAO);
+        verifyZeroInteractions(mockRouteDao);
+
+
+    }
+
+    @Test
+    void noMoreFreeSeats() {
+        TicketDTO ticketDTO = new TicketDTO();
+        Ticket ticket = mockConverter.toEntity(ticketDTO);
+        ticketDTO.setBirthday(new Date());
+        when(mockTicketDAO.checkForFreeSeats(ticket)).thenReturn(true);
+        assertThrows(NoMoreFreeSeatsException.class, () -> mockTicketService
+                .registerTicket(ticketDTO));
+        verify(mockTicketDAO, times(1)).checkEnoughTimeBeforeDeparture(ticket);
+        verify(mockTicketDAO, times(1)).findSamePassenger(ticket);
+        verify(mockTicketDAO, times(1)).checkForFreeSeats(ticket);
+        verifyNoMoreInteractions(mockTicketDAO);
+        verifyZeroInteractions(mockRouteDao);
+
+
     }
 }
 

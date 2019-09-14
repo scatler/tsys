@@ -96,11 +96,11 @@ routeEditor.controller('routeEditCtrl',
                 editDropdownIdLabel: 'id',
                 cellFilter: 'griddropdown:this'
             },
-            {name: 'timezone', enableCellEdit: true, width: '10%'},
+            {name: 'timezone', enableCellEdit: true, width: '30%'},
         ];
         vm.routeGrid.columnDefs = [
-            {name: 'id', enableCellEdit: false, width: '10%'},
-            {name: 'name', enableCellEdit: true, width: '30%'},
+            {name: 'id', enableCellEdit: false, width: '20%'},
+            {name: 'name', enableCellEdit: true, width: '80%'},
         ];
         //vm.routeGrid.enableRowHashing = false;
         vm.trainGrid.columnDefs = [
@@ -206,7 +206,7 @@ routeEditor.controller('routeEditCtrl',
         };
         vm.trdGrid.onRegisterApi = function (gridApi) {
             vm.trdGridApi = gridApi;
-            gridApi.rowEdit.on.saveRow($scope, vm.saveRowTrain);
+            gridApi.rowEdit.on.saveRow($scope, vm.saveRowTrd);
             vm.allApi.push(gridApi);
         }
         /*-----------Register api*/

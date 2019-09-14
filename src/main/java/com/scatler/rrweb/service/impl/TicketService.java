@@ -5,6 +5,7 @@ import com.scatler.rrweb.dto.TicketDTO;
 import com.scatler.rrweb.dto.AllPassengersDTO;
 import com.scatler.rrweb.dto.forms.AvailableTrain;
 import com.scatler.rrweb.entity.objects.exception.FoundSamePassengerException;
+import com.scatler.rrweb.entity.objects.exception.NoMoreFreeSeatsException;
 import com.scatler.rrweb.entity.objects.exception.NotEnoughTimeBeforeDeparture;
 import com.scatler.rrweb.service.converter.TicketConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class TicketService {
     private TicketConverter ticketConverter;
 
     @Transactional
-    public List<AvailableTrain> getAvailableTrains(int station_id1, int station_id2, Date day) {
-        return ticketDAO.getAvailableTrains(station_id1, station_id2, day);
+    public List<AvailableTrain> getAvailableTrains(int station_id1, int station_id2, Date dayFrom, Date dayTo) {
+        return ticketDAO.getAvailableTrains(station_id1, station_id2, dayFrom,dayTo);
     }
 
     @Transactional
@@ -35,7 +36,15 @@ public class TicketService {
         if (findSamePassenger(ticketDTO)) {
             throw new FoundSamePassengerException("Same passenger found");
         }
+
+        if (checkForFreeSeats(ticketDTO)) {
+            throw new NoMoreFreeSeatsException("No more seats");
+        }
         return ticketDAO.addOrUpdate(ticketConverter.toEntity(ticketDTO));
+    }
+
+    private boolean checkForFreeSeats(TicketDTO ticketDTO) {
+        return ticketDAO.checkForFreeSeats(ticketConverter.toEntity(ticketDTO));
     }
 
     private boolean checkEnoughTimeBeforeDeparture(TicketDTO ticketDTO) {

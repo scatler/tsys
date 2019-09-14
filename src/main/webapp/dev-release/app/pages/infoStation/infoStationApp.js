@@ -1,7 +1,66 @@
-var buyTicketsApp = angular.module('buyTicketsApp', ['ui.bootstrap', 'toastr', 'ngAnimate','ngTouch', 'ui.select', 'ngSanitize', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.resizeColumns', 'ui.grid.selection', 'routeEditor']);
-buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManager','toastr','$uibModal', '$log','$document',function ($scope, $http, stationsManager,toastr, $uibModal, $log, $document) {
+var infoStationApp = angular.module('infoStationApp', ['ui.bootstrap', 'toastr', 'ngAnimate','ngTouch', 'ui.select', 'ngSanitize', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.resizeColumns', 'ui.grid.selection', 'routeEditor']);
+
+
+infoStationApp.controller('infoStationCtrl', ['$scope', '$http', 'stationsManager','toastr','$uibModal', '$log','$document', 'toastrConfig',function ($scope, $http, stationsManager,toastr, $uibModal, $log, $document,  toastrConfig) {
     var vm = this;
-    vm.oneAtATime = true;
+    vm.findTrains = {};
+    vm.stationFrom = {};
+    vm.stationTimeTableForm = {};
+
+    vm.panels = {
+        infoTable: false,
+        infoForm: false,
+
+    };
+
+    vm.toastOptions = {
+        "autoDismiss": false,
+        "positionClass": "toast-bottom-right",
+        "timeOut": "5000",
+        "extendedTimeOut": "2000",
+        "allowHtml": false,
+        "closeButton": false,
+        "tapToDismiss": true,
+        "progressBar": false,
+        "newestOnTop": true,
+        "maxOpened": 0,
+        "preventDuplicates": false,
+        "preventOpenDuplicates": false
+    };
+
+    angular.extend(toastrConfig, vm.toastOptions);
+
+    vm.searchForTrains = function (dateFrom, stFrom) {
+        if (angular.equals(vm.stationFrom,{})) {
+            toastr.warning("Station is not selected!")
+        }
+
+        vm.findTrains.data = [];
+        loadData('infoStation', vm.findTrains,
+            formatDate(vm.df),
+            vm.stationFrom.id);
+        //TODO open accordion
+    };
+    vm.findTrains = {
+        columnDefs: [
+                {name: 'trainId', width: '25%'},
+                {name: 'routeId', width: '25%'},
+                {name: 'routeName', width: '25%'},
+                {name: 'arrivalTime', width: '25%'},
+        ],
+        data: []
+    };
+
+    vm.findTrains.rowHeight = 30;
+    vm.findTrains.onRegisterApi = function (gridApi) {
+        vm.gridApi = gridApi;
+    };
+
+
+
+
+
+/*    vm.oneAtATime = true;
     vm.groups = [
         {
             title: 'Dynamic Group Header - 1',
@@ -11,100 +70,40 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
             title: 'Dynamic Group Header - 2',
             content: 'Dynamic Group Body - 2'
         }
-    ];
-    vm.items = ['Item 1', 'Item 2', 'Item 3'];
-    vm.addItem = function () {
+    ];*/
+
+/*    vm.addItem = function () {
         var newItemNo = $scope.items.length + 1;
         $scope.items.push('Item ' + newItemNo);
-    };
-    vm.status = {
+    };*/
+/*    vm.status = {
         isCustomHeaderOpen: false,
         isFirstOpen: true,
         isFirstDisabled: false
     };
-    vm.findTrains = {};
-    vm.stationFrom = {};
-    vm.stationTo = {};
-    var buttonTRD =
-        vm.dt = {};
-    vm.df = {};
-    vm.findTrains = {
-        columnDefs: [
-/*            {name: 'trainId', width: '10%'},
-            {name: 'trainRouteDay', width: '10%'},*/
-            {name: 'Info1', width: '10%',
-                cellTemplate: '<span> ' +
-                    '{{row.entity.trainName}}<br> ' +
-                    'TrainId:{{row.entity.trainId}}<br> ' +
-                    'TRD:{{row.entity.trainRouteDay}}<br> ' +
-                    '#{{row.entity.routeId}} </span>'},
-/*            {name: 'trainName', width: '10%'},
-            {name: 'routeId', width: '10%'},*/
-            {name: 'From', width: '10%',
-                cellTemplate: '<p>From</p>'},
-            {name: 'Info2', width: '20%',
-                cellTemplate: '<span> ' +
-                    '{{row.entity.arrivalTimeToStation1}}<br> ' +
-                    '{{row.entity.station1Name}} </span>'},
-            {name: 'To', width: '10%',
-                cellTemplate: '<p>To</p>'},
-            {name: 'Info3', width: '20%',
-                cellTemplate: '<span> ' +
-                    '{{row.entity.arrivalTimeToStation2}}<br> ' +
-                    '{{row.entity.station2Name}} </span>'},
-            //{name: 'station1Id', width: '10%'},
-/*            {name: 'station1Name', width: '10%'},
-            //{name: 'dayOfStart', width: '10%'},
-            {name: 'arrivalTimeToStation1', width: '20%'},
-            {name: 'arrivalTimeToStation2', width: '20%'},*/
-            //{name: 'station2id', width: '10%'},
-            //{name: 'station2name', width: '10%'},
-            {name: 'Info4', width: '10%',
-                cellTemplate: '<span> ' +
-                    '<b>Free seats:{{row.entity.freeTickets}}</b><br>' +
-                    'Total seats: {{row.entity.totalSeats}}</span>'},
-/*            {name: 'totalSeats', width: '10%'},
-            {name: 'freeTickets', width: '10%'},*/
-            {
-                name: 'ticket',
-                cellTemplate: '<button ' +
-                    'class="btn btn-sm btn-info" ' +
-                    'ng-click="grid.appScope.$ctrl.enterPesonalInfo(row.entity.trainRouteDay)" ' +
-                    'type="button">Buy ticket ' +
-                    '</button>'
-            }
-        ],
-        data: []
-    };
+    */
 
-    vm.findTrains.rowHeight = 80;
-    vm.findTrains.showHeader = false;
 
-    function loadData(dataPath, table, dateFrom, dateTo, stFrom, stTo) {
+
+
+    function loadData(dataPath, table, dateFrom, stFrom) {
         $http.get('http://localhost:8080/' + dataPath,
-            {params: {stationFrom: stFrom, stationTo: stTo, dayFrom: dateFrom, dayTo:dateTo}})
+            {params: {stationFrom: stFrom, dayFrom: dateFrom }})
             .then(function (response) {
                 table.data = response.data;
-                if (response) vm.panels.trainOpen = true;
+                if (response.data.length === 0) {
+
+                    toastr.warning('Nothing to show',"");
+                }
+                else {
+                    toastr.success(response.data.length + ' rows loaded',"", {"positionClass": "toast-bottom-right"})
+                }
             });
     }
 
-    vm.findTrains.onRegisterApi = function (gridApi) {
-        vm.gridApi = gridApi;
-    };
+
     /*My function*/
-    vm.searchForTrains = function (dateFrom, dateTo, stFrom, stTo) {
-        vm.panels.ticketOpen = false;
-        vm.panels.trainOpen = false;
-        vm.panels.infoOpen = false;
-        vm.findTrains.data = [];
-        loadData('availableTrains', vm.findTrains,
-            formatDate(vm.df),
-            formatDate(vm.dt),
-            vm.stationFrom.id,
-            vm.stationTo.id);
-        //TODO open accordion
-    };
+
 
     function formatDate(date) {
         var day = date.getDate();
@@ -113,26 +112,21 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
         return monthIndex + '/' + day + '/' + year;
     }
 
-    function formatDateBirthday(date) {
-        var day = date.getDate();
-        var monthIndex = date.getMonth() + 1;
-        var year = date.getFullYear();
-        return day + '/' + monthIndex + '/' + year;
-    }
-
     /*Panels*/
-    vm.panels = {
-        trainOpen: false,
-        ticketOpen: false,
-        infoOpen: false,
-        findTrains: true
-    };
+
     /*Dropdown menu*/
     vm.stationList = [];
     stationsManager.loadAll().then(function (data) {
         vm.stationList = data;
     });
-    /*Date picker zone*/
+
+    //-----------Notification--------------------------
+    vm.showSuccessMsg = function (msg) {
+        toastr.success(msg);
+    };
+
+
+    /*Date picker zone--->*/
     vm.today = function () {
         vm.dt = new Date();
         vm.df = new Date();
@@ -141,11 +135,7 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
     vm.clear = function () {
         vm.dt = null;
     };
-    /*    vm.inlineOptions = {
-            customClass: getDayClass,
-            minDate: new Date(),
-            showWeeks: true
-        };*/
+
     //****
     vm.dateOptions = {
         //dateDisabled: disabled,
@@ -155,18 +145,7 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
         startingDay: 1
     };
     // Disable weekend selection
-    /*
-        function disabled(data) {
-            var date = data.date,
-                mode = data.mode;
-            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-        }
-    */
-    /*    vm.toggleMin = function() {
-            vm.inlineOptions.minDate = vm.inlineOptions.minDate ? null : new Date();
-            vm.dateOptions.minDate = vm.inlineOptions.minDate;
-        };*/
-    /*    vm.toggleMin();*/
+
     //****
     vm.open1 = function () {
         vm.popup1.opened = true;
@@ -222,7 +201,7 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
         return '';
     }
 
-    /*Date picker zone*/
+    /*<----Date picker zone*/
     /*Ticket*/
     vm.birthday = new Date();
     vm.userForm = {
@@ -244,7 +223,7 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
     };*/
 /*    vm.ticketId = {};*/
 
-    vm.enterPesonalInfo = function(trd) {
+/*    vm.enterPesonalInfo = function(trd) {
         vm.panels.ticketOpen = true;
         vm.userForm.trd = trd;
     };
@@ -253,11 +232,11 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
 
         vm.userForm.station1Id = vm.stationFrom.id;
         vm.userForm.station2Id = vm.stationTo.id;
-        vm.userForm.birthday = formatDateBirthday(vm.userForm.birthday);
+        vm.userForm.birthday = formatDate(vm.userForm.birthday);
 
         $http.post('http://localhost:8080/saveTicket', vm.userForm).success(function (response) {
             if (response) {
-               /* vm.ticketId = response.data;*/
+               /!* vm.ticketId = response.data;*!/
                 vm.ticketId = response;
                 vm.panels.infoOpen = true;
                 vm.panels.trainOpen = false;
@@ -271,20 +250,18 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
             .catch(function (data, status, headers, config) {
                 toastr.warning('Something wrong', data.data.error, {})
             })
-    }
-    //-----------Notification--------------------------
-    vm.showSuccessMsg = function (msg) {
-        toastr.success(msg);
-    };
+    }*/
 
+/*
     function openModal (msg) {
         vm.items = msg;
         vm.open();
     }
+*/
 
 
     //----------------------Modal
-    vm.items = 'Hello!';
+ /*   vm.items = 'Hello!';
 
     vm.animationsEnabled = true;
 
@@ -361,7 +338,7 @@ buyTicketsApp.controller('AccordionDemoCtrl', ['$scope', '$http', 'stationsManag
 
     vm.toggleAnimation = function () {
         vm.animationsEnabled = !vm.animationsEnabled;
-    };
+    };*/
 
 }]);
 

@@ -72,14 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http)
             throws Exception {
             http.csrf().disable()
-/*                    .authorizeRequests()
-                    //.antMatchers("/**").not().hasAuthority("ROLE_CANDIDATE")
-                    //.antMatchers("/**").hasRole("USER")
-                    .antMatchers("/anonymous*").anonymous()
-                    .antMatchers("/login").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-                    .formLogin().loginPage("/login").loginProcessingUrl("/loginPerform").permitAll();*/
+
                     .authorizeRequests()
                     .antMatchers("/dev-release/index.html").hasAnyRole("ADMIN", "USER")
                     .antMatchers("/anonymous*").anonymous()
@@ -91,14 +84,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/dev-release/app/*").permitAll()
                     .antMatchers("/update/*").permitAll()
                     .antMatchers("/dev-release/assets/img/rrd.jpg").permitAll()
+                    .antMatchers("/dev-release/index.html#/infoPass").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
                     .loginPage("/dev-release/auth.html")
                     .loginProcessingUrl("/perform_login")
-                    .defaultSuccessUrl("/dev-release/index.html#/buyTickets", true)
-                    //.failureUrl("/login.html?error=true")
-                    //.failureHandler(authenticationFailureHandler())
+                    .defaultSuccessUrl("/dev-release/index.html#/infoStation", true)
+
                     .and()
                     .logout()
                     .logoutUrl("/perform_logout")
@@ -106,10 +99,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     //.logoutSuccessHandler(logoutSuccessHandler());
     }
 
-/*    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-                .antMatchers("/app/**") //TODO check why?
-                .antMatchers("/app/**"); //TODO check why?
-    }*/
+
 }

@@ -18,11 +18,28 @@
 
       function _factory() {
         var isMenuCollapsed = shouldMenuBeCollapsed();
+        //var _ = require('lodash');
 
         this.getMenuItems = function() {
           var states = defineMenuItemStates();
           var menuItems = states.filter(function(item) {
             return item.level == 0;
+          });
+
+          menuItems.forEach(function(item) {
+            var children = states.filter(function(child) {
+              return child.level == 1 && child.name.indexOf(item.name) === 0;
+            });
+            item.subMenu = children.length ? children : null;
+          });
+
+          return menuItems.concat(staticMenuItems);
+        };
+
+        this.getAuthorizedMenuItems = function(user) {
+          var states = defineMenuItemStates();
+          var menuItems = states.filter(function(item) {
+            return item.level == 0 && _.includes(item.authRole,user);
           });
 
           menuItems.forEach(function(item) {
@@ -77,6 +94,7 @@
                   order: meta.order,
                   icon: meta.icon,
                   stateRef: s.name,
+                  authRole: meta.authRole,
                 };
               })
               .sort(function(a, b) {

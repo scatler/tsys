@@ -13,8 +13,11 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class TrainDTO extends AbstractDTO {
     private Integer id;
-    @NotEmpty (message = "Name is required")
+    @NotEmpty(message = "Name is required")
     private String name;
-    @NotNull (message = "Seats is required")
+    @NotNull(message = "Seats is required")
     private Integer seats;
+    public TrainDTO(Integer id) {
+        this.id = id;
+    }
 }

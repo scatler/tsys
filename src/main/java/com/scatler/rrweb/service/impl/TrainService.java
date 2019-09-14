@@ -31,11 +31,6 @@ public class TrainService {
     }
 
     @Transactional
-    public List<ViewAllTrain> viewAllTrains() {
-        return dao.viewAllTrains();
-    }
-
-    @Transactional
     public List<TrainDTO> getAll() {
         return dao.getAll().stream().map((a) -> converter.toDto(a)).collect(Collectors.toList());
     }
@@ -49,6 +44,7 @@ public class TrainService {
         return converter.toDto(dao.get(id));
     }
 
+    @Transactional
     public Integer addOrUpdate(TrainDTO dto) {
         return dao.addOrUpdate(converter.toEntity(dto));
     }

@@ -11,8 +11,11 @@
                 url: '/buyTickets',
                 templateUrl: 'app/pages/buyTickets/but-tickets.html',
                 title: 'Tickets & Trains',
+
                 sidebarMeta: {
+                    icon: 'ion-star',
                     order: 800,
+                    authRole: ['USER']
                 },
             });
     }

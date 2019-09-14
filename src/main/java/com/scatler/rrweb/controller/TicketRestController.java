@@ -1,6 +1,7 @@
 package com.scatler.rrweb.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.scatler.rrweb.dto.AllPassengersDTO;
 import com.scatler.rrweb.dto.TicketDTO;
 import com.scatler.rrweb.dto.forms.AvailableTrain;
 import com.scatler.rrweb.entity.objects.exception.FoundSamePassengerException;
@@ -29,14 +30,21 @@ public class TicketRestController {
     @RequestMapping(path = "/availableTrains", produces = "application/json")
     public List<AvailableTrain> getAvailableTrains(@RequestParam Integer stationFrom,
                                                    @RequestParam Integer stationTo,
-                                                   @RequestParam @JsonFormat(shape = JsonFormat.Shape.STRING,
-                                                           pattern = "dd-MM-yyyy")
-                                                           Date day) {
-        return ticketService.getAvailableTrains(stationFrom, stationTo, day);
+                                                   @RequestParam @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") Date dayFrom,
+                                                   @RequestParam @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") Date dayTo
+    ) {
+        List<AvailableTrain> availableTrains = ticketService.getAvailableTrains(stationFrom, stationTo, dayFrom, dayTo);
+        return availableTrains;
     }
 
-    @RequestMapping(path = "/saveTicket", consumes = "application/json")
+    @RequestMapping(path = "/saveTicket", consumes = "application/json", produces = "application/json")
     public Integer registerTicket(@RequestBody TicketDTO dto) throws FoundSamePassengerException, NotEnoughTimeBeforeDeparture {
         return ticketService.registerTicket(dto);
+    }
+
+    @RequestMapping(path = "/infoPass", produces = "application/json")
+    public List<AllPassengersDTO> loadAllPass(@RequestParam Integer routeId,
+                                              @RequestParam @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") Date dayFrom) {
+        return ticketService.getAllPassengers(routeId, dayFrom);
     }
 }

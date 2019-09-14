@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <form class="ng-pristine ng-scope ng-invalid ng-invalid-required ng-valid-email ng-submitted" name="vm.personalInfoForm"
+              novalidate="" style="">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group has-feedback has-error"
+                         ng-class="{'has-error': vm.personalInfoForm.username.$invalid &amp;&amp; (vm.personalInfoForm.username.$dirty || vm.personalInfoForm.$submitted)}"
+                         style=""><label for="exampleUsername1">Username</label> <input class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"
+                                                                                        id="exampleUsername1"
+                                                                                        name="username"
+                                                                                        ng-model="vm.personalInfo.username"
+                                                                                        placeholder="Username"
+                                                                                        required=""
+                                                                                        style="" type="text"> <span
+                        class="help-block error-block basic-block">Required</span></div>
+                    <div class="form-group has-error"
+                         ng-class="{'has-error': vm.personalInfoForm.email.$invalid &amp;&amp; (vm.personalInfoForm.email.$dirty || vm.personalInfoForm.$submitted)}"
+                         style=""><label for="exampleInputEmail1">Email address</label> <input class="form-control ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required"
+                                                                                               id="exampleInputEmail1"
+                                                                                               name="email"
+                                                                                               ng-model="vm.personalInfo.email"
+                                                                                               placeholder="Email"
+                                                                                               required=""
+                                                                                               type="email"> <span
+                        class="help-block error-block basic-block">Proper email required</span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group has-error"
+                         ng-class="{'has-error': vm.personalInfoForm.password.$invalid &amp;&amp; (vm.personalInfoForm.password.$dirty || vm.personalInfoForm.$submitted)}"
+                         style=""><label for="exampleInputPassword1">Password</label> <input class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
+                                                                                             id="exampleInputPassword1"
+                                                                                             name="password"
+                                                                                             ng-model="vm.personalInfo.password"
+                                                                                             placeholder="Password"
+                                                                                             required=""
+                                                                                             type="password"> <span
+                        class="help-block error-block basic-block">Required</span></div>
+                    <div class="form-group has-error"
+                         ng-class="{'has-error': !vm.arePersonalInfoPasswordsEqual() &amp;&amp; (vm.personalInfoForm.confirmPassword.$dirty || vm.personalInfoForm.$submitted)}">
+                        <label for="exampleInputConfirmPassword1">Confirm Password</label> <input class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
+                                                                                                  id="exampleInputConfirmPassword1"
+                                                                                                  name="confirmPassword"
+                                                                                                  ng-model="vm.personalInfo.confirmPassword"
+                                                                                                  placeholder="Confirm Password"
+                                                                                                  required=""
+                                                                                                  type="password"> <span
+                        class="help-block error-block basic-block">Passwords should match</span></div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

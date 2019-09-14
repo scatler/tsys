@@ -15,17 +15,20 @@
     'BlurAdmin.pages.charts',
     'BlurAdmin.pages.maps',
     'BlurAdmin.pages.profile',*/
+    'BlurAdmin.pages.ui',
     'BlurAdmin.pages.editRoute',
     'BlurAdmin.pages.buyTickets',
+    'BlurAdmin.pages.infoStation',
+    'BlurAdmin.pages.infoPass',
   ])
       .config(routeConfig)
       .run(run);
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/infoStation');
 
-    baSidebarServiceProvider.addStaticItem({
+/*    baSidebarServiceProvider.addStaticItem({
       title: 'Pages',
       icon: 'ion-document',
       subMenu: [{
@@ -44,8 +47,8 @@
         fixedHref: '404.html',
         blank: true
       }]
-    });
-    baSidebarServiceProvider.addStaticItem({
+    });*/
+/*    baSidebarServiceProvider.addStaticItem({
       title: 'Menu Level 1',
       icon: 'ion-ios-more',
       subMenu: [{
@@ -58,7 +61,7 @@
           disabled: true
         }]
       }]
-    });
+    });*/
   }
 
     /** @ngInject */
@@ -69,13 +72,18 @@
                 = 'Basic ' + JSON.parse(userData).authData;
         }
 
-        $rootScope.isAdmin = false;
+        $rootScope.user = '';
 
         $http({
             url: 'http://localhost:8080/user',
             method: "GET"
         }).then(function (response) {
-            $rootScope.isAdmin = response.data.authorities[0].authority === "ROLE_ADMIN";
+            if (response.data.authorities[0].authority === "ROLE_ADMIN") {
+                $rootScope.user = 'ADMIN' ;
+            } else  {
+                $rootScope.user = 'USER'
+            }
+
 
         })
 /*        $rootScope
@@ -100,3 +108,18 @@
 
 
 })();
+
+
+
+/*
+function mineAuth($http,$q) {
+    $http({
+        url: 'http://localhost:8080/user',
+        method: "GET"
+    }).then(function (response) {
+        $rootScope.isAdmin = response.data.authorities[0].authority === "ROLE_ADMIN";
+
+    })
+}
+
+angular.module('BlurAdmin.pages').service('MineAuth',[$http,$q,mineAuth]);*/

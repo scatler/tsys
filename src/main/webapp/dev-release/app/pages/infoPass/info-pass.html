@@ -1,0 +1,44 @@
+<div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-success animated zoomIn" style="min-height:700px">
+        <div class="panel-heading clearfix"><h3 class="panel-title">List of passengers</h3></div>
+        <div class="panel-body">
+            <div ng-controller="infoPassAppCtrl as $ctrl">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <ui-select ng-model="$ctrl.Route" theme="selectize" title="Choose a station">
+                                <ui-select-match placeholder="Choose station...">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.routeList | filter: $select.search">
+                                    <div ng-bind-html="item.name | highlight: $select.search"></div>
+                                    <small ng-bind-html="item.id | highlight: $select.search"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="input-group">
+                            <input alt-input-formats="altInputFormats" class="form-control" close-text="Close"
+                                   datepicker-options="$ctrl.dateOptions"
+                                   is-open="$ctrl.popup2.opened" ng-model="$ctrl.df" ng-required="true"
+                                   type="text" uib-datepicker-popup="{{$ctrl.format}}"/>
+                            <span class="input-group-btn">
+                                            <button class="btn btn-default" ng-click="$ctrl.open2()" type="button">
+                                                <i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                        </p>
+                    </div>
+                </div>
+                <button class="btn btn-info btn-space"
+                        ng-click="$ctrl.searchForPassengers()"
+                        type="button">Find passengers
+                </button>
+                <div class="grid-accord table table-hover" ui-grid="$ctrl.findPass"
+                     ui-grid-cellNav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
