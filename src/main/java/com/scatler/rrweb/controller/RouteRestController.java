@@ -14,6 +14,7 @@ import com.scatler.rrweb.service.impl.RouteStationService;
 import com.scatler.rrweb.service.impl.StationService;
 import com.scatler.rrweb.service.impl.TrainService;
 import com.scatler.rrweb.service.impl.TrdService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @RestController("routeApi")
 public class RouteRestController {
     @Autowired
@@ -42,15 +44,13 @@ public class RouteRestController {
     private TrainService trainService;
     @Autowired
     private TrdService trdService;
-    @Autowired
-    private Logger log;
-
     //------------------Saving
+
     @RequestMapping(value = "/saveStation", //
             method = RequestMethod.PUT, //
             consumes = "application/json")
     public Integer updateStation(@RequestBody StationDTO dto) {
-        log.debug("Add or update station with Id: " + dto.getId());
+        log.info("Add or update station with Id: " + dto.getId());
         return stationService.addOrUpdate(dto);
     }
 
@@ -90,62 +90,62 @@ public class RouteRestController {
     //-----------------------Get service
 
     @RequestMapping(path = "/stations", produces = "application/json")
-    public List<StationDTO> getAllStations(HttpServletResponse response) throws IOException {
+    public List<StationDTO> getAllStations() {
         return stationService.getAll();
     }
 
     @RequestMapping(path = "/stations/{id}", produces = "application/json")
-    public StationDTO getStationByID(@PathVariable Integer id) throws IOException {
+    public StationDTO getStationByID(@PathVariable Integer id) {
         return stationService.get(id);
     }
 
     @RequestMapping(path = "/lines", produces = "application/json")
-    public List<LineDTO> getAllLines(HttpServletResponse response) throws IOException {
+    public List<LineDTO> getAllLines() {
         return lineService.getAll();
     }
 
     @RequestMapping(path = "/routes", produces = "application/json")
-    public List<RouteDTO> getData() throws IOException {
+    public List<RouteDTO> getData() {
         return routeService.getAll();
     }
 
     @RequestMapping(path = "/routes/{id}", produces = "application/json")
-    public RouteDTO getRouteById(@PathVariable Integer id) throws IOException {
+    public RouteDTO getRouteById(@PathVariable Integer id) {
         return routeService.get(id);
     }
 
     @RequestMapping(path = "/routesStations", produces = "application/json")
-    public List<RouteStationDTO> sendData(HttpServletResponse response) throws IOException {
+    public List<RouteStationDTO> sendData() {
         return routeStationService.getAll();
     }
 
     //-----------------------Trains-----------------------------
     @RequestMapping(path = "/trains", produces = "application/json")
-    public List<TrainDTO> getAllTrains() throws IOException {
+    public List<TrainDTO> getAllTrains() {
         return trainService.getAll();
     }
 
     @RequestMapping(path = "/trains/{id}", produces = "application/json")
-    public TrainDTO getTrainById(@PathVariable Integer id) throws IOException {
+    public TrainDTO getTrainById(@PathVariable Integer id) {
         return trainService.get(id);
     }
 
     //-------------------------TRD-------------------------------
     @RequestMapping(path = "/trd", produces = "application/json")
-    public List<TrainRouteDTO> getAllTrd() throws IOException {
+    public List<TrainRouteDTO> getAllTrd() {
         return trdService.getAll();
     }
 
     @RequestMapping(path = "/trd/{id}", produces = "application/json")
-    public TrainRouteDTO getTrdById(@PathVariable Integer id) throws IOException {
+    public TrainRouteDTO getTrdById(@PathVariable Integer id) {
         return trdService.get(id);
     }
     //------------------------Info Station --------------------------
 
     @RequestMapping(path = "/infoStation", produces = "application/json")
     public List<StationTimeTable> getInfoStation(@RequestParam Integer stationFrom,
-                                                 @RequestParam @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy") Date dayFrom
-                                              ) throws IOException {
-        return stationService.getStationSchedule(stationFrom,dayFrom);
+                                                 @RequestParam @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") Date dayFrom
+    ) {
+        return stationService.getStationSchedule(stationFrom, dayFrom);
     }
 }

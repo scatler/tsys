@@ -72,19 +72,16 @@
             <version>${hibernate.validator}</version>
         </dependency>
 
-        <!-- JSTL Dependency -->
         <dependency>
-            <groupId>javax.servlet.jsp.jstl</groupId>
-            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
-            <version>${jstl.version}</version>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.2</version>
         </dependency>
-
         <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>standard</artifactId>
-            <version>${tld.version}</version>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.2</version>
         </dependency>
-
 
         <!-- Servlet Dependency -->
 

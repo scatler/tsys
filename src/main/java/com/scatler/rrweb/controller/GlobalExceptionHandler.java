@@ -27,53 +27,7 @@ import java.io.IOException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @Autowired
-    Logger logger;
-
-/*    @Autowired
-    private ExceptionTranslatorService exceptionTranslatorService;*/
-    //ToDO enable
-/*    @ExceptionHandler(SQLException.class)
-    public String handleSQLException(HttpServletRequest request, Exception ex) {
-        logger.info("SQLException Occured:: URL=" + request.getRequestURL());
-        return "database_error";
-    }*/
-
-/*    @ExceptionHandler(HibernateException.class)
-    public String handleHibernate(HttpServletRequest request, Exception ex) {
-        logger.info("SQLException Occured:: URL=" + request.getRequestURL());
-        return "Hibernate_error";
-    }*/
-
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occured")
-    @ExceptionHandler(IOException.class)
-    public String handleIOException() {
-        logger.error("IOException handler executed");
-        return "404";
-    }
-
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public String handle(Exception ex) {
-        return "404";
-    }
-
-    @ExceptionHandler(EmailExistsException.class)
-    public ModelAndView handleEmailExists(HttpServletRequest request, EmailExistsException ex) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName(ex.getViewname());
-        mv.addObject("error", ex.toString());
-        mv.addObject("user", new UserDTO());
-        return mv;
-    }
-
- /*   @ExceptionHandler(FoundSamePassengerException.class)
-    public ModelAndView handleUsernameNotFoundException(HttpServletRequest request, Exception ex) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("ticket-buy-valid");
-        mv.addObject("error", ex.toString());
-        mv.addObject("ticket", new TicketDTO());
-        return mv;
-    }
-*/
+    private Logger logger;
 
     @ExceptionHandler(FoundSamePassengerException.class)
     protected ResponseEntity<String> handleUsernameNotFoundException(HttpServletRequest request, Exception ex) {

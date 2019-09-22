@@ -19,16 +19,12 @@ import java.util.List;
 @RestController("webapi")
 public class UpdateDataController {
     @Autowired
-    StationService stationService;
+    private StationService stationService;
 
-    @RequestMapping(path="/update/{stationId}", produces = "application/json")
+    @RequestMapping(path = "/update/{stationId}", produces = "application/json")
     public StationTimeTableWrapper sendData(HttpServletResponse response, @PathVariable Integer stationId) throws IOException {
         Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
         List<StationTimeTable> list = stationService.getStationSchedule(stationId, today);
         return new StationTimeTableWrapper(list);
     }
-
-/*    @RequestMapping("/register/{stationId}")
-    public void registerListener(@PathVariable Integer stationId) {
-    }*/
 }

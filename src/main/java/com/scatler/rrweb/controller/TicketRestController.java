@@ -6,8 +6,6 @@ import com.scatler.rrweb.dto.TicketDTO;
 import com.scatler.rrweb.dto.forms.AvailableTrain;
 import com.scatler.rrweb.entity.objects.exception.FoundSamePassengerException;
 import com.scatler.rrweb.entity.objects.exception.NotEnoughTimeBeforeDeparture;
-import com.scatler.rrweb.service.impl.RouteService;
-import com.scatler.rrweb.service.impl.StationService;
 import com.scatler.rrweb.service.impl.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +19,7 @@ import java.util.List;
 @RestController("ticket-api")
 public class TicketRestController {
     @Autowired
-    private StationService stationService;
-    @Autowired
     private TicketService ticketService;
-    @Autowired
-    private RouteService routeService;
 
     @RequestMapping(path = "/availableTrains", produces = "application/json")
     public List<AvailableTrain> getAvailableTrains(@RequestParam Integer stationFrom,
@@ -33,8 +27,7 @@ public class TicketRestController {
                                                    @RequestParam @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") Date dayFrom,
                                                    @RequestParam @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") Date dayTo
     ) {
-        List<AvailableTrain> availableTrains = ticketService.getAvailableTrains(stationFrom, stationTo, dayFrom, dayTo);
-        return availableTrains;
+        return ticketService.getAvailableTrains(stationFrom, stationTo, dayFrom, dayTo);
     }
 
     @RequestMapping(path = "/saveTicket", consumes = "application/json", produces = "application/json")

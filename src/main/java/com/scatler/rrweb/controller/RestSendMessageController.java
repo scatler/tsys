@@ -11,7 +11,7 @@ import java.util.concurrent.TimeoutException;
 @RestController("sendMessage")
 public class RestSendMessageController {
     @Autowired
-    SenderServiceMQ mq;
+    private SenderServiceMQ mq;
 
     @RequestMapping("/sendMessage")
     public String sendMessageToMQ() throws IOException, TimeoutException {
