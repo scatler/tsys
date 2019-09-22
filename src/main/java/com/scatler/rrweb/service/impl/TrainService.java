@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @Service
 public class TrainService {
     @Autowired
-    TrainDAO dao;
+    private TrainDAO dao;
     @Autowired
-    TrainConverter converter;
+    private TrainConverter converter;
     @Autowired
-    TrainRouteDAO trainRouteDAO;
+    private TrainRouteDAO trainRouteDAO;
     @Autowired
-    TrainRouteConverter trainRouteConverter;
+    private TrainRouteConverter trainRouteConverter;
 
     @Transactional
     public void save(TrainDTO trainDTO) {

@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 @Service
 public class RouteStationService {
     @Autowired
-    RouteStationDAO dao;
+    private RouteStationDAO dao;
     @Autowired
-    RouteStationConverter converter;
+    private RouteStationConverter converter;
 
 
     @Transactional

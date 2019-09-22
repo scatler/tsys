@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 @Service
 public class TrdService {
     @Autowired
-    TrainRouteDAO dao;
+    private TrainRouteDAO dao;
     @Autowired
-    TrainRouteConverter converter;
+    private TrainRouteConverter converter;
     @Transactional
     public List<TrainRouteDTO> getAll() {
         List<TrainRouteDTO> list = new ArrayList<>();

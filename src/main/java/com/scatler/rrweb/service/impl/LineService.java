@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 @Service
 public class LineService {
     @Autowired
-    LineDAO dao;
+    private LineDAO dao;
     @Autowired
-    LineConverter converter;
+    private LineConverter converter;
     @Transactional
     public List<LineDTO> getAll() {
         return dao.getAll().stream().map((a)->converter.toDto(a)).collect(Collectors.toList());

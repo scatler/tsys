@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 public class StationService  {
 
     @Autowired
-    StationDAO dao;
+    private StationDAO dao;
 
     @Autowired
-    StationConverter converter;
+    private StationConverter converter;
 
     @Transactional
     public List<StationTimeTable> getStationSchedule(Integer station_id, Date day) {

@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 public class RouteService {
 
     @Autowired
-    RouteDAO dao;
+    private RouteDAO dao;
 
     @Autowired
-    RouteConverter converter;
+    private RouteConverter converter;
 
     @Transactional
     public void save(RouteDTO routeDTO) {

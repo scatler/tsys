@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     @Autowired
-    UserDAO dao;
+    private UserDAO dao;
     @Autowired
-    UserConverter converter;
+    private UserConverter converter;
     @Autowired
-    AuDAO auDAO;
+    private AuDAO auDAO;
     @Autowired
-    AuConverter auConverter;
+    private AuConverter auConverter;
 
     @Transactional
     public void registerNewUserAccount(UserDTO accountDto) throws EmailExistsException {
