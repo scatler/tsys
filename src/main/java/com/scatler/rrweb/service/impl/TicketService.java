@@ -29,7 +29,7 @@ public class TicketService {
     }
 
     @Transactional
-    public Integer registerTicket(TicketDTO ticketDTO) throws FoundSamePassengerException, NotEnoughTimeBeforeDeparture {
+    public Integer registerTicket(TicketDTO ticketDTO) {
         if (checkEnoughTimeBeforeDeparture(ticketDTO)){
             throw new NotEnoughTimeBeforeDeparture("Not enough time before train departure");
         }

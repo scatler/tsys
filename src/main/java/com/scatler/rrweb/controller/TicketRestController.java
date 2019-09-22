@@ -31,7 +31,7 @@ public class TicketRestController {
     }
 
     @RequestMapping(path = "/saveTicket", consumes = "application/json", produces = "application/json")
-    public Integer registerTicket(@RequestBody TicketDTO dto) throws FoundSamePassengerException, NotEnoughTimeBeforeDeparture {
+    public Integer registerTicket(@RequestBody TicketDTO dto) {
         return ticketService.registerTicket(dto);
     }
 
