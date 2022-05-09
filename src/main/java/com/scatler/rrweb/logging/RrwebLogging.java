@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Aspect
 @Component
 public class RrwebLogging {
+
     @Pointcut("execution(public * com.scatler.rrweb.controller.RouteRestController.*(..))")
     public void callToRouteRestController() {
     }

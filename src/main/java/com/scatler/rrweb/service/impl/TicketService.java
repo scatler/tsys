@@ -48,7 +48,7 @@ public class TicketService {
     }
 
     private boolean checkEnoughTimeBeforeDeparture(TicketDTO ticketDTO) {
-      return ticketDAO.checkEnoughTimeBeforeDeparture(ticketConverter.toEntity(ticketDTO));
+      return ticketDAO.isTimeSufficientBeforeDeparture(ticketConverter.toEntity(ticketDTO));
     }
 
     @Transactional

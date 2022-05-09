@@ -27,10 +27,11 @@ import java.util.List;
 public class TicketDAO extends AbstractDAO<Ticket> {
     @Autowired
     private SessionFactory sessionFactory;
+
     @PersistenceContext
     private EntityManager em;
 
-    public List<AvailableTrain> getAvailableTrains(int station_id1, int station_id2, Date dayFrom, Date dayTo) {
+    public List<AvailableTrain> getAvailableTrains(int stationFrom, int stationTo, Date dayFrom, Date dayTo) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "SELECT" +
                 "    alt.trainId, " +
@@ -83,8 +84,8 @@ public class TicketDAO extends AbstractDAO<Ticket> {
             int id;
         }
         Object resultList = session.createNativeQuery(hql, "AvailableTrain")
-                .setParameter(1, station_id1)
-                .setParameter(2, station_id2)
+                .setParameter(1, stationFrom)
+                .setParameter(2, stationTo)
                 .setDate(3, dayFrom)
                 .setDate(4, dayTo)
                 .getResultList();
@@ -103,7 +104,7 @@ public class TicketDAO extends AbstractDAO<Ticket> {
                 .getResultList().size() > 0;
     }
 
-    public boolean checkEnoughTimeBeforeDeparture(Ticket ticket) {
+    public boolean isTimeSufficientBeforeDeparture(Ticket ticket) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createNativeQuery(
                 "select trd.id  from train_routeid_day trd " +
